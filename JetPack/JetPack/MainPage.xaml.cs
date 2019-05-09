@@ -50,10 +50,8 @@ namespace JetPack
             float surfaceWidth = e.Info.Width;
             float surfaceHeight = e.Info.Height;
             SKCanvas canvas = e.Surface.Canvas;
-            SKPaint paint = new SKPaint();
-            paint.Color = Color.Beige.ToSKColor();
-            paint.Style = SKPaintStyle.Fill;
-            canvas.DrawCircle(new SKPoint(surfaceWidth / 2, surfaceHeight / 2), surfaceWidth/2 - 50, paint);
+            Player player = new Player(10, 10, 50, 50);
+            player.Draw(canvas, surfaceWidth, surfaceHeight);
         }
 
         private void OnTouch(object sender, SKTouchEventArgs e)
