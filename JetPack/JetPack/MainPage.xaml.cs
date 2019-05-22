@@ -9,54 +9,80 @@ using Xamarin.Forms;
 
 namespace JetPack
 {
-    public partial class MainPage : ContentPage
-    {
-        bool pageIsActive;
-        int fps = 30;
+	public partial class MainPage : ContentPage
+	{
+		int xMax = 160;
+		int yMax = 90;
 
-        public MainPage()
-        {
-            InitializeComponent();
+		bool pageIsActive;
+		int fps = 30;
 
-            canvasView.PaintSurface += OnPaintSample;
-            canvasView.Touch += OnTouch;
-            Content = canvasView;
-        }
+		Player player;
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            pageIsActive = true;
-            AnimationLoop();
-        }
+		public MainPage()
+		{
+			InitializeComponent();
+			this.player = new Player(10, 10, 10, 10);
 
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            pageIsActive = false;
-        }
+			canvasView.PaintSurface += OnPaintSample;
+			canvasView.Touch += OnTouch;
+			Content = canvasView;
+		}
 
-        async Task AnimationLoop()
-        {
-            while (pageIsActive)
-            {
-                canvasView.InvalidateSurface();
-                await Task.Delay(TimeSpan.FromSeconds(1.0 / fps));
-            }
-        }
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			MessagingCenter.Send(this, "AllowLandscape");
+			pageIsActive = true;
+			AnimationLoop();
+		}
 
-        private void OnPaintSample(object sender, SKPaintSurfaceEventArgs e)
-        {
-            float surfaceWidth = e.Info.Width;
-            float surfaceHeight = e.Info.Height;
-            SKCanvas canvas = e.Surface.Canvas;
-            Player player = new Player(10, 10, 50, 50);
-            player.Draw(canvas, surfaceWidth, surfaceHeight);
-        }
+		protected override void OnDisappearing()
+		{
+			base.OnDisappearing();
+			MessagingCenter.Send(this, "PreventLandscape");
+			pageIsActive = false;
+		}
 
-        private void OnTouch(object sender, SKTouchEventArgs e)
-        {
-            
-        }
-    }
+		async Task AnimationLoop()
+		{
+			while (pageIsActive)
+			{
+				canvasView.InvalidateSurface();
+				await Task.Delay(TimeSpan.FromSeconds(1.0 / fps));
+			}
+		}
+
+		private void OnPaintSample(object sender, SKPaintSurfaceEventArgs e)
+		{
+			float pixelCoordRatioX = (float)e.Info.Width/(float)Globals.xMax ;
+			float pixelCoordRatioY = (float)e.Info.Height / (float)Globals.yMax;
+			SKCanvas canvas = e.Surface.Canvas;
+			try
+			{
+				canvas.Clear(SKColors.DarkBlue);
+				canvas.Scale(pixelCoordRatioX, pixelCoordRatioY);
+				player.Draw(canvas);
+			}
+			catch(Exception error)
+			{
+				int fdjkvn = 90;
+			}
+			finally
+			{
+				canvas.Scale(1 / pixelCoordRatioX, 1 / pixelCoordRatioY);
+			}
+		}
+
+		private void OnTouch(object sender, SKTouchEventArgs e)
+		{
+			player.Touch(sender, e);
+		}
+	}
+
+	public static class Globals
+	{
+		public const int xMax = 160;
+		public const int yMax = 90;
+	}
 }
