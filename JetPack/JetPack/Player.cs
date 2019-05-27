@@ -29,15 +29,10 @@ namespace JetPack
 			this.sizeY = sizeY;
 			this.speed = 0;
 			string resourceID = "JetPack.media.player_up.png";
-			Assembly assembly = GetType().GetTypeInfo().Assembly;
-
-			using (Stream stream = assembly.GetManifestResourceStream(resourceID))
-			{
-				playerBitmap = SKBitmap.Decode(stream);
-			}
+			playerBitmap = LoadBitmap(resourceID);
 		}
 
-		private void Loop()
+		public void Loop()
 		{
 			this.ApplyGravity();
 			this.Move();
@@ -86,8 +81,18 @@ namespace JetPack
 
 		public void Draw(SKCanvas canvas)
 		{
-			this.Loop();
 			canvas.DrawBitmap(playerBitmap, new SKRect((float)x, (float)y, (float)(x + sizeX), (float)(y + sizeY)));
+		}
+
+		private SKBitmap LoadBitmap(string resourceId)
+		{
+			string resourceID = "JetPack.media.player_up.png";
+			Assembly assembly = GetType().GetTypeInfo().Assembly;
+
+			using (Stream stream = assembly.GetManifestResourceStream(resourceID))
+			{
+				return SKBitmap.Decode(stream);
+			}
 		}
 	}
 }

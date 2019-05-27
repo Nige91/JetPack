@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using JetPack.Enemies;
 
 namespace JetPack
 {
@@ -22,16 +23,11 @@ namespace JetPack
 		public MainPage()
 		{
 			InitializeComponent();
+			//TODO Remove magic numbers
 			this.player = new Player(10, 10, 10, 10);
-
-			Assembly assembly = GetType().GetTypeInfo().Assembly;
-
-			using (Stream stream = assembly.GetManifestResourceStream("JetPack.media.starfield_purple.png"))
-			{
-				this.backgroundBitmap = SKBitmap.Decode(stream);
-			}
+			EnemyManager.SpawnEnemy1();
+			LoadBackground("JetPack.media.starfield_purple.png");
 			
-
 			canvasView.PaintSurface += OnPaintSample;
 			canvasView.Touch += OnTouch;
 			Content = canvasView;
@@ -61,8 +57,10 @@ namespace JetPack
 			}
 		}
 
+		//TODO Move Stuff out of OnPaintSample
 		private void OnPaintSample(object sender, SKPaintSurfaceEventArgs e)
 		{
+			GameLoop();
 			float pixelCoordRatioX = (float)e.Info.Width/(float)Globals.xAxisLength ;
 			float pixelCoordRatioY = (float)e.Info.Height / (float)Globals.yAxisLength;
 			SKCanvas canvas = e.Surface.Canvas;
@@ -72,16 +70,32 @@ namespace JetPack
 				canvas.Scale(pixelCoordRatioX, pixelCoordRatioY);
 				canvas.DrawBitmap(backgroundBitmap, new SKRect(0, 0, Globals.xAxisLength, Globals.yAxisLength));
 				player.Draw(canvas);
+				EnemyManager.DrawEnemies(canvas);
 			}
 			finally
 			{
 				canvas.Scale(1 / pixelCoordRatioX, 1 / pixelCoordRatioY);
 			}
 		}
+		
+		private void GameLoop()
+		{
+			player.Loop();
+			EnemyManager.Loop();
+		}
 
 		private void OnTouch(object sender, SKTouchEventArgs e)
 		{
 			player.Touch(sender, e);
+		}
+
+		private void LoadBackground(string resourceId)
+		{
+			Assembly assembly = GetType().GetTypeInfo().Assembly;
+			using (Stream stream = assembly.GetManifestResourceStream(resourceId))
+			{
+				this.backgroundBitmap = SKBitmap.Decode(stream);
+			}
 		}
 	}
 
@@ -90,5 +104,6 @@ namespace JetPack
 		public const int xAxisLength = 160;
 		public const int yAxisLength = 90;
 		public const int fps = 30;
+		public const int normalTimeUnitInMs = 1000;
 	}
 }

@@ -19,6 +19,7 @@ namespace JetPack.Movement
 		{
 			this.coords = coords;
 			this.size = size;
+			movementModuleUnits = new List<MovementModuleUnit>();
 		}
 
 		public void AddUnit(MovementModuleUnit unit)
@@ -32,6 +33,12 @@ namespace JetPack.Movement
 			{
 				coords += unit.Move(speed);
 			}
+		}
+
+		public SKRect GetRect()
+		{
+			SKRect rect = new SKRect(coords.X, coords.Y, coords.X + size.Width, coords.Y + size.Height);
+			return rect;
 		}
 
 		public void SetSpeed(float speed)
@@ -96,7 +103,7 @@ namespace JetPack.Movement
 		//TODO implement GetLoopTime
 		private float GetLoopTime()
 		{
-			return 1000 / Globals.fps;
+			return (float)1000 / ((float)Globals.fps * (float)Globals.normalTimeUnitInMs);
 		}
 	}
 }
