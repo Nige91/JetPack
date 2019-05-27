@@ -2,7 +2,9 @@
 using SkiaSharp.Views.Forms;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -11,18 +13,24 @@ namespace JetPack
 {
 	public partial class MainPage : ContentPage
 	{
-		int xMax = 160;
-		int yMax = 90;
-
 		bool pageIsActive;
-		int fps = 30;
 
 		Player player;
+
+		SKBitmap backgroundBitmap;
 
 		public MainPage()
 		{
 			InitializeComponent();
 			this.player = new Player(10, 10, 10, 10);
+
+			Assembly assembly = GetType().GetTypeInfo().Assembly;
+
+			using (Stream stream = assembly.GetManifestResourceStream("JetPack.media.starfield_purple.png"))
+			{
+				this.backgroundBitmap = SKBitmap.Decode(stream);
+			}
+			
 
 			canvasView.PaintSurface += OnPaintSample;
 			canvasView.Touch += OnTouch;
@@ -49,24 +57,21 @@ namespace JetPack
 			while (pageIsActive)
 			{
 				canvasView.InvalidateSurface();
-				await Task.Delay(TimeSpan.FromSeconds(1.0 / fps));
+				await Task.Delay(TimeSpan.FromSeconds(1.0 / Globals.fps));
 			}
 		}
 
 		private void OnPaintSample(object sender, SKPaintSurfaceEventArgs e)
 		{
-			float pixelCoordRatioX = (float)e.Info.Width/(float)Globals.xMax ;
-			float pixelCoordRatioY = (float)e.Info.Height / (float)Globals.yMax;
+			float pixelCoordRatioX = (float)e.Info.Width/(float)Globals.xAxisLength ;
+			float pixelCoordRatioY = (float)e.Info.Height / (float)Globals.yAxisLength;
 			SKCanvas canvas = e.Surface.Canvas;
 			try
 			{
 				canvas.Clear(SKColors.DarkBlue);
 				canvas.Scale(pixelCoordRatioX, pixelCoordRatioY);
+				canvas.DrawBitmap(backgroundBitmap, new SKRect(0, 0, Globals.xAxisLength, Globals.yAxisLength));
 				player.Draw(canvas);
-			}
-			catch(Exception error)
-			{
-				int fdjkvn = 90;
 			}
 			finally
 			{
@@ -82,7 +87,8 @@ namespace JetPack
 
 	public static class Globals
 	{
-		public const int xMax = 160;
-		public const int yMax = 90;
+		public const int xAxisLength = 160;
+		public const int yAxisLength = 90;
+		public const int fps = 30;
 	}
 }

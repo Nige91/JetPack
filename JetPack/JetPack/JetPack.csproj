@@ -12,11 +12,15 @@
   <ItemGroup>
     <None Remove="media\player_down.png" />
     <None Remove="media\player_up.png" />
+    <None Remove="media\starfield_black.png" />
+    <None Remove="media\starfield_purple.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="media\player_down.png" />
     <EmbeddedResource Include="media\player_up.png" />
+    <EmbeddedResource Include="media\starfield_black.png" />
+    <EmbeddedResource Include="media\starfield_purple.png" />
   </ItemGroup>
 
   <ItemGroup>

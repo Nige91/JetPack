@@ -69,13 +69,13 @@ namespace JetPack
 
 		private void Move()
 		{
-			if (this.y - this.speed < Globals.yMax - sizeY)
+			if (this.y - this.speed < Globals.yAxisLength - sizeY)
 			{
 				y -= speed;
 			}
-			else if (this.y < Globals.yMax - sizeY)
+			else if (this.y < Globals.yAxisLength - sizeY)
 			{
-				this.y = Globals.yMax - sizeY;
+				this.y = Globals.yAxisLength - sizeY;
 			}
 		}
 
