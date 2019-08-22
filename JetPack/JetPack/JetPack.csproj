@@ -12,6 +12,7 @@
   <ItemGroup>
     <None Remove="media\player_down.png" />
     <None Remove="media\player_up.png" />
+    <None Remove="media\projectile1.png" />
     <None Remove="media\ship1.png" />
     <None Remove="media\starfield_black.png" />
     <None Remove="media\starfield_purple.png" />
@@ -20,6 +21,7 @@
   <ItemGroup>
     <EmbeddedResource Include="media\player_down.png" />
     <EmbeddedResource Include="media\player_up.png" />
+    <EmbeddedResource Include="media\projectile1.png" />
     <EmbeddedResource Include="media\ship1.png" />
     <EmbeddedResource Include="media\starfield_black.png" />
     <EmbeddedResource Include="media\starfield_purple.png" />

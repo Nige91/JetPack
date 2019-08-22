@@ -71,6 +71,7 @@ namespace JetPack
 				canvas.DrawBitmap(backgroundBitmap, new SKRect(0, 0, Globals.xAxisLength, Globals.yAxisLength));
 				player.Draw(canvas);
 				EnemyManager.DrawEnemies(canvas);
+				EnemyManager.DrawProjectiles(canvas);
 			}
 			finally
 			{
@@ -86,7 +87,14 @@ namespace JetPack
 
 		private void OnTouch(object sender, SKTouchEventArgs e)
 		{
-			player.Touch(sender, e);
+			if(e.Location.X < ((SKCanvasView)sender).CanvasSize.Width / 2)
+			{
+				player.TouchLeft();
+			}
+			else
+			{
+				player.TouchRight();
+			}
 		}
 
 		private void LoadBackground(string resourceId)

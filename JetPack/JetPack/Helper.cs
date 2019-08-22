@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace JetPack
 {
@@ -20,6 +21,28 @@ namespace JetPack
 		public static float GetRandomFloat(float min, float max)
 		{
 			return min + (float)rand.NextDouble() * (max - min);
+		}
+
+		public static SKBitmap LoadBitmap(string resourceId)
+		{
+
+			Assembly assembly = typeof(App).GetTypeInfo().Assembly;
+			using (Stream stream = assembly.GetManifestResourceStream(resourceId))
+			{
+				return SKBitmap.Decode(stream);
+			}
+		}
+
+		public static T DeepClone<T>(T obj)
+		{
+			using (var ms = new MemoryStream())
+			{
+				var formatter = new BinaryFormatter();
+				formatter.Serialize(ms, obj);
+				ms.Position = 0;
+
+				return (T)formatter.Deserialize(ms);
+			}
 		}
 	}
 }

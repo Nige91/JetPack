@@ -38,6 +38,26 @@ namespace JetPack
 			this.Move();
 		}
 
+		public void TouchLeft()
+		{
+			this.JetPackBoost();
+		}
+
+		public void TouchRight()
+		{
+			this.Shoot();
+		}
+
+		public void Draw(SKCanvas canvas)
+		{
+			canvas.DrawBitmap(playerBitmap, new SKRect((float)x, (float)y, (float)(x + sizeX), (float)(y + sizeY)));
+		}
+
+		private void Shoot()
+		{
+
+		}
+
 		private void ApplyGravity()
 		{
 			if (this.speed - this.gravity > this.minSpeed)
@@ -72,16 +92,6 @@ namespace JetPack
 			{
 				this.y = Globals.yAxisLength - sizeY;
 			}
-		}
-
-		public void Touch(object sender, SKTouchEventArgs e)
-		{
-			this.JetPackBoost();
-		}
-
-		public void Draw(SKCanvas canvas)
-		{
-			canvas.DrawBitmap(playerBitmap, new SKRect((float)x, (float)y, (float)(x + sizeX), (float)(y + sizeY)));
 		}
 
 		private SKBitmap LoadBitmap(string resourceId)

@@ -4,9 +4,11 @@ using System.Text;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using JetPack.Movement;
+using JetPack.Weapons;
 
 namespace JetPack.Enemies
 {
+	//TODO overthink Enemy class structure
 	static class EnemyManager
 	{
 		private static List<Enemy> enemyList = new List<Enemy>();
@@ -20,7 +22,11 @@ namespace JetPack.Enemies
 		//TODO Make Spawn Enemy1 prettier
 		public static void SpawnEnemy1(SKPoint coords)
 		{
-			Enemy enemy = new Enemy(100, MovementModuleFactory.CreateStandardHorizontalModule(coords, new SKSize(15, 15), - 15), "JetPack.media.ship1.png");
+			//TODO Remove Magic Numbers
+			Enemy enemy = new Enemy(100, 
+				MovementModuleFactory.CreateStandardHorizontalModule(coords, new SKSize(15, 15), - 3),
+				WeaponModuleFactory.CreateWeapon1(0.5f, 10, - 20),
+				"JetPack.media.ship1.png");
 			enemyList.Add(enemy);
 		}
 
@@ -28,7 +34,15 @@ namespace JetPack.Enemies
 		{
 			foreach (var enemy in enemyList)
 			{
-				enemy.Draw(canvas);
+				enemy.DrawEnemy(canvas);
+			}
+		}
+
+		public static void DrawProjectiles(SKCanvas canvas)
+		{
+			foreach (var enemy in enemyList)
+			{
+				enemy.DrawProjectiles(canvas);
 			}
 		}
 		

@@ -6,6 +6,8 @@ using SkiaSharp.Views.Forms;
 
 namespace JetPack.Movement
 {
+	//TODO overthink MovementModule class structure
+	[Serializable()]
 	class MovementModule
 	{
 		public SKPoint coords { get; private set; }
@@ -15,11 +17,31 @@ namespace JetPack.Movement
 
 		public float speed { get; private set; } = 1;
 
+		public MovementModule()
+		{
+			movementModuleUnits = new List<MovementModuleUnit>();
+		}
+
 		public MovementModule(SKPoint coords, SKSize size)
 		{
 			this.coords = coords;
 			this.size = size;
 			movementModuleUnits = new List<MovementModuleUnit>();
+		}
+
+		public MovementModule Copy(SKPoint coords)
+		{
+			MovementModule module = new MovementModule();
+			module.coords = new SKPoint(coords.X, coords.Y);
+			module.size = new SKSize(this.size.Width, this.size.Height);
+			module.scale = new SKSize(this.scale.Width, this.scale.Height);
+			module.movementModuleUnits = new List<MovementModuleUnit>();
+			foreach(var unit in this.movementModuleUnits)
+			{
+				module.movementModuleUnits.Add(unit.Copy());
+			}
+			module.speed = this.speed;
+			return module;
 		}
 
 		public void AddUnit(MovementModuleUnit unit)
@@ -64,11 +86,15 @@ namespace JetPack.Movement
 		public int phaseDuration { get; private set; }
 		public long phaseStartTime { get; private set; }
 
+		public MovementModuleUnit()
+		{
+		}
+
 		public MovementModuleUnit(SKPoint distance)
 		{
 			this.distance = distance;
 			this.phaseDuration = 0;
-			this.phaseDuration = 0;
+			this.phaseStartTime = 0;
 		}
 
 		public MovementModuleUnit(SKPoint distance, float ampMin, float ampMax, int phaseDuration)
@@ -78,6 +104,17 @@ namespace JetPack.Movement
 			this.ampMax = ampMax;
 			this.phaseDuration = phaseDuration;
 			this.phaseStartTime = Helper.GetMilliseconds();
+		}
+
+		public MovementModuleUnit Copy()
+		{
+			MovementModuleUnit unit = new MovementModuleUnit();
+			unit.distance = new SKPoint(this.distance.X, this.distance.Y);
+			unit.ampMin = this.ampMin;
+			unit.ampMax = this.ampMax;
+			unit.phaseDuration = this.phaseDuration;
+			unit.phaseStartTime = this.phaseStartTime;
+			return unit;
 		}
 
 		public SKPoint Move(float speed)
