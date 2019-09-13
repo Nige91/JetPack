@@ -12,12 +12,13 @@ namespace JetPack.Weapons
 	{
 		public float speedModifier { get; private set; }
 		public float strengthModifier { get; private set; }
-		public bool active { get; private set; }
+		public bool active { get; set; }
 		public SKSize scale { get; private set; }
 		public List<WeaponModuleUnit> weaponUnits { get; private set; }
 
 		public WeaponModule()
 		{
+			active = true;
 			weaponUnits = new List<WeaponModuleUnit>();
 		}
 
@@ -25,7 +26,7 @@ namespace JetPack.Weapons
 		{
 			foreach (var unit in weaponUnits)
 			{
-				unit.Loop(coords);
+				unit.Loop(coords, active);
 			}
 		}
 

@@ -89,12 +89,24 @@ namespace JetPack
 		{
 			if(e.Location.X < ((SKCanvasView)sender).CanvasSize.Width / 2)
 			{
-				player.TouchLeft();
+				if (e.ActionType == SKTouchAction.Pressed)
+				{
+					player.TouchLeft();
+				}
 			}
-			else
+			else 
 			{
-				player.TouchRight();
+				if (e.ActionType == SKTouchAction.Pressed)
+				{
+					player.TouchRight();
+				}
+				else if (e.ActionType == SKTouchAction.Released)
+				{
+					player.ReleaseRight();
+				}
+					
 			}
+			e.Handled = true;
 		}
 
 		private void LoadBackground(string resourceId)

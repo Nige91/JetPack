@@ -12,14 +12,17 @@ namespace JetPack.Enemies
 {
 	class Enemy
 	{
-		public float life { get; private set; }
+		public float maxHealth { get; private set; }
 		public MovementModule movementModule { get; set; }
 		public SKBitmap bitmap { get; private set; }
 		public WeaponModule weaponModule { get; private set; }
 
-		public Enemy(float life, MovementModule movementModule, WeaponModule weaponModule, string bitmapResourceId)
+		public float health { get; private set; }
+
+		public Enemy(float maxHealth, MovementModule movementModule, WeaponModule weaponModule, string bitmapResourceId)
 		{
-			this.life = life;
+			this.maxHealth = maxHealth;
+			this.health = maxHealth;
 			this.movementModule = movementModule;
 			this.weaponModule = weaponModule;
 			this.bitmap = LoadBitmap(bitmapResourceId);
@@ -44,6 +47,7 @@ namespace JetPack.Enemies
 		public void DrawEnemy(SKCanvas canvas)
 		{
 			canvas.DrawBitmap(bitmap, movementModule.GetRect());
+			Interface.DrawHealthbar(canvas, movementModule.coords.X, movementModule.coords.Y, health / maxHealth);
 		}
 
 		public void DrawProjectiles(SKCanvas canvas)
@@ -53,7 +57,7 @@ namespace JetPack.Enemies
 
 		public bool isDead()
 		{
-			return life < 0;
+			return maxHealth < 0;
 		}
 
 		private SKBitmap LoadBitmap(string resourceId)

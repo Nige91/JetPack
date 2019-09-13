@@ -30,11 +30,11 @@ namespace JetPack.Weapons
 			this.cooldownStartTime = Helper.GetMilliseconds();
 		}
 
-		public void Loop(SKPoint coords)
+		public void Loop(SKPoint coords, bool active)
 		{
 			MoveProjectiles();
 			ReduceCooldown();
-			if (CooldownReady())
+			if (CooldownReady() && active)
 			{
 				Shoot(coords);
 			}
