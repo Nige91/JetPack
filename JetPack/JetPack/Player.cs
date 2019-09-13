@@ -34,7 +34,8 @@ namespace JetPack
 			this.speed = 0;
 			string resourceID = "JetPack.media.player_up.png";
 			playerBitmap = LoadBitmap(resourceID);
-			weapon = WeaponModuleFactory.CreateWeapon1(8, 30, 100);
+			weapon = WeaponModuleFactory.CreatePlayerWeapon1(8, 30, 100);
+			weapon.SetFriendly();
 			weapon.active = false;
 			jetPackActive = false;
 		}
@@ -69,9 +70,18 @@ namespace JetPack
 
 		public void Draw(SKCanvas canvas)
 		{
-			canvas.DrawBitmap(playerBitmap, new SKRect(pos.X, pos.Y, (float)(pos.X + sizeX), (float)(pos.Y + sizeY)));
+			canvas.DrawBitmap(playerBitmap, GetRect());
 			Interface.DrawHealthbar(canvas, pos.X, pos.Y, (float)(health / maxHealth));
-			weapon.DrawProjectiles(canvas);
+		}
+
+		public void SufferDamage(float damage)
+		{
+			health -= damage;
+		}
+
+		public SKRect GetRect()
+		{
+			return new SKRect(pos.X, pos.Y, (float)(pos.X + sizeX), (float)(pos.Y + sizeY));
 		}
 
 		private void ApplyGravity()
@@ -112,6 +122,11 @@ namespace JetPack
 			{
 				pos.Y = (float)(Globals.yAxisLength - sizeY);
 			}
+		}
+
+		private void Die()
+		{
+			health = maxHealth;
 		}
 
 		private SKBitmap LoadBitmap(string resourceId)

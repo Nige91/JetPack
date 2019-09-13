@@ -11,7 +11,12 @@ namespace JetPack.Enemies
 	//TODO overthink Enemy class structure
 	static class EnemyManager
 	{
-		private static List<Enemy> enemyList = new List<Enemy>();
+		public static List<Enemy> enemyList { get; private set; }
+
+		static EnemyManager()
+		{
+			enemyList = new List<Enemy>();
+		}
 
 		//TODO Remove Magic Numbers, prevent spawning inside each other.
 		public static void SpawnEnemy1()
@@ -25,7 +30,7 @@ namespace JetPack.Enemies
 			//TODO Remove Magic Numbers
 			Enemy enemy = new Enemy(100, 
 				MovementModuleFactory.CreateStandardHorizontalModule(coords, new SKSize(15, 15), - 3),
-				WeaponModuleFactory.CreateWeapon1(0.5f, 10, - 20),
+				WeaponModuleFactory.CreateEnemyWeapon1(2f, 10, - 60),
 				"JetPack.media.ship1.png");
 			enemyList.Add(enemy);
 		}
@@ -35,14 +40,6 @@ namespace JetPack.Enemies
 			foreach (var enemy in enemyList)
 			{
 				enemy.DrawEnemy(canvas);
-			}
-		}
-
-		public static void DrawProjectiles(SKCanvas canvas)
-		{
-			foreach (var enemy in enemyList)
-			{
-				enemy.DrawProjectiles(canvas);
 			}
 		}
 		
@@ -62,12 +59,17 @@ namespace JetPack.Enemies
 
 		private static void RemoveDeadEnemies()
 		{
+			List<Enemy> enemiesToRemove = new List<Enemy>();
 			foreach (var enemy in enemyList)
 			{
 				if (enemy.isDead())
 				{
-					enemyList.Remove(enemy);
+					enemiesToRemove.Add(enemy);
 				}
+			}
+			foreach (var enemy in enemiesToRemove)
+			{
+				enemyList.Remove(enemy);
 			}
 		}
 	}

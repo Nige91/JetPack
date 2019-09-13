@@ -9,30 +9,27 @@ namespace JetPack.Weapons
 	class WeaponModuleUnit
 	{
 		public float interval { get; private set; }
-		public float strength { get; private set; }
-		public List<Projectile> projectiles { get; private set; }
+		public float damage { get; private set; }
+		public bool friendly { get; set; }
 		public MovementModule movementTemplate { get; private set; }
 		public string projectileBitmapResourceString { get; private set; }
-
-		private float cooldown;
+		
 		private long cooldownStartTime;
 		private bool cooledDown;
 
 
-		public WeaponModuleUnit(float frequency, float strength, MovementModule movementTemplate, string projectileBitmapResourceString)
+		public WeaponModuleUnit(float frequency, float damage, MovementModule movementTemplate, string projectileBitmapResourceString)
 		{
 			this.interval = 1000 / frequency;
-			this.strength = strength;
-			this.projectiles = new List<Projectile>();
+			this.damage = damage;
 			this.movementTemplate = movementTemplate;
 			this.projectileBitmapResourceString = projectileBitmapResourceString;
-			this.cooldown = 0;
 			this.cooldownStartTime = Helper.GetMilliseconds();
+			this.friendly = false;
 		}
 
 		public void Loop(SKPoint coords, bool active)
 		{
-			MoveProjectiles();
 			ReduceCooldown();
 			if (CooldownReady() && active)
 			{
@@ -40,20 +37,9 @@ namespace JetPack.Weapons
 			}
 		}
 
-		public void DrawProjectiles(SKCanvas canvas)
+		public void SetCooldownPhaseShiftPercent(float percent)
 		{
-			foreach (var projectile in projectiles)
-			{
-				projectile.Draw(canvas);
-			}
-		}
-
-		private void MoveProjectiles()
-		{
-			foreach (var projectile in projectiles)
-			{
-				projectile.Move();
-			}
+			cooldownStartTime -= (long)(interval * percent / 100f);
 		}
 
 		private void ReduceCooldown()
@@ -78,9 +64,9 @@ namespace JetPack.Weapons
 		private void Shoot(SKPoint coords)
 		{
 			cooledDown = false;
-			projectiles.Add( new Projectile(movementTemplate.Copy(coords), projectileBitmapResourceString));
+			Projectile projectile = new Projectile(movementTemplate.Copy(coords), projectileBitmapResourceString, damage);
+			projectile.friendly = this.friendly;
+			ProjectileManager.AddProjectile(projectile);
 		}
-
-
 	}
 }

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using JetPack.Enemies;
+using JetPack.Weapons;
 
 namespace JetPack
 {
@@ -71,7 +72,7 @@ namespace JetPack
 				canvas.DrawBitmap(backgroundBitmap, new SKRect(0, 0, Globals.xAxisLength, Globals.yAxisLength));
 				player.Draw(canvas);
 				EnemyManager.DrawEnemies(canvas);
-				EnemyManager.DrawProjectiles(canvas);
+				ProjectileManager.DrawProjectiles(canvas);
 			}
 			finally
 			{
@@ -83,6 +84,8 @@ namespace JetPack
 		{
 			player.Loop();
 			EnemyManager.Loop();
+			ProjectileManager.MoveProjectiles();
+			ProjectileManager.CollideProjectiles(player, EnemyManager.enemyList);
 		}
 
 		private void OnTouch(object sender, SKTouchEventArgs e)

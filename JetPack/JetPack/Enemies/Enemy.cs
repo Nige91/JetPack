@@ -50,14 +50,14 @@ namespace JetPack.Enemies
 			Interface.DrawHealthbar(canvas, movementModule.coords.X, movementModule.coords.Y, health / maxHealth);
 		}
 
-		public void DrawProjectiles(SKCanvas canvas)
+		public void SufferDamage(float damage)
 		{
-			weaponModule.DrawProjectiles(canvas);
+			this.health -= damage;
 		}
 
 		public bool isDead()
 		{
-			return maxHealth < 0;
+			return health < 0;
 		}
 
 		private SKBitmap LoadBitmap(string resourceId)

@@ -32,7 +32,7 @@ namespace JetPack.Movement
 		public MovementModule Copy(SKPoint coords)
 		{
 			MovementModule module = new MovementModule();
-			module.coords = new SKPoint(coords.X, coords.Y);
+			module.coords = new SKPoint(this.coords.X + coords.X, this.coords.Y + coords.Y);
 			module.size = new SKSize(this.size.Width, this.size.Height);
 			module.scale = new SKSize(this.scale.Width, this.scale.Height);
 			module.movementModuleUnits = new List<MovementModuleUnit>();
