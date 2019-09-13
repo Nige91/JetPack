@@ -19,9 +19,10 @@ namespace JetPack
 		private double minSpeed = -5;
 		private double maxSpeed = 5;
 		private double gravity = 0.6;
-		private double jetPackBoost = 10;
+		private double jetPackStrength = 1.4;
 		private double health = 80;
 		private double maxHealth = 100;
+		private bool jetPackActive = false;
 		SKBitmap playerBitmap;
 		WeaponModule weapon;
 
@@ -33,20 +34,27 @@ namespace JetPack
 			this.speed = 0;
 			string resourceID = "JetPack.media.player_up.png";
 			playerBitmap = LoadBitmap(resourceID);
-			weapon = WeaponModuleFactory.CreateWeapon1(3, 30, 20);
+			weapon = WeaponModuleFactory.CreateWeapon1(8, 30, 100);
 			weapon.active = false;
+			jetPackActive = false;
 		}
 
 		public void Loop()
 		{
 			this.ApplyGravity();
+			this.ApplyJetPack();
 			this.Move();
 			this.weapon.Loop(pos);
 		}
 
 		public void TouchLeft()
 		{
-			this.JetPackBoost();
+			this.jetPackActive = true;
+		}
+
+		public void ReleaseLeft()
+		{
+			this.jetPackActive = false;
 		}
 
 		public void TouchRight()
@@ -78,25 +86,29 @@ namespace JetPack
 			}
 		}
 
-		private void JetPackBoost()
+		private void ApplyJetPack()
 		{
-			if(this.speed + this.jetPackBoost < this.maxSpeed)
+			if (this.jetPackActive)
 			{
-				this.speed += this.jetPackBoost;
-			}
-			else if(this.speed < this.maxSpeed)
-			{
-				this.speed = this.maxSpeed;
+				if (this.speed + this.jetPackStrength < this.maxSpeed)
+				{
+					this.speed += this.jetPackStrength;
+				}
+				else if (this.speed < this.maxSpeed)
+				{
+					this.speed = this.maxSpeed;
+				}
 			}
 		}
 
 		private void Move()
 		{
-			if (pos.Y - this.speed < Globals.yAxisLength - sizeY)
+			pos.Y -= (float)speed;
+			if (pos.Y < 0)
 			{
-				pos.Y -= (float)speed;
+				pos.Y = 0;
 			}
-			else if (pos.Y < Globals.yAxisLength - sizeY)
+			else if (pos.Y > Globals.yAxisLength - sizeY)
 			{
 				pos.Y = (float)(Globals.yAxisLength - sizeY);
 			}

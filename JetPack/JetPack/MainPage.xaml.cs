@@ -93,6 +93,10 @@ namespace JetPack
 				{
 					player.TouchLeft();
 				}
+				else if (e.ActionType == SKTouchAction.Released)
+				{
+					player.ReleaseLeft();
+				}
 			}
 			else 
 			{
@@ -104,7 +108,6 @@ namespace JetPack
 				{
 					player.ReleaseRight();
 				}
-					
 			}
 			e.Handled = true;
 		}
