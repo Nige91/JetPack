@@ -11,6 +11,7 @@ namespace JetPack.Movement
 	{
 		public SKPoint coords { get; private set; }
 		public SKSize size { get; private set; }
+		public SKSize explSize { get; private set; }
 		public SKSize scale { get; private set; } = new SKSize(1, 1);
 		public List<MovementModuleUnit> movementModuleUnits { get; set; }
 
@@ -21,10 +22,11 @@ namespace JetPack.Movement
 			movementModuleUnits = new List<MovementModuleUnit>();
 		}
 
-		public MovementModule(SKPoint coords, SKSize size)
+		public MovementModule(SKPoint coords, SKSize size, SKSize explSize)
 		{
 			this.coords = coords;
 			this.size = size;
+			this.explSize = explSize;
 			movementModuleUnits = new List<MovementModuleUnit>();
 		}
 
@@ -33,6 +35,7 @@ namespace JetPack.Movement
 			MovementModule module = new MovementModule();
 			module.coords = new SKPoint(this.coords.X + coords.X, this.coords.Y + coords.Y);
 			module.size = new SKSize(this.size.Width, this.size.Height);
+			module.explSize = new SKSize(this.explSize.Width, this.explSize.Height);
 			module.scale = new SKSize(this.scale.Width, this.scale.Height);
 			module.movementModuleUnits = new List<MovementModuleUnit>();
 			foreach(var unit in this.movementModuleUnits)
@@ -59,6 +62,12 @@ namespace JetPack.Movement
 		public SKRect GetRect()
 		{
 			SKRect rect = new SKRect(coords.X, coords.Y, coords.X + size.Width, coords.Y + size.Height);
+			return rect;
+		}
+
+		public SKRect GetRectExpl()
+		{
+			SKRect rect = new SKRect(coords.X, coords.Y, coords.X + explSize.Width, coords.Y + explSize.Height);
 			return rect;
 		}
 

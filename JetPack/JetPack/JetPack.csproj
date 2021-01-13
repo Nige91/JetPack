@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="media\explosion1.png" />
     <None Remove="media\player_down.png" />
     <None Remove="media\player_up.png" />
     <None Remove="media\projectile1.png" />
@@ -19,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="media\explosion1.png" />
     <EmbeddedResource Include="media\player_down.png" />
     <EmbeddedResource Include="media\player_up.png" />
     <EmbeddedResource Include="media\projectile1.png" />

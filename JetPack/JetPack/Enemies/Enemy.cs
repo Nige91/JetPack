@@ -15,17 +15,23 @@ namespace JetPack.Enemies
 		public float maxHealth { get; private set; }
 		public MovementModule movementModule { get; set; }
 		public SKBitmap bitmap { get; private set; }
+		public SKBitmap explBitmap { get; private set; }
 		public WeaponModule weaponModule { get; private set; }
+		public int explDuration { get; private set; }
+		private bool exploded = false;
+		private long explStart;
 
 		public float health { get; private set; }
 
-		public Enemy(float maxHealth, MovementModule movementModule, WeaponModule weaponModule, string bitmapResourceId)
+		public Enemy(float maxHealth, MovementModule movementModule, WeaponModule weaponModule, string bitmapResourceId, string explBitmapResourceId, int explDuration)
 		{
 			this.maxHealth = maxHealth;
 			this.health = maxHealth;
 			this.movementModule = movementModule;
 			this.weaponModule = weaponModule;
 			this.bitmap = LoadBitmap(bitmapResourceId);
+			this.explBitmap = LoadBitmap(explBitmapResourceId);
+			this.explDuration = explDuration;
 		}
 
 		public void Loop()
@@ -36,7 +42,10 @@ namespace JetPack.Enemies
 
 		private void Move()
 		{
-			movementModule.Move();
+			if (!exploded)
+			{
+				movementModule.Move(); 
+			}
 		}
 
 		private void LoopWeapons()
@@ -44,10 +53,18 @@ namespace JetPack.Enemies
 			weaponModule.Loop(movementModule.coords);
 		}
 
-		public void DrawEnemy(SKCanvas canvas)
+		public void Draw(SKCanvas canvas)
 		{
-			canvas.DrawBitmap(bitmap, movementModule.GetRect());
-			Interface.DrawHealthbar(canvas, movementModule.coords.X, movementModule.coords.Y, health / maxHealth);
+			if (!exploded)
+			{
+				canvas.DrawBitmap(bitmap, movementModule.GetRect());
+				Interface.DrawHealthbar(canvas, movementModule.coords.X, movementModule.coords.Y, health / maxHealth); 
+			}
+			else
+			{
+				canvas.DrawBitmap(explBitmap, movementModule.GetRectExpl());
+				Interface.DrawHealthbar(canvas, movementModule.coords.X, movementModule.coords.Y, health / maxHealth);
+			}
 		}
 
 		public void SufferDamage(float damage)
@@ -55,9 +72,20 @@ namespace JetPack.Enemies
 			this.health -= damage;
 		}
 
-		public bool isDead()
+		public bool IsDead()
 		{
-			return health < 0;
+			return health <= 0;
+		}
+
+		public void Explode()
+		{
+			exploded = true;
+			explStart = Helper.GetMilliseconds();
+		}
+
+		public bool ExplosionFinished()
+		{
+			return Helper.GetMilliseconds() - explStart > explDuration;
 		}
 
 		private SKBitmap LoadBitmap(string resourceId)

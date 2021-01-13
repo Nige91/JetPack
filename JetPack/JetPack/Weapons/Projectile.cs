@@ -10,25 +10,52 @@ namespace JetPack.Weapons
 	{
 		public bool friendly { get; set; }
 		public MovementModule movementModule { get; set; }
-		public SKBitmap bitmap { get; private set; }
+		public SKBitmap projBitmap { get; private set; }
+		public SKBitmap explBitmap { get; private set; }
 		public float damage { get; set; }
+		public int explDuration { get; private set; }
+		private bool exploded = false;
+		private long explStart;
 
-		public Projectile(MovementModule movementModule, string bitmapResourceId, float damage)
+		public Projectile(MovementModule movementModule, string projBitmapResourceId, string explBitmapResourceId, float damage, int explDuration)
 		{
 			this.movementModule = movementModule;
-			this.bitmap = Helper.LoadBitmap(bitmapResourceId);
+			this.projBitmap = Helper.LoadBitmap(projBitmapResourceId);
+			this.explBitmap = Helper.LoadBitmap(explBitmapResourceId);
 			this.damage = damage;
+			this.explDuration = explDuration;
 			this.friendly = false;
 		}
 
 		public void Move()
 		{
-			movementModule.Move();
+			if (!exploded)
+			{
+				movementModule.Move();
+			}
 		}
 
 		public void Draw(SKCanvas canvas)
 		{
-			canvas.DrawBitmap(bitmap, movementModule.GetRect());
+			if (!exploded)
+			{
+				canvas.DrawBitmap(projBitmap, movementModule.GetRect()); 
+			}
+			else
+			{
+				canvas.DrawBitmap(explBitmap, movementModule.GetRectExpl());
+			}
+		}
+
+		public void Explode()
+		{
+			exploded = true;
+			explStart = Helper.GetMilliseconds();
+		}
+
+		public bool ExplosionFinished()
+		{
+			return Helper.GetMilliseconds() - explStart > explDuration;
 		}
 	}
 }

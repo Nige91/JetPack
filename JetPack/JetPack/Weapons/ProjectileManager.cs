@@ -10,9 +10,12 @@ namespace JetPack.Weapons
 	{
 		public static List<Projectile> projectileList { get; private set; }
 
+		public static List<Projectile> explodedList { get; private set; }
+
 		static ProjectileManager()
 		{
 			projectileList = new List<Projectile>();
+			explodedList = new List<Projectile>();
 		}
 
 		public static void AddProjectile(Projectile projectile)
@@ -23,6 +26,10 @@ namespace JetPack.Weapons
 		public static void DrawProjectiles(SKCanvas canvas)
 		{
 			foreach (var projectile in projectileList)
+			{
+				projectile.Draw(canvas);
+			}
+			foreach (var projectile in explodedList)
 			{
 				projectile.Draw(canvas);
 			}
@@ -38,7 +45,7 @@ namespace JetPack.Weapons
 
 		public static void CollideProjectiles(Player player, List<Enemy> enemies)
 		{
-			List<Projectile> projectilesToRemove = new List<Projectile>();
+			List<Projectile> projectilesToExplode = new List<Projectile>();
 			foreach (var projectile in projectileList)
 			{
 				if (projectile.friendly)
@@ -48,7 +55,7 @@ namespace JetPack.Weapons
 						if (projectile.movementModule.GetRect().IntersectsWith(enemy.movementModule.GetRect()))
 						{
 							enemy.SufferDamage(projectile.damage);
-							projectilesToRemove.Add(projectile);
+							projectilesToExplode.Add(projectile);
 						}
 					}
 				}
@@ -57,13 +64,36 @@ namespace JetPack.Weapons
 					if (projectile.movementModule.GetRect().IntersectsWith(player.GetRect()))
 					{
 						player.SufferDamage(projectile.damage);
-						projectilesToRemove.Add(projectile);
+						projectilesToExplode.Add(projectile);
 					}
+				}
+			}
+			foreach (var projectile in projectilesToExplode)
+			{
+				ExplodeProjectile(projectile);
+			}
+		}
+
+		public static void ExplodeProjectile(Projectile projectile)
+		{
+			projectile.Explode();
+			projectileList.Remove(projectile);
+			explodedList.Add(projectile);
+		}
+
+		public static void RemoveProjectiles()
+		{
+			List<Projectile> projectilesToRemove = new List<Projectile>();
+			foreach (var projectile in explodedList)
+			{
+				if (projectile.ExplosionFinished())
+				{
+					projectilesToRemove.Add(projectile);
 				}
 			}
 			foreach (var projectile in projectilesToRemove)
 			{
-				projectileList.Remove(projectile);
+				explodedList.Remove(projectile);
 			}
 		}
 	}

@@ -13,19 +13,23 @@ namespace JetPack.Weapons
 		public bool friendly { get; set; }
 		public MovementModule movementTemplate { get; private set; }
 		public string projectileBitmapResourceString { get; private set; }
-		
+		public string explosionBitmapResourceString { get; private set; }
+		public int explDuration { get; private set; }
+
 		private long cooldownStartTime;
 		private bool cooledDown;
 
 
-		public WeaponModuleUnit(float frequency, float damage, MovementModule movementTemplate, string projectileBitmapResourceString)
+		public WeaponModuleUnit(float frequency, float damage, MovementModule movementTemplate, string projectileBitmapResourceString, string explosionBitmapResourceString, int explDuration)
 		{
 			this.interval = 1000 / frequency;
 			this.damage = damage;
 			this.movementTemplate = movementTemplate;
 			this.projectileBitmapResourceString = projectileBitmapResourceString;
+			this.explosionBitmapResourceString = explosionBitmapResourceString;
 			this.cooldownStartTime = Helper.GetMilliseconds();
 			this.friendly = false;
+			this.explDuration = explDuration;
 		}
 
 		public void Loop(SKPoint coords, bool active)
@@ -64,7 +68,7 @@ namespace JetPack.Weapons
 		private void Shoot(SKPoint coords)
 		{
 			cooledDown = false;
-			Projectile projectile = new Projectile(movementTemplate.Copy(coords), projectileBitmapResourceString, damage);
+			Projectile projectile = new Projectile(movementTemplate.Copy(coords), projectileBitmapResourceString, explosionBitmapResourceString, damage, explDuration);
 			projectile.friendly = this.friendly;
 			ProjectileManager.AddProjectile(projectile);
 		}

@@ -33,7 +33,7 @@ namespace JetPack
 			public static class Weapon
 			{
 				public const float frequency = 2;
-				public const float damage = 30;
+				public const float damage = 100;
 				public const float projSpeed = 150;
 
 				public const float yCoord = 5;
@@ -45,6 +45,9 @@ namespace JetPack
 			public const float health = 100;
 			public const float sizeX = 15;
 			public const float sizeY = 15;
+			public const int explDuration = 100;
+			public const float explSizeX = 20;
+			public const float explSizeY = 20;
 			public const float speed = -3;
 
 			public static class Weapon1
@@ -70,6 +73,9 @@ namespace JetPack
 		{
 			public const float projSizeX = 3;
 			public const float projSizeY = 0.5f;
+			public const int explDuration = 100;
+			public const float explSizeX = 2;
+			public const float explSizeY = 2;
 		}
 	}
 }

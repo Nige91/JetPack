@@ -86,6 +86,7 @@ namespace JetPack
 			EnemyManager.Loop();
 			ProjectileManager.MoveProjectiles();
 			ProjectileManager.CollideProjectiles(player, EnemyManager.enemyList);
+			ProjectileManager.RemoveProjectiles();
 		}
 
 		private void OnTouch(object sender, SKTouchEventArgs e)

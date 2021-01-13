@@ -54,10 +54,18 @@ namespace JetPack.Weapons
 		{
 			MovementModule module = MovementModuleFactory.CreateStandardHorizontalModule(
 				coords, 
-				new SKSize(Settings.Weapon1.projSizeX, Settings.Weapon1.projSizeY), 
+				new SKSize(Settings.Weapon1.projSizeX, Settings.Weapon1.projSizeY),
+				new SKSize(Settings.Weapon1.explSizeX, Settings.Weapon1.explSizeY),
 				projectileSpeed
 			);
-			WeaponModuleUnit unit = new WeaponModuleUnit(frequency, damage, module, "JetPack.media.projectile1.png");
+			WeaponModuleUnit unit = new WeaponModuleUnit(
+				frequency, 
+				damage, 
+				module, 
+				"JetPack.media.projectile1.png", 
+				"JetPack.media.explosion1.png", 
+				Settings.Weapon1.explDuration
+			);
 			unit.SetCooldownPhaseShiftPercent(cooldownPhaseShiftPercent);
 			return unit;
 		}

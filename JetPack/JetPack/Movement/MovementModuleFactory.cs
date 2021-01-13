@@ -8,16 +8,16 @@ namespace JetPack.Movement
 {
 	static class MovementModuleFactory
 	{
-		public static MovementModule CreateStandardHorizontalModule(SKPoint coords, SKSize size, float speed)
+		public static MovementModule CreateStandardHorizontalModule(SKPoint coords, SKSize size, SKSize explSize, float speed)
 		{
-			MovementModule module = CreateEmptyModule(coords, size);
+			MovementModule module = CreateEmptyModule(coords, size, explSize);
 			module.AddUnit(new MovementModuleUnit(new SKPoint(speed, 0)));
 			return module;
 		}
 
-		public static MovementModule CreateEmptyModule(SKPoint coords, SKSize size)
+		public static MovementModule CreateEmptyModule(SKPoint coords, SKSize size, SKSize explSize)
 		{
-			MovementModule module = new MovementModule(coords, size);
+			MovementModule module = new MovementModule(coords, size, explSize);
 			return module;
 		}
 	}
