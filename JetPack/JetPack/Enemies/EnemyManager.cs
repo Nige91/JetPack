@@ -21,17 +21,26 @@ namespace JetPack.Enemies
 		//TODO Remove Magic Numbers, prevent spawning inside each other.
 		public static void SpawnEnemy1()
 		{
-			SpawnEnemy1(new SKPoint(Globals.xAxisLength, Helper.GetRandomFloat(0, Globals.yAxisLength - 15)));
+			SpawnEnemy1(new SKPoint(Settings.General.xAxisLength, Helper.GetRandomFloat(0, Settings.General.yAxisLength - Settings.Enemy1.sizeY)));
 		}
 
 		//TODO Make Spawn Enemy1 prettier
 		public static void SpawnEnemy1(SKPoint coords)
 		{
-			//TODO Remove Magic Numbers
-			Enemy enemy = new Enemy(100, 
-				MovementModuleFactory.CreateStandardHorizontalModule(coords, new SKSize(15, 15), - 3),
-				WeaponModuleFactory.CreateEnemyWeapon1(2f, 10, - 60),
-				"JetPack.media.ship1.png");
+			Enemy enemy = new Enemy(
+				Settings.Enemy1.health, 
+				MovementModuleFactory.CreateStandardHorizontalModule(
+					coords, 
+					new SKSize(Settings.Enemy1.sizeX,Settings.Enemy1.sizeY),
+					Settings.Enemy1.speed
+				),
+				WeaponModuleFactory.CreateEnemyWeapon1(
+					Settings.Enemy1.Weapon1.frequency,
+					Settings.Enemy1.Weapon1.damage, 
+					Settings.Enemy1.Weapon1.projSpeed
+				),
+				"JetPack.media.ship1.png"
+			);
 			enemyList.Add(enemy);
 		}
 

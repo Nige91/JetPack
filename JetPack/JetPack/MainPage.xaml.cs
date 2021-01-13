@@ -54,7 +54,7 @@ namespace JetPack
 			while (pageIsActive)
 			{
 				canvasView.InvalidateSurface();
-				await Task.Delay(TimeSpan.FromSeconds(1.0 / Globals.fps));
+				await Task.Delay(TimeSpan.FromSeconds(1.0 / Settings.General.fps));
 			}
 		}
 
@@ -62,14 +62,14 @@ namespace JetPack
 		private void OnPaintSample(object sender, SKPaintSurfaceEventArgs e)
 		{
 			GameLoop();
-			float pixelCoordRatioX = (float)e.Info.Width/(float)Globals.xAxisLength ;
-			float pixelCoordRatioY = (float)e.Info.Height / (float)Globals.yAxisLength;
+			float pixelCoordRatioX = (float)e.Info.Width/(float)Settings.General.xAxisLength ;
+			float pixelCoordRatioY = (float)e.Info.Height / (float)Settings.General.yAxisLength;
 			SKCanvas canvas = e.Surface.Canvas;
 			try
 			{
 				canvas.Clear(SKColors.DarkBlue);
 				canvas.Scale(pixelCoordRatioX, pixelCoordRatioY);
-				canvas.DrawBitmap(backgroundBitmap, new SKRect(0, 0, Globals.xAxisLength, Globals.yAxisLength));
+				canvas.DrawBitmap(backgroundBitmap, new SKRect(0, 0, Settings.General.xAxisLength, Settings.General.yAxisLength));
 				player.Draw(canvas);
 				EnemyManager.DrawEnemies(canvas);
 				ProjectileManager.DrawProjectiles(canvas);
@@ -123,13 +123,5 @@ namespace JetPack
 				this.backgroundBitmap = SKBitmap.Decode(stream);
 			}
 		}
-	}
-
-	public static class Globals
-	{
-		public const int xAxisLength = 160;
-		public const int yAxisLength = 90;
-		public const int fps = 30;
-		public const int normalTimeUnitInMs = 1000;
 	}
 }

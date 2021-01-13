@@ -16,12 +16,12 @@ namespace JetPack
 		private double sizeX;
 		private double sizeY;
 		private double speed;
-		private double minSpeed = -5;
-		private double maxSpeed = 5;
-		private double gravity = 0.6;
-		private double jetPackStrength = 1.4;
-		private double health = 80;
-		private double maxHealth = 100;
+		private double minSpeed = Settings.Player.minSpeed;
+		private double maxSpeed = Settings.Player.maxSpeed;
+		private double gravity = Settings.Player.gravity;
+		private double jetPackStrength = Settings.Player.jetPackStrength;
+		private double health = Settings.Player.maxHealth;
+		private double maxHealth = Settings.Player.maxHealth;
 		private bool jetPackActive = false;
 		SKBitmap playerBitmap;
 		WeaponModule weapon;

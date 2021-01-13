@@ -7,10 +7,10 @@ namespace JetPack
 {
 	static class Interface
 	{
-		private static float healthBarPosX = 0;
-		private static float healthBarPosY = -5;
-		private static float healthBarWidth = 10;
-		private static float healthBarHeight = 1;
+		private static float healthBarPosX = Settings.Interface.healthBarPosX;
+		private static float healthBarPosY = Settings.Interface.healthBarPosY;
+		private static float healthBarWidth = Settings.Interface.healthBarWidth;
+		private static float healthBarHeight = Settings.Interface.healthBarHeight;
 
 		public static void DrawHealthbar(SKCanvas canvas, float x, float y, float life)
 		{
