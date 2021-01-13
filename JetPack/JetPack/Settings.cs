@@ -6,15 +6,6 @@ namespace JetPack
 {
 	static class Settings
 	{
-		public static class Player
-		{
-			public const double minSpeed = -5;
-			public const double maxSpeed = 5;
-			public const double gravity = 0.6;
-			public const double jetPackStrength = 1.4;
-			public const double maxHealth = 100;
-		}
-
 		public static class General
 		{
 			public const int xAxisLength = 160;
@@ -31,6 +22,24 @@ namespace JetPack
 			public const float healthBarHeight = 1;
 		}
 
+		public static class Player
+		{
+			public const double minSpeed = -5;
+			public const double maxSpeed = 5;
+			public const double gravity = 0.6;
+			public const double jetPackStrength = 1.4;
+			public const double maxHealth = 100;
+
+			public static class Weapon
+			{
+				public const float frequency = 2;
+				public const float damage = 30;
+				public const float projSpeed = 150;
+
+				public const float yCoord = 5;
+			}
+		}
+
 		public static class Enemy1
 		{
 			public const float health = 100;
@@ -40,10 +49,27 @@ namespace JetPack
 
 			public static class Weapon1
 			{
-				public const float frequency = 2;
-				public const float damage = 10;
+				public const float frequency = 0.2f;
+				public const float damage = 30;
 				public const float projSpeed = -60;
+
+				public const float yCoords1 = 0;
+				public const float yCoords2 = 2;
+				public const float yCoords3 = 13;
+				public const float yCoords4 = 15;
+
+				//percent
+				public const float phaseShift1 = 0;
+				public const float phaseShift2 = 10;
+				public const float phaseShift3 = 20;
+				public const float phaseShift4 = 30;
 			}
+		}
+
+		public static class Weapon1
+		{
+			public const float projSizeX = 3;
+			public const float projSizeY = 0.5f;
 		}
 	}
 }

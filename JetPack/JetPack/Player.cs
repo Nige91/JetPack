@@ -34,7 +34,11 @@ namespace JetPack
 			this.speed = 0;
 			string resourceID = "JetPack.media.player_up.png";
 			playerBitmap = LoadBitmap(resourceID);
-			weapon = WeaponModuleFactory.CreatePlayerWeapon1(8, 30, 100);
+			weapon = WeaponModuleFactory.CreatePlayerWeapon1(
+				Settings.Player.Weapon.frequency, 
+				Settings.Player.Weapon.damage,
+				Settings.Player.Weapon.projSpeed
+			);
 			weapon.SetFriendly();
 			weapon.active = false;
 			jetPackActive = false;
@@ -118,9 +122,9 @@ namespace JetPack
 			{
 				pos.Y = 0;
 			}
-			else if (pos.Y > Globals.yAxisLength - sizeY)
+			else if (pos.Y > Settings.General.yAxisLength - sizeY)
 			{
-				pos.Y = (float)(Globals.yAxisLength - sizeY);
+				pos.Y = (float)(Settings.General.yAxisLength - sizeY);
 			}
 		}
 

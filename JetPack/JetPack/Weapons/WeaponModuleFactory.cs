@@ -8,28 +8,56 @@ namespace JetPack.Weapons
 {
 	static class WeaponModuleFactory
 	{
-		static public WeaponModule CreateEnemyWeapon1(float frequency, float strength, float projectileSpeed)
+		static public WeaponModule CreateEnemyWeapon1(float frequency, float damage, float projectileSpeed)
 		{
 			WeaponModule module = new WeaponModule();
-			module.AddWeaponUnit(CreateWeaponModuleUnit1(frequency, strength, projectileSpeed, new SKPoint(0, 0)));
-			module.AddWeaponUnit(CreateWeaponModuleUnit1(frequency, strength, projectileSpeed, new SKPoint(0, 2), 10));
-			module.AddWeaponUnit(CreateWeaponModuleUnit1(frequency, strength, projectileSpeed, new SKPoint(0, 13), 20));
-			module.AddWeaponUnit(CreateWeaponModuleUnit1(frequency, strength, projectileSpeed, new SKPoint(0, 15), 30));
+			module.AddWeaponUnit(CreateWeaponModuleUnit1(
+				frequency, 
+				damage, 
+				projectileSpeed, 
+				new SKPoint(0, Settings.Enemy1.Weapon1.yCoords1),
+				Settings.Enemy1.Weapon1.phaseShift1
+			));
+			module.AddWeaponUnit(CreateWeaponModuleUnit1(
+				frequency,
+				damage,
+				projectileSpeed,
+				new SKPoint(0, Settings.Enemy1.Weapon1.yCoords2),
+				Settings.Enemy1.Weapon1.phaseShift2
+			));
+			module.AddWeaponUnit(CreateWeaponModuleUnit1(
+				frequency,
+				damage,
+				projectileSpeed,
+				new SKPoint(0, Settings.Enemy1.Weapon1.yCoords3),
+				Settings.Enemy1.Weapon1.phaseShift3
+			));
+			module.AddWeaponUnit(CreateWeaponModuleUnit1(
+				frequency,
+				damage,
+				projectileSpeed,
+				new SKPoint(0, Settings.Enemy1.Weapon1.yCoords4),
+				Settings.Enemy1.Weapon1.phaseShift4
+			));
 			return module;
 		}
 
-		static public WeaponModule CreatePlayerWeapon1(float frequency, float strength, float projectileSpeed)
+		static public WeaponModule CreatePlayerWeapon1(float frequency, float damage, float projectileSpeed)
 		{
 			WeaponModule module = new WeaponModule();
-			module.AddWeaponUnit(CreateWeaponModuleUnit1(frequency, strength, projectileSpeed, new SKPoint(0, 5)));
+			module.AddWeaponUnit(CreateWeaponModuleUnit1(frequency, damage, projectileSpeed, new SKPoint(0, Settings.Player.Weapon.yCoord)));
 			return module;
 		}
 
 		//TODO Remove magic numbers
-		static private WeaponModuleUnit CreateWeaponModuleUnit1(float frequency, float strength, float projectileSpeed, SKPoint coords, float cooldownPhaseShiftPercent = 0)
+		static private WeaponModuleUnit CreateWeaponModuleUnit1(float frequency, float damage, float projectileSpeed, SKPoint coords, float cooldownPhaseShiftPercent = 0)
 		{
-			MovementModule module = MovementModuleFactory.CreateStandardHorizontalModule(coords, new SKSize(3, 0.5f), projectileSpeed);
-			WeaponModuleUnit unit = new WeaponModuleUnit(frequency, strength, module, "JetPack.media.projectile1.png");
+			MovementModule module = MovementModuleFactory.CreateStandardHorizontalModule(
+				coords, 
+				new SKSize(Settings.Weapon1.projSizeX, Settings.Weapon1.projSizeY), 
+				projectileSpeed
+			);
+			WeaponModuleUnit unit = new WeaponModuleUnit(frequency, damage, module, "JetPack.media.projectile1.png");
 			unit.SetCooldownPhaseShiftPercent(cooldownPhaseShiftPercent);
 			return unit;
 		}

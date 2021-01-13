@@ -68,7 +68,7 @@ namespace JetPack.Movement
 		//TODO implement GetLoopTime
 		private float GetLoopTime()
 		{
-			return (float)1000 / ((float)Globals.fps * (float)Globals.normalTimeUnitInMs);
+			return (float)1000 / ((float)Settings.General.fps * (float)Settings.General.normalTimeUnitInMs);
 		}
 	}
 }
