@@ -11,10 +11,11 @@ namespace JetPack
 {
 	class Player
 	{
-		//TODO remove magic numbers
 		private SKPoint pos;
-		private double sizeX;
-		private double sizeY;
+		private double sizeX = Settings.Player.sizeX;
+		private double sizeY = Settings.Player.sizeY;
+		private double explSizeX = Settings.Player.explSizeX;
+		private double explSizeY = Settings.Player.explSizeY;
 		private double speed;
 		private double minSpeed = Settings.Player.minSpeed;
 		private double maxSpeed = Settings.Player.maxSpeed;
@@ -23,17 +24,19 @@ namespace JetPack
 		private double health = Settings.Player.maxHealth;
 		private double maxHealth = Settings.Player.maxHealth;
 		private bool jetPackActive = false;
-		SKBitmap playerBitmap;
-		WeaponModule weapon;
+		private int explDuration;
+		private bool exploded = false;
+		private long explStart;
+		private SKBitmap playerBitmap;
+		private SKBitmap explBitmap;
+		private WeaponModule weapon;
 
-		public Player(float x, float y, float sizeX, float sizeY)
+		public Player()
 		{
-			this.pos = new SKPoint(x, y);
-			this.sizeX = sizeX;
-			this.sizeY = sizeY;
+			this.pos = new SKPoint(Settings.Player.startPosX, Settings.Player.startPosY);
 			this.speed = 0;
-			string resourceID = "JetPack.media.player_up.png";
-			playerBitmap = LoadBitmap(resourceID);
+			playerBitmap = Helper.LoadBitmap("JetPack.media.player_up.png");
+			explBitmap = Helper.LoadBitmap("JetPack.media.explosion1.png");
 			weapon = WeaponModuleFactory.CreatePlayerWeapon1(
 				Settings.Player.Weapon.frequency, 
 				Settings.Player.Weapon.damage,
@@ -42,6 +45,7 @@ namespace JetPack
 			weapon.SetFriendly();
 			weapon.active = false;
 			jetPackActive = false;
+			explDuration = Settings.Player.explDuration;
 		}
 
 		public void Loop()
@@ -74,18 +78,50 @@ namespace JetPack
 
 		public void Draw(SKCanvas canvas)
 		{
-			canvas.DrawBitmap(playerBitmap, GetRect());
-			Interface.DrawHealthbar(canvas, pos.X, pos.Y, (float)(health / maxHealth));
+			if (!exploded)
+			{
+				canvas.DrawBitmap(playerBitmap, GetRect());
+				Interface.DrawHealthbar(canvas, pos.X, pos.Y, (float)(health / maxHealth)); 
+			}
+			else
+			{
+				canvas.DrawBitmap(explBitmap, GetRectExpl());
+			}
 		}
 
 		public void SufferDamage(float damage)
 		{
 			health -= damage;
+			if(health <= 0)
+			{
+				Explode();
+			}
 		}
 
 		public SKRect GetRect()
 		{
 			return new SKRect(pos.X, pos.Y, (float)(pos.X + sizeX), (float)(pos.Y + sizeY));
+		}
+
+		public SKRect GetRectExpl()
+		{
+			return new SKRect(pos.X, pos.Y, (float)(pos.X + explSizeX), (float)(pos.Y + explSizeY));
+		}
+
+		public bool IsGameOver()
+		{
+			return exploded && ExplosionFinished();
+		}
+
+		private void Explode()
+		{
+			exploded = true;
+			explStart = Helper.GetMilliseconds();
+		}
+
+		private bool ExplosionFinished()
+		{
+			return Helper.GetMilliseconds() - explStart > explDuration;
 		}
 
 		private void ApplyGravity()
@@ -131,17 +167,6 @@ namespace JetPack
 		private void Die()
 		{
 			health = maxHealth;
-		}
-
-		private SKBitmap LoadBitmap(string resourceId)
-		{
-			string resourceID = "JetPack.media.player_up.png";
-			Assembly assembly = GetType().GetTypeInfo().Assembly;
-
-			using (Stream stream = assembly.GetManifestResourceStream(resourceID))
-			{
-				return SKBitmap.Decode(stream);
-			}
 		}
 	}
 }

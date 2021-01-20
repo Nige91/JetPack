@@ -16,11 +16,16 @@ namespace JetPack.Enemies
 
 		static EnemyManager()
 		{
+			Initialize();
+		}
+
+		public static void Initialize()
+		{
 			enemyList = new List<Enemy>();
 			explodedList = new List<Enemy>();
 		}
 
-		//TODO Remove Magic Numbers, prevent spawning inside each other.
+		//TODO prevent spawning inside each other.
 		public static void SpawnEnemy1()
 		{
 			SpawnEnemy1(new SKPoint(Settings.General.xAxisLength, Helper.GetRandomFloat(0, Settings.General.yAxisLength - Settings.Enemy1.sizeY)));

@@ -14,6 +14,11 @@ namespace JetPack.Weapons
 
 		static ProjectileManager()
 		{
+			Initialize();
+		}
+
+		public static void Initialize()
+		{
 			projectileList = new List<Projectile>();
 			explodedList = new List<Projectile>();
 		}
@@ -35,7 +40,14 @@ namespace JetPack.Weapons
 			}
 		}
 
-		public static void MoveProjectiles()
+		public static void Loop(Player player, List<Enemy> enemies)
+		{
+			MoveProjectiles();
+			CollideProjectiles(player, EnemyManager.enemyList);
+			RemoveProjectiles();
+		}
+
+		private static void MoveProjectiles()
 		{
 			foreach (var projectile in projectileList)
 			{
@@ -43,7 +55,7 @@ namespace JetPack.Weapons
 			}
 		}
 
-		public static void CollideProjectiles(Player player, List<Enemy> enemies)
+		private static void CollideProjectiles(Player player, List<Enemy> enemies)
 		{
 			List<Projectile> projectilesToExplode = new List<Projectile>();
 			foreach (var projectile in projectileList)
@@ -74,14 +86,14 @@ namespace JetPack.Weapons
 			}
 		}
 
-		public static void ExplodeProjectile(Projectile projectile)
+		private static void ExplodeProjectile(Projectile projectile)
 		{
 			projectile.Explode();
 			projectileList.Remove(projectile);
 			explodedList.Add(projectile);
 		}
 
-		public static void RemoveProjectiles()
+		private static void RemoveProjectiles()
 		{
 			List<Projectile> projectilesToRemove = new List<Projectile>();
 			foreach (var projectile in explodedList)

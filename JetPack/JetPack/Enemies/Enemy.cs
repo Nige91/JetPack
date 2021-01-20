@@ -29,8 +29,8 @@ namespace JetPack.Enemies
 			this.health = maxHealth;
 			this.movementModule = movementModule;
 			this.weaponModule = weaponModule;
-			this.bitmap = LoadBitmap(bitmapResourceId);
-			this.explBitmap = LoadBitmap(explBitmapResourceId);
+			this.bitmap = Helper.LoadBitmap(bitmapResourceId);
+			this.explBitmap = Helper.LoadBitmap(explBitmapResourceId);
 			this.explDuration = explDuration;
 		}
 
@@ -86,16 +86,6 @@ namespace JetPack.Enemies
 		public bool ExplosionFinished()
 		{
 			return Helper.GetMilliseconds() - explStart > explDuration;
-		}
-
-		private SKBitmap LoadBitmap(string resourceId)
-		{
-			return Helper.LoadBitmap(resourceId);
-			//Assembly assembly = GetType().GetTypeInfo().Assembly;
-			//using (Stream stream = assembly.GetManifestResourceStream(resourceId))
-			//{
-			//	return SKBitmap.Decode(stream);
-			//}
 		}
 	}
 }

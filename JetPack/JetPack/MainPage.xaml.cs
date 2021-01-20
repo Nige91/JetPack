@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using JetPack.Enemies;
 using JetPack.Weapons;
+using JetPack.Pages;
 
 namespace JetPack
 {
@@ -24,14 +25,10 @@ namespace JetPack
 		public MainPage()
 		{
 			InitializeComponent();
-			//TODO Remove magic numbers
-			this.player = new Player(10, 10, 10, 10);
-			EnemyManager.SpawnEnemy1();
-			LoadBackground("JetPack.media.starfield_purple.png");
-			
-			canvasView.PaintSurface += OnPaintSample;
+			canvasView.PaintSurface += OnPaint;
 			canvasView.Touch += OnTouch;
 			Content = canvasView;
+			backgroundBitmap = Helper.LoadBitmap("JetPack.media.starfield_purple.png");
 		}
 
 		protected override void OnAppearing()
@@ -39,7 +36,8 @@ namespace JetPack
 			base.OnAppearing();
 			MessagingCenter.Send(this, "AllowLandscape");
 			pageIsActive = true;
-			AnimationLoop();
+			//TODO move initialization
+			InitializeGame();
 		}
 
 		protected override void OnDisappearing()
@@ -49,49 +47,25 @@ namespace JetPack
 			pageIsActive = false;
 		}
 
-		async Task AnimationLoop()
+		private void OnPaint(object sender, SKPaintSurfaceEventArgs e)
 		{
-			while (pageIsActive)
-			{
-				canvasView.InvalidateSurface();
-				await Task.Delay(TimeSpan.FromSeconds(1.0 / Settings.General.fps));
-			}
-		}
-
-		//TODO Move Stuff out of OnPaintSample
-		private void OnPaintSample(object sender, SKPaintSurfaceEventArgs e)
-		{
-			GameLoop();
 			float pixelCoordRatioX = (float)e.Info.Width/(float)Settings.General.xAxisLength ;
 			float pixelCoordRatioY = (float)e.Info.Height / (float)Settings.General.yAxisLength;
 			SKCanvas canvas = e.Surface.Canvas;
+			canvas.Scale(pixelCoordRatioX, pixelCoordRatioY);
 			try
 			{
-				canvas.Clear(SKColors.DarkBlue);
-				canvas.Scale(pixelCoordRatioX, pixelCoordRatioY);
-				canvas.DrawBitmap(backgroundBitmap, new SKRect(0, 0, Settings.General.xAxisLength, Settings.General.yAxisLength));
-				player.Draw(canvas);
-				EnemyManager.DrawEnemies(canvas);
-				ProjectileManager.DrawProjectiles(canvas);
+				DrawingLoop(canvas);
 			}
 			finally
 			{
 				canvas.Scale(1 / pixelCoordRatioX, 1 / pixelCoordRatioY);
 			}
 		}
-		
-		private void GameLoop()
-		{
-			player.Loop();
-			EnemyManager.Loop();
-			ProjectileManager.MoveProjectiles();
-			ProjectileManager.CollideProjectiles(player, EnemyManager.enemyList);
-			ProjectileManager.RemoveProjectiles();
-		}
 
 		private void OnTouch(object sender, SKTouchEventArgs e)
 		{
-			if(e.Location.X < ((SKCanvasView)sender).CanvasSize.Width / 2)
+			if (e.Location.X < ((SKCanvasView)sender).CanvasSize.Width / 2)
 			{
 				if (e.ActionType == SKTouchAction.Pressed)
 				{
@@ -102,7 +76,7 @@ namespace JetPack
 					player.ReleaseLeft();
 				}
 			}
-			else 
+			else
 			{
 				if (e.ActionType == SKTouchAction.Pressed)
 				{
@@ -116,12 +90,43 @@ namespace JetPack
 			e.Handled = true;
 		}
 
-		private void LoadBackground(string resourceId)
+		private void InitializeGame()
 		{
-			Assembly assembly = GetType().GetTypeInfo().Assembly;
-			using (Stream stream = assembly.GetManifestResourceStream(resourceId))
+			player = new Player();
+			EnemyManager.Initialize();
+			ProjectileManager.Initialize();
+			EnemyManager.SpawnEnemy1();
+			Loop();
+		}
+
+		//TODO Implement precise Timing
+		async void Loop()
+		{
+			while (pageIsActive)
 			{
-				this.backgroundBitmap = SKBitmap.Decode(stream);
+				GameLoop();
+				canvasView.InvalidateSurface();
+				await Task.Delay(TimeSpan.FromSeconds(1.0 / Settings.General.fps));
+			}
+		}
+
+		private void DrawingLoop(SKCanvas canvas)
+		{
+			canvas.Clear(SKColors.DarkBlue);
+			canvas.DrawBitmap(backgroundBitmap, new SKRect(0, 0, Settings.General.xAxisLength, Settings.General.yAxisLength));
+			player.Draw(canvas);
+			EnemyManager.DrawEnemies(canvas);
+			ProjectileManager.DrawProjectiles(canvas);
+		}
+		
+		private void GameLoop()
+		{
+			player.Loop();
+			EnemyManager.Loop();
+			ProjectileManager.Loop(player, EnemyManager.enemyList);
+			if (player.IsGameOver())
+			{
+				Navigation.PushAsync(new GameOverPage());
 			}
 		}
 	}
