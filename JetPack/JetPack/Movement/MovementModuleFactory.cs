@@ -25,7 +25,12 @@ namespace JetPack.Movement
 			return instance;
 		}
 
-		public MovementModule CreateStandardHorizontalModule(SKPoint coords, SKSize size, SKSize explSize, float speed)
+		public MovementModule CreateStandardHorizontalModule(
+			SKPoint coords, 
+			SKSize size, 
+			SKSize explSize, 
+			float speed
+		)
 		{
 			MovementModule module = CreateEmptyModule(coords, size, explSize);
 			module.AddUnit(new MovementModuleUnit(new SKPoint(speed, 0)));

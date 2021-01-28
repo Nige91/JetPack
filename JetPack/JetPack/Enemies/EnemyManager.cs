@@ -70,10 +70,12 @@ namespace JetPack.Enemies
 
 		public void SpawnEnemy2()
 		{
-			var enemy = enemyFactory.CreateEnemy2(new SKPoint(
-				Settings.General.xAxisLength,
-				Helper.GetRandomFloat(0, Settings.General.yAxisLength - Settings.Enemy1.sizeY)
-			));
+			var enemy = enemyFactory.CreateEnemy2(
+				new SKPoint(
+					Settings.General.xAxisLength,
+					Helper.GetRandomFloat(0, Settings.General.yAxisLength - Settings.Enemy1.sizeY)
+				)
+			);
 			enemyList.Add(enemy);
 		}
 
