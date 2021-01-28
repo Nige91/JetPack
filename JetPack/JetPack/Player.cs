@@ -35,7 +35,10 @@ namespace JetPack
 
 		public Player()
 		{
-			this.pos = new SKPoint(Settings.Player.startPosX, Settings.Player.startPosY);
+			this.pos = new SKPoint(
+				Settings.Player.startPosX, 
+				Settings.Player.startPosY
+			);
 			this.speed = 0;
 			playerBitmap = Helper.LoadBitmap("JetPack.media.player_up.png");
 			weaponModuleFactory = WeaponModuleFactory.GetInstance();
@@ -88,7 +91,12 @@ namespace JetPack
 			if (!exploded)
 			{
 				canvas.DrawBitmap(playerBitmap, GetRect());
-				GraphicalUserInterface.DrawHealthbar(canvas, pos.X, pos.Y, (float)(health / maxHealth)); 
+				GraphicalUserInterface.DrawHealthbar(
+					canvas, 
+					pos.X, 
+					pos.Y, 
+					(float)(health / maxHealth)
+				); 
 			}
 			else
 			{
@@ -107,12 +115,22 @@ namespace JetPack
 
 		public SKRect GetRect()
 		{
-			return new SKRect(pos.X, pos.Y, (float)(pos.X + sizeX), (float)(pos.Y + sizeY));
+			return new SKRect(
+				pos.X, 
+				pos.Y, 
+				(float)(pos.X + sizeX), 
+				(float)(pos.Y + sizeY)
+			);
 		}
 
 		public SKRect GetRectExpl()
 		{
-			return new SKRect(pos.X, pos.Y, (float)(pos.X + explSizeX), (float)(pos.Y + explSizeY));
+			return new SKRect(
+				pos.X, 
+				pos.Y, 
+				(float)(pos.X + explSizeX), 
+				(float)(pos.Y + explSizeY)
+			);
 		}
 
 		public bool IsGameOver()

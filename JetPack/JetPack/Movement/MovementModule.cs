@@ -33,7 +33,10 @@ namespace JetPack.Movement
 		public MovementModule Copy(SKPoint coords)
 		{
 			MovementModule module = new MovementModule();
-			module.coords = new SKPoint(this.coords.X + coords.X, this.coords.Y + coords.Y);
+			module.coords = new SKPoint(
+				this.coords.X + coords.X, 
+				this.coords.Y + coords.Y
+			);
 			module.size = new SKSize(this.size.Width, this.size.Height);
 			module.explSize = new SKSize(this.explSize.Width, this.explSize.Height);
 			module.scale = new SKSize(this.scale.Width, this.scale.Height);
@@ -61,13 +64,23 @@ namespace JetPack.Movement
 
 		public SKRect GetRect()
 		{
-			SKRect rect = new SKRect(coords.X, coords.Y, coords.X + size.Width, coords.Y + size.Height);
+			SKRect rect = new SKRect(
+				coords.X, 
+				coords.Y, 
+				coords.X + size.Width, 
+				coords.Y + size.Height
+			);
 			return rect;
 		}
 
 		public SKRect GetRectExpl()
 		{
-			SKRect rect = new SKRect(coords.X, coords.Y, coords.X + explSize.Width, coords.Y + explSize.Height);
+			SKRect rect = new SKRect(
+				coords.X, 
+				coords.Y, 
+				coords.X + explSize.Width, 
+				coords.Y + explSize.Height
+			);
 			return rect;
 		}
 

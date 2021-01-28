@@ -30,7 +30,11 @@ namespace JetPack.Weapons
 		{
 			this.movementModule = movementModule;
 			this.projBitmap = Helper.LoadBitmap(projBitmapResourceId);
-			this.animatorExpl = new Animator(explAnimResString, explAnimNSteps, explAnimStepDuration);
+			this.animatorExpl = new Animator(
+				explAnimResString, 
+				explAnimNSteps, 
+				explAnimStepDuration
+			);
 			this.explDuration = explAnimStepDuration * explAnimNSteps;
 			this.damage = damage;
 			this.friendly = false;

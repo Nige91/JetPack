@@ -26,8 +26,20 @@ namespace JetPack
 				Color = SKColors.Red
 			};
 
-			canvas.DrawRect(x + healthBarPosX, y + healthBarPosY, healthBarWidth, healthBarHeight, backGround);
-			canvas.DrawRect(x + healthBarPosX, y + healthBarPosY, healthBarWidth * life, healthBarHeight, health);
+			canvas.DrawRect(
+				x + healthBarPosX, 
+				y + healthBarPosY, 
+				healthBarWidth, 
+				healthBarHeight, 
+				backGround
+			);
+			canvas.DrawRect(
+				x + healthBarPosX, 
+				y + healthBarPosY, 
+				healthBarWidth * life, 
+				healthBarHeight, 
+				health
+			);
 		}
 	}
 }

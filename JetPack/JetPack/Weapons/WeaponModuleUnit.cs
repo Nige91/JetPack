@@ -58,7 +58,9 @@ namespace JetPack.Weapons
 
 		private void ReduceCooldown()
 		{
-			if(Helper.GetMilliseconds() - cooldownStartTime > interval && Helper.GetMilliseconds() - cooldownStartTime < 2* interval)
+			if(Helper.GetMilliseconds() - cooldownStartTime > interval && 
+				Helper.GetMilliseconds() - cooldownStartTime < 2* interval
+			)
 			{
 				cooledDown = true;
 				cooldownStartTime += (long)interval;
@@ -78,7 +80,14 @@ namespace JetPack.Weapons
 		private void Shoot(SKPoint coords)
 		{
 			cooledDown = false;
-			Projectile projectile = new Projectile(movementTemplate.Copy(coords), projectileBitmapResourceString, explAnimResString, explAnimNSteps, explAnimStepDuration, damage);
+			Projectile projectile = new Projectile(
+				movementTemplate.Copy(coords), 
+				projectileBitmapResourceString, 
+				explAnimResString, 
+				explAnimNSteps, 
+				explAnimStepDuration, 
+				damage
+			);
 			projectile.friendly = this.friendly;
 			ProjectileManager.AddProjectile(projectile);
 		}

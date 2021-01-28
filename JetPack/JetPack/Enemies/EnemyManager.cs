@@ -61,10 +61,15 @@ namespace JetPack.Enemies
 		//TODO prevent spawning inside each other.
 		public void SpawnEnemy1()
 		{
-			var enemy = enemyFactory.CreateEnemy1(new SKPoint(
-				Settings.General.xAxisLength,
-				Helper.GetRandomFloat(0, Settings.General.yAxisLength - Settings.Enemy1.sizeY)
-			));
+			var enemy = enemyFactory.CreateEnemy1(
+				new SKPoint(
+					Settings.General.xAxisLength,
+					Helper.GetRandomFloat(
+						0, 
+						Settings.General.yAxisLength - Settings.Enemy1.sizeY
+					)
+				)
+			);
 			enemyList.Add(enemy);
 		}
 
@@ -73,7 +78,10 @@ namespace JetPack.Enemies
 			var enemy = enemyFactory.CreateEnemy2(
 				new SKPoint(
 					Settings.General.xAxisLength,
-					Helper.GetRandomFloat(0, Settings.General.yAxisLength - Settings.Enemy1.sizeY)
+					Helper.GetRandomFloat(
+						0, 
+						Settings.General.yAxisLength - Settings.Enemy1.sizeY
+					)
 				)
 			);
 			enemyList.Add(enemy);

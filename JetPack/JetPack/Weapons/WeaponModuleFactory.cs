@@ -5,7 +5,8 @@ namespace JetPack.Weapons
 {
 	sealed class WeaponModuleFactory
 	{
-		private static readonly WeaponModuleFactory instance = new WeaponModuleFactory();
+		private static readonly WeaponModuleFactory instance = 
+			new WeaponModuleFactory();
 
 		private MovementModuleFactory movementModuleFactory;
 
@@ -89,12 +90,13 @@ namespace JetPack.Weapons
 			float cooldownPhaseShiftPercent = 0
 		)
 		{
-			MovementModule module = movementModuleFactory.CreateStandardHorizontalModule(
-				coords,
-				new SKSize(Settings.Weapon1.projSizeX, Settings.Weapon1.projSizeY),
-				new SKSize(Settings.Weapon1.explSizeX, Settings.Weapon1.explSizeY),
-				projectileSpeed
-			);
+			MovementModule module = 
+				movementModuleFactory.CreateStandardHorizontalModule(
+					coords,
+					new SKSize(Settings.Weapon1.projSizeX, Settings.Weapon1.projSizeY),
+					new SKSize(Settings.Weapon1.explSizeX, Settings.Weapon1.explSizeY),
+					projectileSpeed
+				);
 			WeaponModuleUnit unit = new WeaponModuleUnit(
 				frequency,
 				damage,

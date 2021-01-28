@@ -50,8 +50,10 @@ namespace JetPack
 
 		private void OnPaint(object sender, SKPaintSurfaceEventArgs e)
 		{
-			float pixelCoordRatioX = (float)e.Info.Width/(float)Settings.General.xAxisLength ;
-			float pixelCoordRatioY = (float)e.Info.Height / (float)Settings.General.yAxisLength;
+			float pixelCoordRatioX = 
+				(float)e.Info.Width/(float)Settings.General.xAxisLength;
+			float pixelCoordRatioY = 
+				(float)e.Info.Height / (float)Settings.General.yAxisLength;
 			SKCanvas canvas = e.Surface.Canvas;
 			canvas.Scale(pixelCoordRatioX, pixelCoordRatioY);
 			try
@@ -114,7 +116,15 @@ namespace JetPack
 		private void DrawingLoop(SKCanvas canvas)
 		{
 			canvas.Clear(SKColors.DarkBlue);
-			canvas.DrawBitmap(backgroundBitmap, new SKRect(0, 0, Settings.General.xAxisLength, Settings.General.yAxisLength));
+			canvas.DrawBitmap(
+				backgroundBitmap, 
+				new SKRect(
+					0, 
+					0, 
+					Settings.General.xAxisLength, 
+					Settings.General.yAxisLength
+				)
+			);
 			player.Draw(canvas);
 			enemyManager.DrawEnemies(canvas);
 			ProjectileManager.DrawProjectiles(canvas);

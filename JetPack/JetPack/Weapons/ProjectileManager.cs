@@ -64,7 +64,9 @@ namespace JetPack.Weapons
 				{
 					foreach (var enemy in enemies)
 					{
-						if (projectile.movementModule.GetRect().IntersectsWith(enemy.movementModule.GetRect()))
+						if (projectile.movementModule.GetRect().IntersectsWith(
+							enemy.movementModule.GetRect()
+						))
 						{
 							enemy.SufferDamage(projectile.damage);
 							projectilesToExplode.Add(projectile);

@@ -25,7 +25,9 @@ namespace JetPack.Drawing
 			this.bitmapsArray = new SKBitmap[nSteps];
 			for(int i = 0; i<nSteps; i++)
 			{
-				bitmapsArray[i] = Helper.LoadBitmap(resourceString + GetStepIdentifierString(i) + ".png");
+				bitmapsArray[i] = Helper.LoadBitmap(
+					resourceString + GetStepIdentifierString(i) + ".png"
+				);
 			}
 		}
 

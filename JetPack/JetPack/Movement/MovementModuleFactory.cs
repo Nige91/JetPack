@@ -8,7 +8,8 @@ namespace JetPack.Movement
 {
 	sealed class MovementModuleFactory
 	{
-		private static readonly MovementModuleFactory instance = new MovementModuleFactory();
+		private static readonly MovementModuleFactory instance = 
+			new MovementModuleFactory();
 
 		static MovementModuleFactory()
 		{
@@ -37,7 +38,11 @@ namespace JetPack.Movement
 			return module;
 		}
 
-		public MovementModule CreateEmptyModule(SKPoint coords, SKSize size, SKSize explSize)
+		public MovementModule CreateEmptyModule(
+			SKPoint coords, 
+			SKSize size, 
+			SKSize explSize
+		)
 		{
 			MovementModule module = new MovementModule(coords, size, explSize);
 			return module;

@@ -42,8 +42,16 @@ namespace JetPack.Enemies
 			this.health = maxHealth;
 			this.movementModule = movementModule;
 			this.weaponModule = weaponModule;
-			this.animatorNormal = new Animator(normalAnimResString, normalAnimNSteps, normalAnimStepDuration);
-			this.animatorExpl = new Animator(explAnimResString, explAnimNSteps, explAnimStepDuration);
+			this.animatorNormal = new Animator(
+				normalAnimResString, 
+				normalAnimNSteps, 
+				normalAnimStepDuration
+			);
+			this.animatorExpl = new Animator(
+				explAnimResString, 
+				explAnimNSteps, 
+				explAnimStepDuration
+			);
 			this.explDuration = explAnimStepDuration*explAnimNSteps;
 		}
 
@@ -71,7 +79,12 @@ namespace JetPack.Enemies
 			if (!exploded)
 			{
 				animatorNormal.Draw(canvas, movementModule.GetRect());
-				GraphicalUserInterface.DrawHealthbar(canvas, movementModule.coords.X, movementModule.coords.Y, health / maxHealth); 
+				GraphicalUserInterface.DrawHealthbar(
+					canvas, 
+					movementModule.coords.X, 
+					movementModule.coords.Y, 
+					health / maxHealth
+				); 
 			}
 			else
 			{
