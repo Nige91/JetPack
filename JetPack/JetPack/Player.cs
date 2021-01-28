@@ -47,8 +47,8 @@ namespace JetPack
 			weapon.active = false;
 			jetPackActive = false;
 			this.animatorExpl = new Animator(
-				"JetPack.media.explosions.expl_" + Settings.Player.explType + "_00", 
-				24, 
+				"JetPack.media.explosions.explosion1_", 
+				1, 
 				Settings.Player.explAnimStepDuration
 			);
 			this.explDuration = Settings.Player.explAnimStepDuration * 24;

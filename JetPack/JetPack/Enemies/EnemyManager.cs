@@ -50,8 +50,8 @@ namespace JetPack.Enemies
 				"JetPack.media.ufos.green1_",
 				4,
 				Settings.Enemy1.normalAnimStepDuration,
-				"JetPack.media.explosions.expl_"+Settings.Enemy1.explType+"_00",
-				24,
+				"JetPack.media.explosions.explosion1_",
+				1,
 				Settings.Enemy1.explAnimStepDuration
 			);
 			enemyList.Add(enemy);

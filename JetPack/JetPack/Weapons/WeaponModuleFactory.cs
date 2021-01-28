@@ -63,7 +63,7 @@ namespace JetPack.Weapons
 				damage, 
 				module, 
 				"JetPack.media.projectile1.png", 
-				"JetPack.media.explosion1.png", 
+				"JetPack.media.explosions.explosion1_00.png", 
 				Settings.Weapon1.explDuration
 			);
 			unit.SetCooldownPhaseShiftPercent(cooldownPhaseShiftPercent);
