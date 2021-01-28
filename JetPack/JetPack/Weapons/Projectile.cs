@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using JetPack.Movement;
+using JetPack.Drawing;
 using SkiaSharp;
 
 namespace JetPack.Weapons
@@ -13,17 +14,25 @@ namespace JetPack.Weapons
 		public SKBitmap projBitmap { get; private set; }
 		public SKBitmap explBitmap { get; private set; }
 		public float damage { get; set; }
-		public int explDuration { get; private set; }
+		private Animator animatorExpl;
+		private int explDuration;
 		private bool exploded = false;
 		private long explStart;
 
-		public Projectile(MovementModule movementModule, string projBitmapResourceId, string explBitmapResourceId, float damage, int explDuration)
+		public Projectile(
+			MovementModule movementModule, 
+			string projBitmapResourceId,
+			string explAnimResString,
+			int explAnimNSteps,
+			int explAnimStepDuration,
+			float damage
+		)
 		{
 			this.movementModule = movementModule;
 			this.projBitmap = Helper.LoadBitmap(projBitmapResourceId);
-			this.explBitmap = Helper.LoadBitmap(explBitmapResourceId);
+			this.animatorExpl = new Animator(explAnimResString, explAnimNSteps, explAnimStepDuration);
+			this.explDuration = explAnimStepDuration * explAnimNSteps;
 			this.damage = damage;
-			this.explDuration = explDuration;
 			this.friendly = false;
 		}
 
@@ -43,7 +52,7 @@ namespace JetPack.Weapons
 			}
 			else
 			{
-				canvas.DrawBitmap(explBitmap, movementModule.GetRectExpl());
+				animatorExpl.Draw(canvas, movementModule.GetRectExpl());
 			}
 		}
 

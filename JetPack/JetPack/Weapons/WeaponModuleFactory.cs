@@ -62,9 +62,10 @@ namespace JetPack.Weapons
 				frequency, 
 				damage, 
 				module, 
-				"JetPack.media.projectile1.png", 
-				"JetPack.media.explosions.explosion1_00.png", 
-				Settings.Weapon1.explDuration
+				"JetPack.media.projectile1.png",
+				"JetPack.media.explosions.explosion1_",
+				1,
+				Settings.Weapon1.explAnimStepDuration
 			);
 			unit.SetCooldownPhaseShiftPercent(cooldownPhaseShiftPercent);
 			return unit;

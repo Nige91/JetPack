@@ -35,7 +35,6 @@ namespace JetPack
 			public const double maxHealth = 100;
 			public const float explSizeX = 10;
 			public const float explSizeY = 10;
-			public const string explType = "03";
 			public const int explAnimStepDuration = 10;
 
 			public static class Weapon
@@ -56,7 +55,6 @@ namespace JetPack
 			public const int normalAnimStepDuration = 100;
 			public const float explSizeX = 20;
 			public const float explSizeY = 20;
-			public const string explType = "03";
 			public const int explAnimStepDuration = 10;
 			public const float speed = -8;
 
@@ -83,9 +81,9 @@ namespace JetPack
 		{
 			public const float projSizeX = 3;
 			public const float projSizeY = 0.5f;
-			public const int explDuration = 100;
 			public const float explSizeX = 2;
 			public const float explSizeY = 2;
+			public const int explAnimStepDuration = 100;
 		}
 	}
 }

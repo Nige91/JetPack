@@ -51,7 +51,7 @@ namespace JetPack
 				1, 
 				Settings.Player.explAnimStepDuration
 			);
-			this.explDuration = Settings.Player.explAnimStepDuration * 24;
+			this.explDuration = Settings.Player.explAnimStepDuration * 1;
 		}
 
 		public void Loop()
