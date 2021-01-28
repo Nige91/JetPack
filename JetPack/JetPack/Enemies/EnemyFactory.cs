@@ -11,6 +11,9 @@ namespace JetPack.Enemies
 	{
 		private static readonly EnemyFactory instance = new EnemyFactory();
 
+		private MovementModuleFactory movementModuleFactory;
+		private WeaponModuleFactory weaponModuleFactory;
+
 		static EnemyFactory()
 		{
 
@@ -18,7 +21,8 @@ namespace JetPack.Enemies
 
 		private EnemyFactory()
 		{
-
+			movementModuleFactory = MovementModuleFactory.GetInstance();
+			weaponModuleFactory = WeaponModuleFactory.GetInstance();
 		}
 
 		public static EnemyFactory GetInstance()
@@ -31,13 +35,13 @@ namespace JetPack.Enemies
 		{
 			Enemy enemy = new Enemy(
 				Settings.Enemy1.health,
-				MovementModuleFactory.CreateStandardHorizontalModule(
+				movementModuleFactory.CreateStandardHorizontalModule(
 					coords,
 					new SKSize(Settings.Enemy1.sizeX, Settings.Enemy1.sizeY),
 					new SKSize(Settings.Enemy1.explSizeX, Settings.Enemy1.explSizeY),
 					Settings.Enemy1.speed
 				),
-				WeaponModuleFactory.CreateEnemyWeapon1(
+				weaponModuleFactory.CreateEnemyWeapon1(
 					Settings.Enemy1.Weapon1.frequency,
 					Settings.Enemy1.Weapon1.damage,
 					Settings.Enemy1.Weapon1.projSpeed
@@ -56,13 +60,13 @@ namespace JetPack.Enemies
 		{
 			Enemy enemy = new Enemy(
 				Settings.Enemy2.health,
-				MovementModuleFactory.CreateStandardHorizontalModule(
+				movementModuleFactory.CreateStandardHorizontalModule(
 					coords,
 					new SKSize(Settings.Enemy2.sizeX, Settings.Enemy2.sizeY),
 					new SKSize(Settings.Enemy2.explSizeX, Settings.Enemy2.explSizeY),
 					Settings.Enemy2.speed
 				),
-				WeaponModuleFactory.CreateEnemyWeapon1(
+				weaponModuleFactory.CreateEnemyWeapon1(
 					Settings.Enemy2.Weapon1.frequency,
 					Settings.Enemy2.Weapon1.damage,
 					Settings.Enemy2.Weapon1.projSpeed

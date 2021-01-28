@@ -30,6 +30,7 @@ namespace JetPack
 		private bool exploded = false;
 		private long explStart;
 		private SKBitmap playerBitmap;
+		private WeaponModuleFactory weaponModuleFactory;
 		private WeaponModule weapon;
 
 		public Player()
@@ -37,7 +38,8 @@ namespace JetPack
 			this.pos = new SKPoint(Settings.Player.startPosX, Settings.Player.startPosY);
 			this.speed = 0;
 			playerBitmap = Helper.LoadBitmap("JetPack.media.player_up.png");
-			weapon = WeaponModuleFactory.CreatePlayerWeapon1(
+			weaponModuleFactory = WeaponModuleFactory.GetInstance();
+			weapon = weaponModuleFactory.CreatePlayerWeapon1(
 				Settings.Player.Weapon.frequency, 
 				Settings.Player.Weapon.damage,
 				Settings.Player.Weapon.projSpeed

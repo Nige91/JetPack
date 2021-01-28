@@ -6,9 +6,28 @@ using SkiaSharp;
 
 namespace JetPack.Weapons
 {
-	static class WeaponModuleFactory
+	sealed class WeaponModuleFactory
 	{
-		static public WeaponModule CreateEnemyWeapon1(float frequency, float damage, float projectileSpeed)
+		private static readonly WeaponModuleFactory instance = new WeaponModuleFactory();
+
+		private MovementModuleFactory movementModuleFactory;
+
+		static WeaponModuleFactory()
+		{
+
+		}
+
+		private WeaponModuleFactory()
+		{
+			movementModuleFactory = MovementModuleFactory.GetInstance();
+		}
+
+		public static WeaponModuleFactory GetInstance()
+		{
+			return instance;
+		}
+
+		public WeaponModule CreateEnemyWeapon1(float frequency, float damage, float projectileSpeed)
 		{
 			WeaponModule module = new WeaponModule();
 			module.AddWeaponUnit(CreateWeaponModuleUnit1(
@@ -42,7 +61,7 @@ namespace JetPack.Weapons
 			return module;
 		}
 
-		static public WeaponModule CreatePlayerWeapon1(float frequency, float damage, float projectileSpeed)
+		public WeaponModule CreatePlayerWeapon1(float frequency, float damage, float projectileSpeed)
 		{
 			WeaponModule module = new WeaponModule();
 			module.AddWeaponUnit(CreateWeaponModuleUnit1(frequency, damage, projectileSpeed, new SKPoint(0, Settings.Player.Weapon.yCoord)));
@@ -50,9 +69,9 @@ namespace JetPack.Weapons
 		}
 
 		//TODO Remove magic numbers
-		static private WeaponModuleUnit CreateWeaponModuleUnit1(float frequency, float damage, float projectileSpeed, SKPoint coords, float cooldownPhaseShiftPercent = 0)
+		private WeaponModuleUnit CreateWeaponModuleUnit1(float frequency, float damage, float projectileSpeed, SKPoint coords, float cooldownPhaseShiftPercent = 0)
 		{
-			MovementModule module = MovementModuleFactory.CreateStandardHorizontalModule(
+			MovementModule module = movementModuleFactory.CreateStandardHorizontalModule(
 				coords, 
 				new SKSize(Settings.Weapon1.projSizeX, Settings.Weapon1.projSizeY),
 				new SKSize(Settings.Weapon1.explSizeX, Settings.Weapon1.explSizeY),
