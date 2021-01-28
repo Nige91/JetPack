@@ -77,6 +77,36 @@ namespace JetPack
 			}
 		}
 
+		public static class Enemy2
+		{
+			public const float health = 300;
+			public const float sizeX = 30;
+			public const float sizeY = 30;
+			public const int normalAnimStepDuration = 100;
+			public const float explSizeX = 20;
+			public const float explSizeY = 20;
+			public const int explAnimStepDuration = 10;
+			public const float speed = -15;
+
+			public static class Weapon1
+			{
+				public const float frequency = 0.2f;
+				public const float damage = 100;
+				public const float projSpeed = -60;
+
+				public const float yCoords1 = 0;
+				public const float yCoords2 = 2;
+				public const float yCoords3 = 13;
+				public const float yCoords4 = 15;
+
+				//percent
+				public const float phaseShift1 = 0;
+				public const float phaseShift2 = 10;
+				public const float phaseShift3 = 20;
+				public const float phaseShift4 = 30;
+			}
+		}
+
 		public static class Weapon1
 		{
 			public const float projSizeX = 3;

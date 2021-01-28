@@ -95,7 +95,7 @@ namespace JetPack
 			player = new Player();
 			EnemyManager.Initialize();
 			ProjectileManager.Initialize();
-			EnemyManager.SpawnEnemy1();
+			EnemyManager.SpawnEnemy2();
 			Loop();
 		}
 

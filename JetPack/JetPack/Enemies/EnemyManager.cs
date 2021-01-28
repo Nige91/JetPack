@@ -31,6 +31,11 @@ namespace JetPack.Enemies
 			SpawnEnemy1(new SKPoint(Settings.General.xAxisLength, Helper.GetRandomFloat(0, Settings.General.yAxisLength - Settings.Enemy1.sizeY)));
 		}
 
+		public static void SpawnEnemy2()
+		{
+			SpawnEnemy2(new SKPoint(Settings.General.xAxisLength, Helper.GetRandomFloat(0, Settings.General.yAxisLength - Settings.Enemy1.sizeY)));
+		}
+
 		//TODO Make Spawn Enemy1 prettier
 		public static void SpawnEnemy1(SKPoint coords)
 		{
@@ -53,6 +58,31 @@ namespace JetPack.Enemies
 				"JetPack.media.explosions.explosion1_",
 				1,
 				Settings.Enemy1.explAnimStepDuration
+			);
+			enemyList.Add(enemy);
+		}
+
+		public static void SpawnEnemy2(SKPoint coords)
+		{
+			Enemy enemy = new Enemy(
+				Settings.Enemy2.health,
+				MovementModuleFactory.CreateStandardHorizontalModule(
+					coords,
+					new SKSize(Settings.Enemy2.sizeX, Settings.Enemy2.sizeY),
+					new SKSize(Settings.Enemy2.explSizeX, Settings.Enemy2.explSizeY),
+					Settings.Enemy2.speed
+				),
+				WeaponModuleFactory.CreateEnemyWeapon1(
+					Settings.Enemy2.Weapon1.frequency,
+					Settings.Enemy2.Weapon1.damage,
+					Settings.Enemy2.Weapon1.projSpeed
+				),
+				"JetPack.media.ufos.red1_",
+				4,
+				Settings.Enemy2.normalAnimStepDuration,
+				"JetPack.media.explosions.explosion1_",
+				1,
+				Settings.Enemy2.explAnimStepDuration
 			);
 			enemyList.Add(enemy);
 		}

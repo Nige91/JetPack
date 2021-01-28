@@ -26,6 +26,10 @@
     <None Remove="media\ufos\green1_01.png" />
     <None Remove="media\ufos\green1_02.png" />
     <None Remove="media\ufos\green1_03.png" />
+    <None Remove="media\ufos\red1_00.png" />
+    <None Remove="media\ufos\red1_01.png" />
+    <None Remove="media\ufos\red1_02.png" />
+    <None Remove="media\ufos\red1_03.png" />
     <None Remove="media\ufos\ufos-2green-1-1.png" />
     <None Remove="media\ufos\ufos-2green-1-2.png" />
     <None Remove="media\ufos\ufos-2green-1-3.png" />
@@ -44,6 +48,10 @@
     <EmbeddedResource Include="media\ufos\green1_01.png" />
     <EmbeddedResource Include="media\ufos\green1_02.png" />
     <EmbeddedResource Include="media\ufos\green1_03.png" />
+    <EmbeddedResource Include="media\ufos\red1_00.png" />
+    <EmbeddedResource Include="media\ufos\red1_01.png" />
+    <EmbeddedResource Include="media\ufos\red1_02.png" />
+    <EmbeddedResource Include="media\ufos\red1_03.png" />
   </ItemGroup>
 
   <ItemGroup>
