@@ -19,6 +19,7 @@ namespace JetPack
 		bool pageIsActive;
 
 		Player player;
+		EnemyManager enemyManager;
 
 		SKBitmap backgroundBitmap;
 
@@ -93,9 +94,9 @@ namespace JetPack
 		private void InitializeGame()
 		{
 			player = new Player();
-			EnemyManager.Initialize();
+			enemyManager = EnemyManager.GetInstance();
 			ProjectileManager.Initialize();
-			EnemyManager.SpawnEnemy2();
+			enemyManager.SpawnEnemy2();
 			Loop();
 		}
 
@@ -115,15 +116,15 @@ namespace JetPack
 			canvas.Clear(SKColors.DarkBlue);
 			canvas.DrawBitmap(backgroundBitmap, new SKRect(0, 0, Settings.General.xAxisLength, Settings.General.yAxisLength));
 			player.Draw(canvas);
-			EnemyManager.DrawEnemies(canvas);
+			enemyManager.DrawEnemies(canvas);
 			ProjectileManager.DrawProjectiles(canvas);
 		}
 		
 		private void GameLoop()
 		{
 			player.Loop();
-			EnemyManager.Loop();
-			ProjectileManager.Loop(player, EnemyManager.enemyList);
+			enemyManager.Loop();
+			ProjectileManager.Loop(player, enemyManager.enemyList);
 			if (player.IsGameOver())
 			{
 				Navigation.PushAsync(new GameOverPage());

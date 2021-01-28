@@ -9,85 +9,37 @@ using JetPack.Weapons;
 namespace JetPack.Enemies
 {
 	//TODO overthink Enemy class structure
-	static class EnemyManager
+	sealed class EnemyManager
 	{
-		public static List<Enemy> enemyList { get; private set; }
-		public static List<Enemy> explodedList { get; private set; }
+		private static readonly EnemyManager instance = new EnemyManager();
+
+		public List<Enemy> enemyList { get; private set; }
+		private List<Enemy> explodedList;
+		private EnemyFactory enemyFactory;
 
 		static EnemyManager()
+		{
+			
+		}
+
+		private EnemyManager()
 		{
 			Initialize();
 		}
 
-		public static void Initialize()
+		private void Initialize()
 		{
 			enemyList = new List<Enemy>();
 			explodedList = new List<Enemy>();
+			enemyFactory = EnemyFactory.GetInstance();
 		}
 
-		//TODO prevent spawning inside each other.
-		public static void SpawnEnemy1()
+		public static EnemyManager GetInstance()
 		{
-			SpawnEnemy1(new SKPoint(Settings.General.xAxisLength, Helper.GetRandomFloat(0, Settings.General.yAxisLength - Settings.Enemy1.sizeY)));
+			return instance;
 		}
 
-		public static void SpawnEnemy2()
-		{
-			SpawnEnemy2(new SKPoint(Settings.General.xAxisLength, Helper.GetRandomFloat(0, Settings.General.yAxisLength - Settings.Enemy1.sizeY)));
-		}
-
-		//TODO Make Spawn Enemy1 prettier
-		public static void SpawnEnemy1(SKPoint coords)
-		{
-			Enemy enemy = new Enemy(
-				Settings.Enemy1.health, 
-				MovementModuleFactory.CreateStandardHorizontalModule(
-					coords, 
-					new SKSize(Settings.Enemy1.sizeX,Settings.Enemy1.sizeY),
-					new SKSize(Settings.Enemy1.explSizeX, Settings.Enemy1.explSizeY),
-					Settings.Enemy1.speed
-				),
-				WeaponModuleFactory.CreateEnemyWeapon1(
-					Settings.Enemy1.Weapon1.frequency,
-					Settings.Enemy1.Weapon1.damage, 
-					Settings.Enemy1.Weapon1.projSpeed
-				),
-				"JetPack.media.ufos.green1_",
-				4,
-				Settings.Enemy1.normalAnimStepDuration,
-				"JetPack.media.explosions.explosion1_",
-				1,
-				Settings.Enemy1.explAnimStepDuration
-			);
-			enemyList.Add(enemy);
-		}
-
-		public static void SpawnEnemy2(SKPoint coords)
-		{
-			Enemy enemy = new Enemy(
-				Settings.Enemy2.health,
-				MovementModuleFactory.CreateStandardHorizontalModule(
-					coords,
-					new SKSize(Settings.Enemy2.sizeX, Settings.Enemy2.sizeY),
-					new SKSize(Settings.Enemy2.explSizeX, Settings.Enemy2.explSizeY),
-					Settings.Enemy2.speed
-				),
-				WeaponModuleFactory.CreateEnemyWeapon1(
-					Settings.Enemy2.Weapon1.frequency,
-					Settings.Enemy2.Weapon1.damage,
-					Settings.Enemy2.Weapon1.projSpeed
-				),
-				"JetPack.media.ufos.red1_",
-				4,
-				Settings.Enemy2.normalAnimStepDuration,
-				"JetPack.media.explosions.explosion1_",
-				1,
-				Settings.Enemy2.explAnimStepDuration
-			);
-			enemyList.Add(enemy);
-		}
-
-		public static void DrawEnemies(SKCanvas canvas)
+		public void DrawEnemies(SKCanvas canvas)
 		{
 			foreach (var enemy in enemyList)
 			{
@@ -98,15 +50,34 @@ namespace JetPack.Enemies
 				enemy.Draw(canvas);
 			}
 		}
-		
-		public static void Loop()
+
+		public void Loop()
 		{
 			LoopEnemies();
 			ExplodeDeadEnemies();
 			RemoveExplodedEnemies();
 		}
 
-		private static void LoopEnemies()
+		//TODO prevent spawning inside each other.
+		public void SpawnEnemy1()
+		{
+			var enemy = enemyFactory.CreateEnemy1(new SKPoint(
+				Settings.General.xAxisLength,
+				Helper.GetRandomFloat(0, Settings.General.yAxisLength - Settings.Enemy1.sizeY)
+			));
+			enemyList.Add(enemy);
+		}
+
+		public void SpawnEnemy2()
+		{
+			var enemy = enemyFactory.CreateEnemy2(new SKPoint(
+				Settings.General.xAxisLength,
+				Helper.GetRandomFloat(0, Settings.General.yAxisLength - Settings.Enemy1.sizeY)
+			));
+			enemyList.Add(enemy);
+		}
+
+		private void LoopEnemies()
 		{
 			foreach (var enemy in enemyList)
 			{
@@ -114,7 +85,7 @@ namespace JetPack.Enemies
 			}
 		}
 
-		private static void ExplodeDeadEnemies()
+		private void ExplodeDeadEnemies()
 		{
 			List<Enemy> enemiesToRemove = new List<Enemy>();
 			foreach (var enemy in enemyList)
@@ -132,7 +103,7 @@ namespace JetPack.Enemies
 			}
 		}
 
-		private static void RemoveExplodedEnemies()
+		private void RemoveExplodedEnemies()
 		{
 			List<Enemy> enemiesToRemove = new List<Enemy>();
 			foreach (var enemy in explodedList)

@@ -43,7 +43,7 @@ namespace JetPack.Weapons
 		public static void Loop(Player player, List<Enemy> enemies)
 		{
 			MoveProjectiles();
-			CollideProjectiles(player, EnemyManager.enemyList);
+			CollideProjectiles(player, enemies);
 			RemoveProjectiles();
 		}
 
