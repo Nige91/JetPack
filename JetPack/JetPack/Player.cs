@@ -30,7 +30,6 @@ namespace JetPack
 		private bool exploded = false;
 		private long explStart;
 		private SKBitmap playerBitmap;
-		private SKBitmap explBitmap;
 		private WeaponModule weapon;
 
 		public Player()
