@@ -5,7 +5,7 @@ using SkiaSharp;
 
 namespace JetPack
 {
-	static class Interface
+	static class GraphicalUserInterface
 	{
 		private static float healthBarPosX = Settings.Interface.healthBarPosX;
 		private static float healthBarPosY = Settings.Interface.healthBarPosY;

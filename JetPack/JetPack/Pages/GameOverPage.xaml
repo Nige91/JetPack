@@ -20,11 +20,6 @@
 					Text="Restart" 
 					Clicked="OnRestartButtonClicked"
 				/>
-				<Button 
-					Grid.Column="1" 
-					Text="Exit" 
-					Clicked="OnExitButtonClicked"
-				/>
 			</Grid>
 		</StackLayout>
 	</ContentPage.Content>

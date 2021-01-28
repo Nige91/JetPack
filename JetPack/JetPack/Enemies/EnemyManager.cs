@@ -47,9 +47,12 @@ namespace JetPack.Enemies
 					Settings.Enemy1.Weapon1.damage, 
 					Settings.Enemy1.Weapon1.projSpeed
 				),
-				"JetPack.media.ship1.png",
-				"JetPack.media.explosion1.png",
-				Settings.Enemy1.explDuration
+				"JetPack.media.ufos.green1_",
+				4,
+				Settings.Enemy1.normalAnimStepDuration,
+				"JetPack.media.explosions.expl_"+Settings.Enemy1.explType+"_00",
+				24,
+				Settings.Enemy1.explAnimStepDuration
 			);
 			enemyList.Add(enemy);
 		}

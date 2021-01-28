@@ -6,6 +6,7 @@ using System.Text;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using JetPack.Weapons;
+using JetPack.Drawing;
 
 namespace JetPack
 {
@@ -24,6 +25,7 @@ namespace JetPack
 		private double health = Settings.Player.maxHealth;
 		private double maxHealth = Settings.Player.maxHealth;
 		private bool jetPackActive = false;
+		private Animator animatorExpl;
 		private int explDuration;
 		private bool exploded = false;
 		private long explStart;
@@ -36,7 +38,6 @@ namespace JetPack
 			this.pos = new SKPoint(Settings.Player.startPosX, Settings.Player.startPosY);
 			this.speed = 0;
 			playerBitmap = Helper.LoadBitmap("JetPack.media.player_up.png");
-			explBitmap = Helper.LoadBitmap("JetPack.media.explosion1.png");
 			weapon = WeaponModuleFactory.CreatePlayerWeapon1(
 				Settings.Player.Weapon.frequency, 
 				Settings.Player.Weapon.damage,
@@ -45,7 +46,12 @@ namespace JetPack
 			weapon.SetFriendly();
 			weapon.active = false;
 			jetPackActive = false;
-			explDuration = Settings.Player.explDuration;
+			this.animatorExpl = new Animator(
+				"JetPack.media.explosions.expl_" + Settings.Player.explType + "_00", 
+				24, 
+				Settings.Player.explAnimStepDuration
+			);
+			this.explDuration = Settings.Player.explAnimStepDuration * 24;
 		}
 
 		public void Loop()
@@ -81,11 +87,11 @@ namespace JetPack
 			if (!exploded)
 			{
 				canvas.DrawBitmap(playerBitmap, GetRect());
-				Interface.DrawHealthbar(canvas, pos.X, pos.Y, (float)(health / maxHealth)); 
+				GraphicalUserInterface.DrawHealthbar(canvas, pos.X, pos.Y, (float)(health / maxHealth)); 
 			}
 			else
 			{
-				canvas.DrawBitmap(explBitmap, GetRectExpl());
+				animatorExpl.Draw(canvas, GetRectExpl());
 			}
 		}
 
