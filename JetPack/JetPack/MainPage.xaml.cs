@@ -128,6 +128,7 @@ namespace JetPack
 			player.Draw(canvas);
 			enemyManager.DrawEnemies(canvas);
 			ProjectileManager.DrawProjectiles(canvas);
+			GraphicalUserInterface.DrawScore(canvas, enemyManager.score);
 		}
 		
 		private void GameLoop()

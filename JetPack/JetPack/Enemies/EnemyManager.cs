@@ -14,8 +14,10 @@ namespace JetPack.Enemies
 		private static readonly EnemyManager instance = new EnemyManager();
 
 		public List<Enemy> enemyList { get; private set; }
+		public int score { get; private set; }
 		private List<Enemy> explodedList;
 		private EnemyFactory enemyFactory;
+		
 
 		static EnemyManager()
 		{
@@ -32,6 +34,7 @@ namespace JetPack.Enemies
 			enemyList = new List<Enemy>();
 			explodedList = new List<Enemy>();
 			enemyFactory = EnemyFactory.GetInstance();
+			score = 0;
 		}
 
 		public static EnemyManager GetInstance()
@@ -56,6 +59,15 @@ namespace JetPack.Enemies
 			LoopEnemies();
 			ExplodeDeadEnemies();
 			RemoveExplodedEnemies();
+			SpawnLoop();
+		}
+
+		private void SpawnLoop()
+		{
+			if(this.enemyList.Count < 1)
+			{
+				SpawnEnemy2();
+			}
 		}
 
 		//TODO prevent spawning inside each other.
@@ -63,7 +75,7 @@ namespace JetPack.Enemies
 		{
 			var enemy = enemyFactory.CreateEnemy1(
 				new SKPoint(
-					Settings.General.xAxisLength,
+					Settings.General.xAxisLength - Settings.Enemy1.sizeX,
 					Helper.GetRandomFloat(
 						0, 
 						Settings.General.yAxisLength - Settings.Enemy1.sizeY
@@ -77,7 +89,7 @@ namespace JetPack.Enemies
 		{
 			var enemy = enemyFactory.CreateEnemy2(
 				new SKPoint(
-					Settings.General.xAxisLength,
+					Settings.General.xAxisLength - Settings.Enemy1.sizeX,
 					Helper.GetRandomFloat(
 						0, 
 						Settings.General.yAxisLength - Settings.Enemy1.sizeY
@@ -104,6 +116,7 @@ namespace JetPack.Enemies
 				{
 					enemiesToRemove.Add(enemy);
 					enemy.Explode();
+					IncreaseScore(1);
 				}
 			}
 			foreach (var enemy in enemiesToRemove)
@@ -127,6 +140,11 @@ namespace JetPack.Enemies
 			{
 				explodedList.Remove(enemy);
 			}
+		}
+
+		private void IncreaseScore(int score)
+		{
+			this.score += score;
 		}
 	}
 }

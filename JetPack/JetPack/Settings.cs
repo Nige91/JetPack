@@ -20,6 +20,10 @@ namespace JetPack
 			public const float healthBarPosY = -5;
 			public const float healthBarWidth = 10;
 			public const float healthBarHeight = 1;
+			public const float scoreTextSize = 5;
+			public const float scoreTextPosX = 5;
+			public const float scoreTextPosY = 5;
+
 		}
 
 		public static class Player
@@ -39,7 +43,7 @@ namespace JetPack
 
 			public static class Weapon
 			{
-				public const float frequency = 2;
+				public const float frequency = 4;
 				public const float damage = 100;
 				public const float projSpeed = 150;
 
@@ -91,7 +95,7 @@ namespace JetPack
 			public static class Weapon1
 			{
 				public const float frequency = 0.2f;
-				public const float damage = 100;
+				public const float damage = 40;
 				public const float projSpeed = -60;
 
 				public const float yCoords1 = 0;
