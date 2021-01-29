@@ -32,5 +32,13 @@ namespace JetPack
 				return SKBitmap.Decode(stream);
 			}
 		}
+
+		public static SKPoint Rotate(SKPoint point, float angle)
+		{
+			SKPoint rot = new SKPoint();
+			rot.X = (float)(Math.Cos(angle) * point.X - Math.Sin(angle) * point.Y);
+			rot.X = (float)(Math.Cos(angle) * point.Y + Math.Sin(angle) * point.X);
+			return rot;
+		}
 	}
 }

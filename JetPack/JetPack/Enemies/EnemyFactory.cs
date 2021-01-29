@@ -41,7 +41,7 @@ namespace JetPack.Enemies
 					new SKSize(Settings.Enemy1.explSizeX, Settings.Enemy1.explSizeY),
 					Settings.Enemy1.speed
 				),
-				weaponModuleFactory.CreateEnemyWeapon1(
+				weaponModuleFactory.CreateEnemyWeaponFourShot(
 					Settings.Enemy1.Weapon1.frequency,
 					Settings.Enemy1.Weapon1.damage,
 					Settings.Enemy1.Weapon1.projSpeed
@@ -66,7 +66,7 @@ namespace JetPack.Enemies
 					new SKSize(Settings.Enemy2.explSizeX, Settings.Enemy2.explSizeY),
 					Settings.Enemy2.speed
 				),
-				weaponModuleFactory.CreateEnemyWeapon1(
+				weaponModuleFactory.CreateEnemyWeaponFourShot(
 					Settings.Enemy2.Weapon1.frequency,
 					Settings.Enemy2.Weapon1.damage,
 					Settings.Enemy2.Weapon1.projSpeed

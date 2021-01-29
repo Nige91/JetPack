@@ -25,35 +25,35 @@ namespace JetPack.Weapons
 			return instance;
 		}
 
-		public WeaponModule CreateEnemyWeapon1(
+		public WeaponModule CreateEnemyWeaponFourShot(
 			float frequency,
 			float damage,
 			float projectileSpeed
 		)
 		{
 			WeaponModule module = new WeaponModule();
-			module.AddWeaponUnit(CreateWeaponModuleUnit1(
+			module.AddWeaponUnit(CreateWeaponModuleUnitHorizontal(
 				frequency,
 				damage,
 				projectileSpeed,
 				new SKPoint(0, Settings.Enemy1.Weapon1.yCoords1),
 				Settings.Enemy1.Weapon1.phaseShift1
 			));
-			module.AddWeaponUnit(CreateWeaponModuleUnit1(
+			module.AddWeaponUnit(CreateWeaponModuleUnitHorizontal(
 				frequency,
 				damage,
 				projectileSpeed,
 				new SKPoint(0, Settings.Enemy1.Weapon1.yCoords2),
 				Settings.Enemy1.Weapon1.phaseShift2
 			));
-			module.AddWeaponUnit(CreateWeaponModuleUnit1(
+			module.AddWeaponUnit(CreateWeaponModuleUnitHorizontal(
 				frequency,
 				damage,
 				projectileSpeed,
 				new SKPoint(0, Settings.Enemy1.Weapon1.yCoords3),
 				Settings.Enemy1.Weapon1.phaseShift3
 			));
-			module.AddWeaponUnit(CreateWeaponModuleUnit1(
+			module.AddWeaponUnit(CreateWeaponModuleUnitHorizontal(
 				frequency,
 				damage,
 				projectileSpeed,
@@ -63,7 +63,7 @@ namespace JetPack.Weapons
 			return module;
 		}
 
-		public WeaponModule CreatePlayerWeapon1(
+		public WeaponModule CreatePlayerWeapon(
 			float frequency,
 			float damage,
 			float projectileSpeed
@@ -71,7 +71,7 @@ namespace JetPack.Weapons
 		{
 			WeaponModule module = new WeaponModule();
 			module.AddWeaponUnit(
-				CreateWeaponModuleUnit1(
+				CreateWeaponModuleUnitHorizontal(
 					frequency, 
 					damage, 
 					projectileSpeed, 
@@ -82,7 +82,7 @@ namespace JetPack.Weapons
 		}
 
 		//TODO Remove magic numbers
-		private WeaponModuleUnit CreateWeaponModuleUnit1(
+		private WeaponModuleUnit CreateWeaponModuleUnitHorizontal(
 			float frequency,
 			float damage,
 			float projectileSpeed,

@@ -42,7 +42,7 @@ namespace JetPack
 			this.speed = 0;
 			playerBitmap = Helper.LoadBitmap("JetPack.media.player_up.png");
 			weaponModuleFactory = WeaponModuleFactory.GetInstance();
-			weapon = weaponModuleFactory.CreatePlayerWeapon1(
+			weapon = weaponModuleFactory.CreatePlayerWeapon(
 				Settings.Player.Weapon.frequency, 
 				Settings.Player.Weapon.damage,
 				Settings.Player.Weapon.projSpeed

@@ -9,13 +9,11 @@ namespace JetPack.Movement
 	//TODO overthink MovementModule class structure
 	class MovementModule
 	{
+		public float rotation { get; set; } = 0;
 		public SKPoint coords { get; private set; }
 		public SKSize size { get; private set; }
 		public SKSize explSize { get; private set; }
-		public SKSize scale { get; private set; } = new SKSize(1, 1);
-		public List<MovementModuleUnit> movementModuleUnits { get; set; }
-
-		public float speed { get; private set; } = 1;
+		public List<MovementModuleUnit> movementModuleUnits { get; private set; }
 
 		public MovementModule()
 		{
@@ -39,13 +37,12 @@ namespace JetPack.Movement
 			);
 			module.size = new SKSize(this.size.Width, this.size.Height);
 			module.explSize = new SKSize(this.explSize.Width, this.explSize.Height);
-			module.scale = new SKSize(this.scale.Width, this.scale.Height);
 			module.movementModuleUnits = new List<MovementModuleUnit>();
 			foreach(var unit in this.movementModuleUnits)
 			{
 				module.movementModuleUnits.Add(unit.Copy());
 			}
-			module.speed = this.speed;
+			module.rotation = this.rotation;
 			return module;
 		}
 
@@ -56,9 +53,15 @@ namespace JetPack.Movement
 
 		public void Move()
 		{
-			foreach (var unit in movementModuleUnits)
+			if(rotation == 0)
 			{
-				coords += unit.Move(speed);
+				foreach (var unit in movementModuleUnits)
+					coords += unit.Move();
+			}
+			else
+			{
+				foreach (var unit in movementModuleUnits)
+					coords += Helper.Rotate(unit.Move(), rotation);
 			}
 		}
 
@@ -82,20 +85,6 @@ namespace JetPack.Movement
 				coords.Y + explSize.Height
 			);
 			return rect;
-		}
-
-		public void SetSpeed(float speed)
-		{
-			RecalibrateUnitPhases(this.speed);
-			this.speed = speed;
-		}
-
-		private void RecalibrateUnitPhases(float speed)
-		{
-			foreach (var unit in movementModuleUnits)
-			{
-				unit.RecalibratePhase(speed);
-			}
 		}
 	}
 }
