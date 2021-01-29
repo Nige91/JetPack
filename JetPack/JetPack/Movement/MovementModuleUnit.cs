@@ -22,8 +22,9 @@ namespace JetPack.Movement
 		public MovementModuleUnit(SKPoint distance)
 		{
 			this.distance = distance;
-			this.phaseDuration = 0;
-			this.phaseStartTime = 0;
+			this.phaseDuration = phaseDuration;
+			this.phaseStartTime = Helper.GetMilliseconds();
+			this.lastStepTime = 0;
 		}
 
 		public MovementModuleUnit(
@@ -31,15 +32,10 @@ namespace JetPack.Movement
 			float ampMin, 
 			float ampMax, 
 			int phaseDuration
-		)
+		) : this(distance)
 		{
-			this.distance = distance;
 			this.ampMin = ampMin;
 			this.ampMax = ampMax;
-			this.phaseDuration = phaseDuration;
-			this.phaseStartTime = Helper.GetMilliseconds();
-			this.lastStepTime = 
-				Helper.GetMilliseconds() - (1000 / Settings.General.fps); 
 		}
 
 		public MovementModuleUnit Copy()
@@ -75,6 +71,10 @@ namespace JetPack.Movement
 
 		private float GetLoopTime()
 		{
+			if(lastStepTime == 0)
+			{
+				lastStepTime = Helper.GetMilliseconds() - (1000/Settings.General.fps);
+			}
 			float loopTimeMs = Helper.GetMilliseconds() - lastStepTime;
 			lastStepTime = Helper.GetMilliseconds();
 			return loopTimeMs / Settings.General.normalTimeUnitInMs;
