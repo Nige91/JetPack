@@ -25,6 +25,8 @@ namespace JetPack.Weapons
 		private float rotCycleDuration = 0;
 		private long rotStartTime = 0;
 
+		private ProjectileManager projectileManager;
+
 
 		public WeaponModuleUnit(
 			float frequency, 
@@ -45,6 +47,7 @@ namespace JetPack.Weapons
 			this.explAnimStepDuration = explAnimStepDuration;
 			this.cooldownStartTime = Helper.GetMilliseconds();
 			this.friendly = false;
+			this.projectileManager = ProjectileManager.GetInstance();
 		}
 
 		public void Loop(SKPoint coords, bool active)
@@ -118,7 +121,7 @@ namespace JetPack.Weapons
 				damage
 			);
 			projectile.friendly = this.friendly;
-			ProjectileManager.AddProjectile(projectile);
+			projectileManager.AddProjectile(projectile);
 		}
 	}
 }

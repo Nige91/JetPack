@@ -6,29 +6,40 @@ using JetPack.Enemies;
 
 namespace JetPack.Weapons
 {
-	static class ProjectileManager
+	sealed class ProjectileManager
 	{
-		public static List<Projectile> projectileList { get; private set; }
+		private static readonly ProjectileManager instance = new ProjectileManager();
 
-		public static List<Projectile> explodedList { get; private set; }
+		public List<Projectile> projectileList { get; private set; }
+		public List<Projectile> explodedList { get; private set; }
 
 		static ProjectileManager()
 		{
-			Initialize();
+
 		}
 
-		public static void Initialize()
+		private ProjectileManager()
+		{
+
+		}
+
+		public static ProjectileManager GetInstance()
+		{
+			return instance;
+		}
+
+		public void Initialize()
 		{
 			projectileList = new List<Projectile>();
 			explodedList = new List<Projectile>();
 		}
 
-		public static void AddProjectile(Projectile projectile)
+		public void AddProjectile(Projectile projectile)
 		{
 			projectileList.Add(projectile);
 		}
 
-		public static void DrawProjectiles(SKCanvas canvas)
+		public void DrawProjectiles(SKCanvas canvas)
 		{
 			foreach (var projectile in projectileList)
 			{
@@ -40,14 +51,15 @@ namespace JetPack.Weapons
 			}
 		}
 
-		public static void Loop(Player player, List<Enemy> enemies)
+		public void Loop(Player player, List<Enemy> enemies)
 		{
 			MoveProjectiles();
 			CollideProjectiles(player, enemies);
-			RemoveProjectiles();
+			RemoveExplodedProjectiles();
+			RemoveOutOfBoundProjectiles();
 		}
 
-		private static void MoveProjectiles()
+		private void MoveProjectiles()
 		{
 			foreach (var projectile in projectileList)
 			{
@@ -55,7 +67,7 @@ namespace JetPack.Weapons
 			}
 		}
 
-		private static void CollideProjectiles(Player player, List<Enemy> enemies)
+		private void CollideProjectiles(Player player, List<Enemy> enemies)
 		{
 			List<Projectile> projectilesToExplode = new List<Projectile>();
 			foreach (var projectile in projectileList)
@@ -88,14 +100,30 @@ namespace JetPack.Weapons
 			}
 		}
 
-		private static void ExplodeProjectile(Projectile projectile)
+		private void ExplodeProjectile(Projectile projectile)
 		{
 			projectile.Explode();
 			projectileList.Remove(projectile);
 			explodedList.Add(projectile);
 		}
 
-		private static void RemoveProjectiles()
+		private void RemoveOutOfBoundProjectiles()
+		{
+			List<Projectile> projectilesToRemove = new List<Projectile>();
+			foreach (var projectile in projectileList)
+			{
+				if (projectile.IsOutOfBounds())
+				{
+					projectilesToRemove.Add(projectile);
+				}
+			}
+			foreach (var projectile in projectilesToRemove)
+			{
+				projectileList.Remove(projectile);
+			}
+		}
+
+		private void RemoveExplodedProjectiles()
 		{
 			List<Projectile> projectilesToRemove = new List<Projectile>();
 			foreach (var projectile in explodedList)

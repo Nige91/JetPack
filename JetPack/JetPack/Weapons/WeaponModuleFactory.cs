@@ -39,7 +39,7 @@ namespace JetPack.Weapons
 				frequency,
 				damage,
 				projectileSpeed,
-				new SKPoint(0, Settings.Enemy1.Weapon.yCoords1),
+				new SKPoint(0, Settings.Enemy2.Weapon.yCoords),
 				new SKSize(
 						Settings.WeaponFanShot.projSizeX,
 						Settings.WeaponFanShot.projSizeY

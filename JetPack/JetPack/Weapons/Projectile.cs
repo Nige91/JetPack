@@ -70,5 +70,22 @@ namespace JetPack.Weapons
 		{
 			return Helper.GetMilliseconds() - explStart > explDuration;
 		}
+
+		public bool IsOutOfBounds()
+		{
+			if(
+				movementModule.coords.X < 0 ||
+				movementModule.coords.Y < 0 ||
+				movementModule.coords.X > Settings.General.xAxisLength ||
+				movementModule.coords.Y > Settings.General.yAxisLength
+			)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
 }

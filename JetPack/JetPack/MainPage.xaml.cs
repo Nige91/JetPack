@@ -20,6 +20,7 @@ namespace JetPack
 
 		Player player;
 		EnemyManager enemyManager;
+		ProjectileManager projectileManager;
 
 		SKBitmap backgroundBitmap;
 
@@ -97,7 +98,8 @@ namespace JetPack
 			player = new Player();
 			enemyManager = EnemyManager.GetInstance();
 			enemyManager.Initialize();
-			ProjectileManager.Initialize();
+			projectileManager = ProjectileManager.GetInstance();
+			projectileManager.Initialize();
 			Loop();
 		}
 
@@ -126,7 +128,7 @@ namespace JetPack
 			);
 			player.Draw(canvas);
 			enemyManager.DrawEnemies(canvas);
-			ProjectileManager.DrawProjectiles(canvas);
+			projectileManager.DrawProjectiles(canvas);
 			GraphicalUserInterface.DrawScore(canvas, enemyManager.score);
 		}
 		
@@ -134,7 +136,7 @@ namespace JetPack
 		{
 			player.Loop();
 			enemyManager.Loop();
-			ProjectileManager.Loop(player, enemyManager.enemyList);
+			projectileManager.Loop(player, enemyManager.enemyList);
 			if (player.IsGameOver())
 			{
 				Navigation.PushAsync(new GameOverPage());

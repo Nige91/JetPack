@@ -97,7 +97,7 @@ namespace JetPack
 				public const float frequency = 5;
 				public const float damage = 20;
 				public const float projSpeed = -60;
-				public const float yCoords = 0;
+				public const float yCoords = 15;
 				public const float rotAngleMin = -45;
 				public const float rotAngleMax = 45;
 				public const float rotCycleDuration = 4;
