@@ -37,7 +37,6 @@ namespace JetPack
 			base.OnAppearing();
 			MessagingCenter.Send(this, "AllowLandscape");
 			pageIsActive = true;
-			//TODO move initialization
 			InitializeGame();
 		}
 
@@ -97,8 +96,8 @@ namespace JetPack
 		{
 			player = new Player();
 			enemyManager = EnemyManager.GetInstance();
+			enemyManager.Initialize();
 			ProjectileManager.Initialize();
-			enemyManager.SpawnEnemy2();
 			Loop();
 		}
 

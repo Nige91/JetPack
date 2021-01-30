@@ -62,7 +62,7 @@ namespace JetPack
 			public const int explAnimStepDuration = 10;
 			public const float speed = -8;
 
-			public static class Weapon1
+			public static class Weapon
 			{
 				public const float frequency = 0.2f;
 				public const float damage = 100;
@@ -92,29 +92,40 @@ namespace JetPack
 			public const int explAnimStepDuration = 10;
 			public const float speed = -15;
 
-			public static class Weapon1
+			public static class Weapon
 			{
-				public const float frequency = 0.2f;
-				public const float damage = 40;
+				public const float frequency = 5;
+				public const float damage = 20;
 				public const float projSpeed = -60;
-
-				public const float yCoords1 = 0;
-				public const float yCoords2 = 2;
-				public const float yCoords3 = 13;
-				public const float yCoords4 = 15;
-
-				//percent
-				public const float phaseShift1 = 0;
-				public const float phaseShift2 = 10;
-				public const float phaseShift3 = 20;
-				public const float phaseShift4 = 30;
+				public const float yCoords = 0;
+				public const float rotAngleMin = -45;
+				public const float rotAngleMax = 45;
+				public const float rotCycleDuration = 4;
 			}
 		}
 
-		public static class Weapon1
+		public static class WeaponPlayer
 		{
 			public const float projSizeX = 3;
 			public const float projSizeY = 0.5f;
+			public const float explSizeX = 2;
+			public const float explSizeY = 2;
+			public const int explAnimStepDuration = 100;
+		}
+
+		public static class WeaponFourShot
+		{
+			public const float projSizeX = 3;
+			public const float projSizeY = 0.5f;
+			public const float explSizeX = 2;
+			public const float explSizeY = 2;
+			public const int explAnimStepDuration = 100;
+		}
+
+		public static class WeaponFanShot
+		{
+			public const float projSizeX = 1;
+			public const float projSizeY = 1;
 			public const float explSizeX = 2;
 			public const float explSizeY = 2;
 			public const int explAnimStepDuration = 100;

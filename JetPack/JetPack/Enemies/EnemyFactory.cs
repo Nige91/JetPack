@@ -42,9 +42,9 @@ namespace JetPack.Enemies
 					Settings.Enemy1.speed
 				),
 				weaponModuleFactory.CreateEnemyWeaponFourShot(
-					Settings.Enemy1.Weapon1.frequency,
-					Settings.Enemy1.Weapon1.damage,
-					Settings.Enemy1.Weapon1.projSpeed
+					Settings.Enemy1.Weapon.frequency,
+					Settings.Enemy1.Weapon.damage,
+					Settings.Enemy1.Weapon.projSpeed
 				),
 				"JetPack.media.ufos.green1_",
 				4,
@@ -66,10 +66,13 @@ namespace JetPack.Enemies
 					new SKSize(Settings.Enemy2.explSizeX, Settings.Enemy2.explSizeY),
 					Settings.Enemy2.speed
 				),
-				weaponModuleFactory.CreateEnemyWeaponFourShot(
-					Settings.Enemy2.Weapon1.frequency,
-					Settings.Enemy2.Weapon1.damage,
-					Settings.Enemy2.Weapon1.projSpeed
+				weaponModuleFactory.CreateEnemyWeaponFanShot(
+					Settings.Enemy2.Weapon.frequency,
+					Settings.Enemy2.Weapon.damage,
+					Settings.Enemy2.Weapon.projSpeed,
+					Settings.Enemy2.Weapon.rotAngleMin,
+					Settings.Enemy2.Weapon.rotAngleMax,
+					Settings.Enemy2.Weapon.rotCycleDuration
 				),
 				"JetPack.media.ufos.red1_",
 				4,

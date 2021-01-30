@@ -26,10 +26,10 @@ namespace JetPack.Enemies
 
 		private EnemyManager()
 		{
-			Initialize();
+
 		}
 
-		private void Initialize()
+		public void Initialize()
 		{
 			enemyList = new List<Enemy>();
 			explodedList = new List<Enemy>();

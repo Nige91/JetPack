@@ -10,7 +10,7 @@ namespace JetPack.Movement
 	class MovementModule
 	{
 		public float rotation { get; set; } = 0;
-		public SKPoint coords { get; private set; }
+		public SKPoint coords { get; set; }
 		public SKSize size { get; private set; }
 		public SKSize explSize { get; private set; }
 		public List<MovementModuleUnit> movementModuleUnits { get; private set; }

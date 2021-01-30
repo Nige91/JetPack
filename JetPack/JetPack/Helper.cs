@@ -36,8 +36,9 @@ namespace JetPack
 		public static SKPoint Rotate(SKPoint point, float angle)
 		{
 			SKPoint rot = new SKPoint();
-			rot.X = (float)(Math.Cos(angle) * point.X - Math.Sin(angle) * point.Y);
-			rot.X = (float)(Math.Cos(angle) * point.Y + Math.Sin(angle) * point.X);
+			float angleRad = angle * (float)Math.PI / 180;
+			rot.X = (float)(Math.Cos(angleRad) * point.X - Math.Sin(angleRad) * point.Y);
+			rot.Y = (float)(Math.Cos(angleRad) * point.Y + Math.Sin(angleRad) * point.X);
 			return rot;
 		}
 	}
