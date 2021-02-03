@@ -29,7 +29,9 @@ namespace JetPack
 		private int explDuration;
 		private bool exploded = false;
 		private long explStart;
-		private SKBitmap playerBitmap;
+		private SKBitmap playerBitmapUp;
+		private SKBitmap playerBitmapDown;
+		private SKBitmap playerBitmapNeutral;
 		private WeaponModuleFactory weaponModuleFactory;
 		private WeaponModule weapon;
 
@@ -40,7 +42,9 @@ namespace JetPack
 				Settings.Player.startPosY
 			);
 			this.speed = 0;
-			playerBitmap = Helper.LoadBitmap("JetPack.media.player_up.png");
+			playerBitmapUp = Helper.LoadBitmap("JetPack.media.player.up.png");
+			playerBitmapDown = Helper.LoadBitmap("JetPack.media.player.down.png");
+			playerBitmapNeutral = Helper.LoadBitmap("JetPack.media.player.neutral.png");
 			weaponModuleFactory = WeaponModuleFactory.GetInstance();
 			weapon = weaponModuleFactory.CreatePlayerWeapon(
 				Settings.Player.Weapon.frequency, 
@@ -90,7 +94,7 @@ namespace JetPack
 		{
 			if (!exploded)
 			{
-				canvas.DrawBitmap(playerBitmap, GetRect());
+				canvas.DrawBitmap(ChooseBitmap(), GetRect());
 				GraphicalUserInterface.DrawHealthbar(
 					canvas, 
 					pos.X, 
@@ -189,9 +193,20 @@ namespace JetPack
 			}
 		}
 
-		private void Die()
+		private SKBitmap ChooseBitmap()
 		{
-			health = maxHealth;
+			if(jetPackActive && speed > 0)
+			{
+				return playerBitmapUp;
+			}
+			else if(jetPackActive && speed <= 0 || !jetPackActive && speed > 0)
+			{
+				return playerBitmapNeutral;
+			}
+			else
+			{
+				return playerBitmapDown;
+			}
 		}
 	}
 }

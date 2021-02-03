@@ -12,8 +12,9 @@
   <ItemGroup>
     <None Remove="media\explosion1.png" />
     <None Remove="media\explosions\explosion1_00.png" />
-    <None Remove="media\player_down.png" />
-    <None Remove="media\player_up.png" />
+    <None Remove="media\player\down.png" />
+    <None Remove="media\player\neutral.png" />
+    <None Remove="media\player\up.png" />
     <None Remove="media\projectile1.png" />
     <None Remove="media\ship1.png" />
     <None Remove="media\starfield_black.png" />
@@ -38,8 +39,9 @@
 
   <ItemGroup>
     <EmbeddedResource Include="media\explosions\explosion1_00.png" />
-    <EmbeddedResource Include="media\player_down.png" />
-    <EmbeddedResource Include="media\player_up.png" />
+    <EmbeddedResource Include="media\player\down.png" />
+    <EmbeddedResource Include="media\player\neutral.png" />
+    <EmbeddedResource Include="media\player\up.png" />
     <EmbeddedResource Include="media\projectile1.png" />
     <EmbeddedResource Include="media\ship1.png" />
     <EmbeddedResource Include="media\starfield_black.png" />

@@ -30,8 +30,8 @@ namespace JetPack
 		{
 			public const float startPosX = 5;
 			public const float startPosY = 5;
-			public const float sizeX = 5;
-			public const float sizeY = 5;
+			public const float sizeX = 10;
+			public const float sizeY = 10;
 			public const double minSpeed = -5;
 			public const double maxSpeed = 5;
 			public const double gravity = 0.45;
