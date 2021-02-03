@@ -13,19 +13,24 @@ namespace JetPack
 	class Player
 	{
 		private SKPoint pos;
-		private double sizeX = Settings.Player.sizeX;
-		private double sizeY = Settings.Player.sizeY;
-		private double explSizeX = Settings.Player.explSizeX;
-		private double explSizeY = Settings.Player.explSizeY;
-		private double speed;
-		private double minSpeed = Settings.Player.minSpeed;
-		private double maxSpeed = Settings.Player.maxSpeed;
-		private double gravity = Settings.Player.gravity;
-		private double jetPackStrength = Settings.Player.jetPackStrength;
-		private double health = Settings.Player.maxHealth;
-		private double maxHealth = Settings.Player.maxHealth;
+		private float sizeX = Settings.Player.sizeX;
+		private float sizeY = Settings.Player.sizeY;
+		private float explSizeX = Settings.Player.explSizeX;
+		private float explSizeY = Settings.Player.explSizeY;
+		private float jetPackFlameSizeX = Settings.Player.jetPackFlameSizeX;
+		private float jetPackFlameSizeY = Settings.Player.jetPackFlameSizeY;
+		private float jetPackFlamePosX = Settings.Player.jetPackFlamePosX;
+		private float jetPackFlamePosY = Settings.Player.jetPackFlameSizeY;
+		private float speed;
+		private float minSpeed = Settings.Player.minSpeed;
+		private float maxSpeed = Settings.Player.maxSpeed;
+		private float gravity = Settings.Player.gravity;
+		private float jetPackStrength = Settings.Player.jetPackStrength;
+		private float health = Settings.Player.maxHealth;
+		private float maxHealth = Settings.Player.maxHealth;
 		private bool jetPackActive = false;
 		private Animator animatorExpl;
+		private Animator animatorJetPack;
 		private int explDuration;
 		private bool exploded = false;
 		private long explStart;
@@ -42,42 +47,54 @@ namespace JetPack
 				Settings.Player.startPosY
 			);
 			this.speed = 0;
-			playerBitmapUp = Helper.LoadBitmap("JetPack.media.player.up.png");
-			playerBitmapDown = Helper.LoadBitmap("JetPack.media.player.down.png");
-			playerBitmapNeutral = Helper.LoadBitmap("JetPack.media.player.neutral.png");
-			weaponModuleFactory = WeaponModuleFactory.GetInstance();
-			weapon = weaponModuleFactory.CreatePlayerWeapon(
+			this.playerBitmapUp = Helper.LoadBitmap("JetPack.media.player.up.png");
+			this.playerBitmapDown = Helper.LoadBitmap("JetPack.media.player.down.png");
+			this.playerBitmapNeutral = Helper.LoadBitmap("JetPack.media.player.neutral.png");
+			this.weaponModuleFactory = WeaponModuleFactory.GetInstance();
+			this.weapon = weaponModuleFactory.CreatePlayerWeapon(
 				Settings.Player.Weapon.frequency, 
 				Settings.Player.Weapon.damage,
 				Settings.Player.Weapon.projSpeed
 			);
-			weapon.SetFriendly();
-			weapon.active = false;
-			jetPackActive = false;
+			this.weapon.SetFriendly();
+			this.weapon.active = false;
+			this.jetPackActive = false;
 			this.animatorExpl = new Animator(
 				"JetPack.media.explosions.explosion1_", 
 				1, 
 				Settings.Player.explAnimStepDuration
 			);
 			this.explDuration = Settings.Player.explAnimStepDuration * 1;
+			this.animatorJetPack = new Animator(
+				"JetPack.media.fire.fire_start_",
+				"JetPack.media.fire.fire_hold_",
+				"JetPack.media.fire.fire_stop_",
+				8,
+				23,
+				19,
+				Settings.Player.jetPackAnimStepDuration
+			);
 		}
 
 		public void Loop()
 		{
-			this.ApplyGravity();
-			this.ApplyJetPack();
-			this.Move();
-			this.weapon.Loop(pos);
+			ApplyGravity();
+			ApplyJetPack();
+			Move();
+			weapon.Loop(pos);
 		}
 
+		//TODO move to different function
 		public void TouchLeft()
 		{
-			this.jetPackActive = true;
+			jetPackActive = true;
+			animatorJetPack.Start();
 		}
 
 		public void ReleaseLeft()
 		{
-			this.jetPackActive = false;
+			jetPackActive = false;
+			animatorJetPack.Stop();
 		}
 
 		public void TouchRight()
@@ -100,7 +117,8 @@ namespace JetPack
 					pos.X, 
 					pos.Y, 
 					(float)(health / maxHealth)
-				); 
+				);
+				animatorJetPack.Draw(canvas, GetRectJetPackFlame());
 			}
 			else
 			{
@@ -122,18 +140,28 @@ namespace JetPack
 			return new SKRect(
 				pos.X, 
 				pos.Y, 
-				(float)(pos.X + sizeX), 
-				(float)(pos.Y + sizeY)
+				pos.X + sizeX, 
+				pos.Y + sizeY
 			);
 		}
 
-		public SKRect GetRectExpl()
+		private SKRect GetRectExpl()
 		{
 			return new SKRect(
 				pos.X, 
 				pos.Y, 
-				(float)(pos.X + explSizeX), 
-				(float)(pos.Y + explSizeY)
+				pos.X + explSizeX, 
+				pos.Y + explSizeY
+			);
+		}
+
+		private SKRect GetRectJetPackFlame()
+		{
+			return new SKRect(
+				pos.X + jetPackFlamePosX, 
+				pos.Y + jetPackFlamePosY,
+				pos.X + jetPackFlamePosX + jetPackFlameSizeX, 
+				pos.Y + jetPackFlamePosY + jetPackFlameSizeY
 			);
 		}
 
@@ -155,11 +183,11 @@ namespace JetPack
 
 		private void ApplyGravity()
 		{
-			if (this.speed - this.gravity > this.minSpeed)
+			if (speed - gravity > minSpeed)
 			{
 				speed -= gravity;
 			}
-			else if(this.speed > this.minSpeed)
+			else if(speed > minSpeed)
 			{
 				speed = minSpeed;
 			}
@@ -167,15 +195,15 @@ namespace JetPack
 
 		private void ApplyJetPack()
 		{
-			if (this.jetPackActive)
+			if (jetPackActive)
 			{
-				if (this.speed + this.jetPackStrength < this.maxSpeed)
+				if (speed + jetPackStrength < maxSpeed)
 				{
-					this.speed += this.jetPackStrength;
+					speed += jetPackStrength;
 				}
-				else if (this.speed < this.maxSpeed)
+				else if (speed < maxSpeed)
 				{
-					this.speed = this.maxSpeed;
+					speed = maxSpeed;
 				}
 			}
 		}

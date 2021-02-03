@@ -32,14 +32,19 @@ namespace JetPack
 			public const float startPosY = 5;
 			public const float sizeX = 10;
 			public const float sizeY = 10;
-			public const double minSpeed = -5;
-			public const double maxSpeed = 5;
-			public const double gravity = 0.45;
-			public const double jetPackStrength = 1;
-			public const double maxHealth = 100;
+			public const float minSpeed = -5;
+			public const float maxSpeed = 5;
+			public const float gravity = 0.45f;
+			public const float jetPackStrength = 1;
+			public const float maxHealth = 100;
 			public const float explSizeX = 10;
 			public const float explSizeY = 10;
 			public const int explAnimStepDuration = 10;
+			public const int jetPackAnimStepDuration = 10;
+			public const float jetPackFlameSizeX = 3;
+			public const float jetPackFlameSizeY = 10;
+			public const float jetPackFlamePosX = 0;
+			public const float jetPackFlamePosY = 5;
 
 			public static class Weapon
 			{
@@ -110,7 +115,7 @@ namespace JetPack
 			public const float projSizeY = 0.5f;
 			public const float explSizeX = 2;
 			public const float explSizeY = 2;
-			public const int explAnimStepDuration = 100;
+			public const float explAnimStepDuration = 100;
 		}
 
 		public static class WeaponFourShot
