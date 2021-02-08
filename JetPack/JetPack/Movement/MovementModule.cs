@@ -1,8 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
 using System.Collections.Generic;
-using System.Text;
-using SkiaSharp;
-using SkiaSharp.Views.Forms;
 
 namespace JetPack.Movement
 {
@@ -32,17 +29,17 @@ namespace JetPack.Movement
 		{
 			MovementModule module = new MovementModule();
 			module.coords = new SKPoint(
-				this.coords.X + coords.X, 
+				this.coords.X + coords.X,
 				this.coords.Y + coords.Y
 			);
-			module.size = new SKSize(this.size.Width, this.size.Height);
-			module.explSize = new SKSize(this.explSize.Width, this.explSize.Height);
+			module.size = new SKSize(size.Width, size.Height);
+			module.explSize = new SKSize(explSize.Width, explSize.Height);
 			module.movementModuleUnits = new List<MovementModuleUnit>();
-			foreach(var unit in this.movementModuleUnits)
+			foreach (var unit in movementModuleUnits)
 			{
 				module.movementModuleUnits.Add(unit.Copy());
 			}
-			module.rotation = this.rotation;
+			module.rotation = rotation;
 			return module;
 		}
 
@@ -53,7 +50,7 @@ namespace JetPack.Movement
 
 		public void Move()
 		{
-			if(rotation == 0)
+			if (rotation == 0)
 			{
 				foreach (var unit in movementModuleUnits)
 					coords += unit.Move();
@@ -68,9 +65,9 @@ namespace JetPack.Movement
 		public SKRect GetRect()
 		{
 			SKRect rect = new SKRect(
-				coords.X, 
-				coords.Y, 
-				coords.X + size.Width, 
+				coords.X,
+				coords.Y,
+				coords.X + size.Width,
 				coords.Y + size.Height
 			);
 			return rect;
@@ -79,9 +76,9 @@ namespace JetPack.Movement
 		public SKRect GetRectExpl()
 		{
 			SKRect rect = new SKRect(
-				coords.X, 
-				coords.Y, 
-				coords.X + explSize.Width, 
+				coords.X,
+				coords.Y,
+				coords.X + explSize.Width,
 				coords.Y + explSize.Height
 			);
 			return rect;

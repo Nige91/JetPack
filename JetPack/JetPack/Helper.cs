@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SkiaSharp;
+using System;
 using System.IO;
 using System.Reflection;
-using System.Text;
-using SkiaSharp;
-using SkiaSharp.Views.Forms;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace JetPack
 {

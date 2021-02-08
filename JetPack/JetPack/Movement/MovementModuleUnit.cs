@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SkiaSharp;
-using SkiaSharp.Views.Forms;
+﻿using SkiaSharp;
 
 namespace JetPack.Movement
 {
@@ -13,19 +9,19 @@ namespace JetPack.Movement
 
 		public MovementModuleUnit()
 		{
-			this.lastStepTime = 0;
+			lastStepTime = 0;
 		}
 
 		public MovementModuleUnit(SKPoint distance)
 		{
 			this.distance = distance;
-			this.lastStepTime = 0;
+			lastStepTime = 0;
 		}
 
 		public MovementModuleUnit Copy()
 		{
 			MovementModuleUnit unit = new MovementModuleUnit();
-			unit.distance = new SKPoint(this.distance.X, this.distance.Y);
+			unit.distance = new SKPoint(distance.X, distance.Y);
 			return unit;
 		}
 
@@ -39,9 +35,9 @@ namespace JetPack.Movement
 
 		private float GetLoopTime()
 		{
-			if(lastStepTime == 0)
+			if (lastStepTime == 0)
 			{
-				lastStepTime = Helper.GetMilliseconds() - (1000/Settings.General.fps);
+				lastStepTime = Helper.GetMilliseconds() - (1000 / Settings.General.fps);
 			}
 			float loopTimeMs = Helper.GetMilliseconds() - lastStepTime;
 			lastStepTime = Helper.GetMilliseconds();

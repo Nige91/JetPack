@@ -1,10 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
 using System.Collections.Generic;
-using System.Text;
-using SkiaSharp;
-using SkiaSharp.Views.Forms;
-using JetPack.Movement;
-using JetPack.Weapons;
 
 namespace JetPack.Enemies
 {
@@ -17,11 +12,11 @@ namespace JetPack.Enemies
 		public int score { get; private set; }
 		private List<Enemy> explodedList;
 		private EnemyFactory enemyFactory;
-		
+
 
 		static EnemyManager()
 		{
-			
+
 		}
 
 		private EnemyManager()
@@ -64,7 +59,7 @@ namespace JetPack.Enemies
 
 		private void SpawnLoop()
 		{
-			if(this.enemyList.Count < 1)
+			if (enemyList.Count < 1)
 			{
 				SpawnEnemy2();
 			}
@@ -77,7 +72,7 @@ namespace JetPack.Enemies
 				new SKPoint(
 					Settings.General.xAxisLength - Settings.Enemy1.sizeX,
 					Helper.GetRandomFloat(
-						0, 
+						0,
 						Settings.General.yAxisLength - Settings.Enemy1.sizeY
 					)
 				)
@@ -91,7 +86,7 @@ namespace JetPack.Enemies
 				new SKPoint(
 					Settings.General.xAxisLength - Settings.Enemy1.sizeX,
 					Helper.GetRandomFloat(
-						0, 
+						0,
 						Settings.General.yAxisLength - Settings.Enemy1.sizeY
 					)
 				)

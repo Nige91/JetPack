@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using JetPack.Enemies;
 using SkiaSharp;
-using JetPack.Enemies;
+using System.Collections.Generic;
 
 namespace JetPack.Weapons
 {

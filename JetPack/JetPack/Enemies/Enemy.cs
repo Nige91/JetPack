@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Text;
+﻿using JetPack.Drawing;
 using JetPack.Movement;
 using JetPack.Weapons;
-using JetPack.Drawing;
 using SkiaSharp;
-using SkiaSharp.Views.Forms;
 
 namespace JetPack.Enemies
 {
@@ -27,32 +21,32 @@ namespace JetPack.Enemies
 		public float health { get; private set; }
 
 		public Enemy(
-			float maxHealth, 
-			MovementModule movementModule, 
-			WeaponModule weaponModule, 
-			string normalAnimResString, 
-			int normalAnimNSteps, 
-			int normalAnimStepDuration, 
+			float maxHealth,
+			MovementModule movementModule,
+			WeaponModule weaponModule,
+			string normalAnimResString,
+			int normalAnimNSteps,
+			int normalAnimStepDuration,
 			string explAnimResString,
 			int explAnimNSteps,
 			int explAnimStepDuration
 		)
 		{
 			this.maxHealth = maxHealth;
-			this.health = maxHealth;
+			health = maxHealth;
 			this.movementModule = movementModule;
 			this.weaponModule = weaponModule;
-			this.animatorNormal = new Animator(
-				normalAnimResString, 
-				normalAnimNSteps, 
+			animatorNormal = new Animator(
+				normalAnimResString,
+				normalAnimNSteps,
 				normalAnimStepDuration
 			);
-			this.animatorExpl = new Animator(
-				explAnimResString, 
-				explAnimNSteps, 
+			animatorExpl = new Animator(
+				explAnimResString,
+				explAnimNSteps,
 				explAnimStepDuration
 			);
-			this.explDuration = explAnimStepDuration*explAnimNSteps;
+			explDuration = explAnimStepDuration * explAnimNSteps;
 		}
 
 		public void Loop()
@@ -65,7 +59,7 @@ namespace JetPack.Enemies
 		{
 			if (!exploded)
 			{
-				movementModule.Move(); 
+				movementModule.Move();
 			}
 		}
 
@@ -80,11 +74,11 @@ namespace JetPack.Enemies
 			{
 				animatorNormal.Draw(canvas, movementModule.GetRect());
 				GraphicalUserInterface.DrawHealthbar(
-					canvas, 
-					movementModule.coords.X, 
-					movementModule.coords.Y, 
+					canvas,
+					movementModule.coords.X,
+					movementModule.coords.Y,
 					health / maxHealth
-				); 
+				);
 			}
 			else
 			{
@@ -94,7 +88,7 @@ namespace JetPack.Enemies
 
 		public void SufferDamage(float damage)
 		{
-			this.health -= damage;
+			health -= damage;
 		}
 
 		public bool IsDead()

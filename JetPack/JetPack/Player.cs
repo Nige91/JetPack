@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using SkiaSharp;
-using SkiaSharp.Views.Forms;
+﻿using JetPack.Drawing;
 using JetPack.Weapons;
-using JetPack.Drawing;
+using SkiaSharp;
 
 namespace JetPack
 {
@@ -42,30 +36,30 @@ namespace JetPack
 
 		public Player()
 		{
-			this.pos = new SKPoint(
-				Settings.Player.startPosX, 
+			pos = new SKPoint(
+				Settings.Player.startPosX,
 				Settings.Player.startPosY
 			);
-			this.speed = 0;
-			this.playerBitmapUp = Helper.LoadBitmap("JetPack.media.player.up.png");
-			this.playerBitmapDown = Helper.LoadBitmap("JetPack.media.player.down.png");
-			this.playerBitmapNeutral = Helper.LoadBitmap("JetPack.media.player.neutral.png");
-			this.weaponModuleFactory = WeaponModuleFactory.GetInstance();
-			this.weapon = weaponModuleFactory.CreatePlayerWeapon(
-				Settings.Player.Weapon.frequency, 
+			speed = 0;
+			playerBitmapUp = Helper.LoadBitmap("JetPack.media.player.up.png");
+			playerBitmapDown = Helper.LoadBitmap("JetPack.media.player.down.png");
+			playerBitmapNeutral = Helper.LoadBitmap("JetPack.media.player.neutral.png");
+			weaponModuleFactory = WeaponModuleFactory.GetInstance();
+			weapon = weaponModuleFactory.CreatePlayerWeapon(
+				Settings.Player.Weapon.frequency,
 				Settings.Player.Weapon.damage,
 				Settings.Player.Weapon.projSpeed
 			);
-			this.weapon.SetFriendly();
-			this.weapon.active = false;
-			this.jetPackActive = false;
-			this.animatorExpl = new Animator(
-				"JetPack.media.explosions.explosion1_", 
-				1, 
+			weapon.SetFriendly();
+			weapon.active = false;
+			jetPackActive = false;
+			animatorExpl = new Animator(
+				"JetPack.media.explosions.explosion1_",
+				1,
 				Settings.Player.explAnimStepDuration
 			);
-			this.explDuration = Settings.Player.explAnimStepDuration * 1;
-			this.animatorJetPack = new Animator(
+			explDuration = Settings.Player.explAnimStepDuration * 1;
+			animatorJetPack = new Animator(
 				"JetPack.media.fire.fire_start_",
 				"JetPack.media.fire.fire_hold_",
 				"JetPack.media.fire.fire_stop_",
@@ -113,9 +107,9 @@ namespace JetPack
 			{
 				canvas.DrawBitmap(ChooseBitmap(), GetRect());
 				GraphicalUserInterface.DrawHealthbar(
-					canvas, 
-					pos.X, 
-					pos.Y, 
+					canvas,
+					pos.X,
+					pos.Y,
 					(float)(health / maxHealth)
 				);
 				animatorJetPack.Draw(canvas, GetRectJetPackFlame());
@@ -129,7 +123,7 @@ namespace JetPack
 		public void SufferDamage(float damage)
 		{
 			health -= damage;
-			if(health <= 0)
+			if (health <= 0)
 			{
 				Explode();
 			}
@@ -138,9 +132,9 @@ namespace JetPack
 		public SKRect GetRect()
 		{
 			return new SKRect(
-				pos.X, 
-				pos.Y, 
-				pos.X + sizeX, 
+				pos.X,
+				pos.Y,
+				pos.X + sizeX,
 				pos.Y + sizeY
 			);
 		}
@@ -148,9 +142,9 @@ namespace JetPack
 		private SKRect GetRectExpl()
 		{
 			return new SKRect(
-				pos.X, 
-				pos.Y, 
-				pos.X + explSizeX, 
+				pos.X,
+				pos.Y,
+				pos.X + explSizeX,
 				pos.Y + explSizeY
 			);
 		}
@@ -158,9 +152,9 @@ namespace JetPack
 		private SKRect GetRectJetPackFlame()
 		{
 			return new SKRect(
-				pos.X + jetPackFlamePosX, 
+				pos.X + jetPackFlamePosX,
 				pos.Y + jetPackFlamePosY,
-				pos.X + jetPackFlamePosX + jetPackFlameSizeX, 
+				pos.X + jetPackFlamePosX + jetPackFlameSizeX,
 				pos.Y + jetPackFlamePosY + jetPackFlameSizeY
 			);
 		}
@@ -187,7 +181,7 @@ namespace JetPack
 			{
 				speed -= gravity;
 			}
-			else if(speed > minSpeed)
+			else if (speed > minSpeed)
 			{
 				speed = minSpeed;
 			}
@@ -223,11 +217,11 @@ namespace JetPack
 
 		private SKBitmap ChooseBitmap()
 		{
-			if(jetPackActive && speed > 0)
+			if (jetPackActive && speed > 0)
 			{
 				return playerBitmapUp;
 			}
-			else if(jetPackActive && speed <= 0 || !jetPackActive && speed > 0)
+			else if (jetPackActive && speed <= 0 || !jetPackActive && speed > 0)
 			{
 				return playerBitmapNeutral;
 			}

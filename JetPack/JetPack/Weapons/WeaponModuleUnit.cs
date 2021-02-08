@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using JetPack.Movement;
+﻿using JetPack.Movement;
 using SkiaSharp;
+using System;
 
 namespace JetPack.Weapons
 {
@@ -29,25 +27,25 @@ namespace JetPack.Weapons
 
 
 		public WeaponModuleUnit(
-			float frequency, 
-			float damage, 
-			MovementModule movementTemplate, 
+			float frequency,
+			float damage,
+			MovementModule movementTemplate,
 			string projectileBitmapResourceString,
 			string explAnimResString,
 			int explAnimNSteps,
 			int explAnimStepDuration
 		)
 		{
-			this.shootInterval = 1000 / frequency;
+			shootInterval = 1000 / frequency;
 			this.damage = damage;
 			this.movementTemplate = movementTemplate;
 			this.projectileBitmapResourceString = projectileBitmapResourceString;
 			this.explAnimResString = explAnimResString;
 			this.explAnimNSteps = explAnimNSteps;
 			this.explAnimStepDuration = explAnimStepDuration;
-			this.cooldownStartTime = Helper.GetMilliseconds();
-			this.friendly = false;
-			this.projectileManager = ProjectileManager.GetInstance();
+			cooldownStartTime = Helper.GetMilliseconds();
+			friendly = false;
+			projectileManager = ProjectileManager.GetInstance();
 		}
 
 		public void Loop(SKPoint coords, bool active)
@@ -66,11 +64,11 @@ namespace JetPack.Weapons
 
 		public void SetRotating(float angleMin, float angleMax, float cycleDuration)
 		{
-			this.rotating = true;
-			this.rotAngleMin = angleMin;
-			this.rotAngleMax = angleMax;
-			this.rotCycleDuration = cycleDuration * Settings.General.normalTimeUnitInMs;
-			this.rotStartTime = Helper.GetMilliseconds();
+			rotating = true;
+			rotAngleMin = angleMin;
+			rotAngleMax = angleMax;
+			rotCycleDuration = cycleDuration * Settings.General.normalTimeUnitInMs;
+			rotStartTime = Helper.GetMilliseconds();
 		}
 
 		private float GetRotationFactor()
@@ -88,14 +86,14 @@ namespace JetPack.Weapons
 
 		private void ReduceCooldown()
 		{
-			if(Helper.GetMilliseconds() - cooldownStartTime > shootInterval && 
-				Helper.GetMilliseconds() - cooldownStartTime < 2* shootInterval
+			if (Helper.GetMilliseconds() - cooldownStartTime > shootInterval &&
+				Helper.GetMilliseconds() - cooldownStartTime < 2 * shootInterval
 			)
 			{
 				cooledDown = true;
 				cooldownStartTime += (long)shootInterval;
 			}
-			else if(Helper.GetMilliseconds() - cooldownStartTime >= 2 * shootInterval)
+			else if (Helper.GetMilliseconds() - cooldownStartTime >= 2 * shootInterval)
 			{
 				cooledDown = true;
 				cooldownStartTime = Helper.GetMilliseconds();
@@ -109,18 +107,18 @@ namespace JetPack.Weapons
 
 		private void Shoot(SKPoint coords)
 		{
-			if(rotating)
+			if (rotating)
 				movementTemplate.rotation = GetRotationAngle();
 			cooledDown = false;
 			Projectile projectile = new Projectile(
-				movementTemplate.Copy(coords), 
-				projectileBitmapResourceString, 
-				explAnimResString, 
-				explAnimNSteps, 
-				explAnimStepDuration, 
+				movementTemplate.Copy(coords),
+				projectileBitmapResourceString,
+				explAnimResString,
+				explAnimNSteps,
+				explAnimStepDuration,
 				damage
 			);
-			projectile.friendly = this.friendly;
+			projectile.friendly = friendly;
 			projectileManager.AddProjectile(projectile);
 		}
 	}

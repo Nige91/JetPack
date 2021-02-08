@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SkiaSharp;
+﻿using SkiaSharp;
 
 namespace JetPack
 {
@@ -31,17 +28,17 @@ namespace JetPack
 			};
 
 			canvas.DrawRect(
-				x + healthBarPosX, 
-				y + healthBarPosY, 
-				healthBarWidth, 
-				healthBarHeight, 
+				x + healthBarPosX,
+				y + healthBarPosY,
+				healthBarWidth,
+				healthBarHeight,
 				backGround
 			);
 			canvas.DrawRect(
-				x + healthBarPosX, 
-				y + healthBarPosY, 
-				healthBarWidth * life, 
-				healthBarHeight, 
+				x + healthBarPosX,
+				y + healthBarPosY,
+				healthBarWidth * life,
+				healthBarHeight,
 				health
 			);
 		}
@@ -57,7 +54,7 @@ namespace JetPack
 			};
 
 			canvas.DrawText(
-				"Score: "+score.ToString(),
+				"Score: " + score.ToString(),
 				new SKPoint(scoreTextPosX, scoreTextPosY),
 				paint
 			);

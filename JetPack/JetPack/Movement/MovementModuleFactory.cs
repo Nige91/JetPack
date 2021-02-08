@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SkiaSharp;
-using SkiaSharp.Views.Forms;
+﻿using SkiaSharp;
 
 namespace JetPack.Movement
 {
 	sealed class MovementModuleFactory
 	{
-		private static readonly MovementModuleFactory instance = 
+		private static readonly MovementModuleFactory instance =
 			new MovementModuleFactory();
 
 		static MovementModuleFactory()
@@ -27,9 +23,9 @@ namespace JetPack.Movement
 		}
 
 		public MovementModule CreateStandardHorizontalModule(
-			SKPoint coords, 
-			SKSize size, 
-			SKSize explSize, 
+			SKPoint coords,
+			SKSize size,
+			SKSize explSize,
 			float speed
 		)
 		{
@@ -39,8 +35,8 @@ namespace JetPack.Movement
 		}
 
 		public MovementModule CreateEmptyModule(
-			SKPoint coords, 
-			SKSize size, 
+			SKPoint coords,
+			SKSize size,
 			SKSize explSize
 		)
 		{

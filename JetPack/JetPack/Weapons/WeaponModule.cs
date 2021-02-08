@@ -1,9 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
 using System.Collections.Generic;
-using System.Text;
-using SkiaSharp;
-using SkiaSharp.Views.Forms;
-using JetPack.Movement;
 
 namespace JetPack.Weapons
 {
@@ -26,7 +22,7 @@ namespace JetPack.Weapons
 
 		public void SetFriendly()
 		{
-			this.friendly = true;
+			friendly = true;
 			foreach (var unit in weaponUnits)
 			{
 				unit.friendly = true;
@@ -43,7 +39,7 @@ namespace JetPack.Weapons
 
 		public void AddWeaponUnit(WeaponModuleUnit unit)
 		{
-			unit.friendly = this.friendly;
+			unit.friendly = friendly;
 			weaponUnits.Add(unit);
 		}
 	}

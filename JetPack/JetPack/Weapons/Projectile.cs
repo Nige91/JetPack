@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using JetPack.Drawing;
 using JetPack.Movement;
-using JetPack.Drawing;
 using SkiaSharp;
 
 namespace JetPack.Weapons
@@ -20,7 +17,7 @@ namespace JetPack.Weapons
 		private long explStart;
 
 		public Projectile(
-			MovementModule movementModule, 
+			MovementModule movementModule,
 			string projBitmapResourceId,
 			string explAnimResString,
 			int explAnimNSteps,
@@ -29,15 +26,15 @@ namespace JetPack.Weapons
 		)
 		{
 			this.movementModule = movementModule;
-			this.projBitmap = Helper.LoadBitmap(projBitmapResourceId);
-			this.animatorExpl = new Animator(
-				explAnimResString, 
-				explAnimNSteps, 
+			projBitmap = Helper.LoadBitmap(projBitmapResourceId);
+			animatorExpl = new Animator(
+				explAnimResString,
+				explAnimNSteps,
 				explAnimStepDuration
 			);
-			this.explDuration = explAnimStepDuration * explAnimNSteps;
+			explDuration = explAnimStepDuration * explAnimNSteps;
 			this.damage = damage;
-			this.friendly = false;
+			friendly = false;
 		}
 
 		public void Move()
@@ -52,7 +49,7 @@ namespace JetPack.Weapons
 		{
 			if (!exploded)
 			{
-				canvas.DrawBitmap(projBitmap, movementModule.GetRect()); 
+				canvas.DrawBitmap(projBitmap, movementModule.GetRect());
 			}
 			else
 			{
@@ -73,7 +70,7 @@ namespace JetPack.Weapons
 
 		public bool IsOutOfBounds()
 		{
-			if(
+			if (
 				movementModule.coords.X < 0 ||
 				movementModule.coords.Y < 0 ||
 				movementModule.coords.X > Settings.General.xAxisLength ||

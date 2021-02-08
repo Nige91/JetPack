@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SkiaSharp;
-using SkiaSharp.Views.Forms;
+﻿using SkiaSharp;
 
 namespace JetPack.Drawing
 {
@@ -21,12 +17,12 @@ namespace JetPack.Drawing
 
 		public Animator(string resourceString, int nSteps, int stepDuration)
 		{
-			this.nStepsPre = 0;
-			this.nStepsHold = nSteps;
-			this.nStepsPost = 0;
+			nStepsPre = 0;
+			nStepsHold = nSteps;
+			nStepsPost = 0;
 			this.stepDuration = stepDuration;
-			this.bitmapsArrayHold = new SKBitmap[nSteps];
-			for(int i = 0; i<nSteps; i++)
+			bitmapsArrayHold = new SKBitmap[nSteps];
+			for (int i = 0; i < nSteps; i++)
 			{
 				bitmapsArrayHold[i] = Helper.LoadBitmap(
 					resourceString + GetStepIdentifierString(i) + ".png"
@@ -37,9 +33,9 @@ namespace JetPack.Drawing
 		}
 
 		public Animator(
-			string resourceStringPre, 
-			string resourceStringHold, 
-			string resourceStringPost, 
+			string resourceStringPre,
+			string resourceStringHold,
+			string resourceStringPost,
 			int nStepsPre,
 			int nStepsHold,
 			int nStepsPost,
@@ -50,9 +46,9 @@ namespace JetPack.Drawing
 			this.nStepsHold = nStepsHold;
 			this.nStepsPost = nStepsPost;
 			this.stepDuration = stepDuration;
-			this.bitmapsArrayPre = new SKBitmap[nStepsPre];
-			this.bitmapsArrayHold = new SKBitmap[nStepsHold];
-			this.bitmapsArrayPost = new SKBitmap[nStepsPost];
+			bitmapsArrayPre = new SKBitmap[nStepsPre];
+			bitmapsArrayHold = new SKBitmap[nStepsHold];
+			bitmapsArrayPost = new SKBitmap[nStepsPost];
 			for (int i = 0; i < nStepsPre; i++)
 			{
 				bitmapsArrayPre[i] = Helper.LoadBitmap(
@@ -75,14 +71,14 @@ namespace JetPack.Drawing
 
 		public void Start()
 		{
-			this.on = true;
-			this.animationStartTime = Helper.GetMilliseconds();
+			on = true;
+			animationStartTime = Helper.GetMilliseconds();
 		}
 
 		public void Stop()
 		{
-			this.on = false;
-			this.animationStopTime = Helper.GetMilliseconds();
+			on = false;
+			animationStopTime = Helper.GetMilliseconds();
 		}
 
 		public void Draw(SKCanvas canvas, SKRect rect)
@@ -93,7 +89,7 @@ namespace JetPack.Drawing
 				SKBitmap[] ba = GetBitmapArray(time);
 				canvas.DrawBitmap(ba[GetAnimationStep(time)], rect);
 			}
-			
+
 		}
 
 		private int GetAnimationStep(long time)
@@ -102,7 +98,7 @@ namespace JetPack.Drawing
 			{
 				long msPassedTotal = time - animationStartTime;
 				int stepsTotal = (int)msPassedTotal / stepDuration;
-				if(stepsTotal < nStepsPre)
+				if (stepsTotal < nStepsPre)
 				{
 					return stepsTotal;
 				}
@@ -124,7 +120,7 @@ namespace JetPack.Drawing
 			if (on)
 			{
 				long msPassedTotal = time - animationStartTime;
-				if(msPassedTotal/stepDuration < nStepsPre)
+				if (msPassedTotal / stepDuration < nStepsPre)
 				{
 					return bitmapsArrayPre;
 				}
@@ -154,7 +150,7 @@ namespace JetPack.Drawing
 
 		private string GetStepIdentifierString(int n)
 		{
-			if(n > 9)
+			if (n > 9)
 			{
 				return n.ToString();
 			}
