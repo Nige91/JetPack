@@ -75,6 +75,7 @@
     <None Remove="media\player\neutral.png" />
     <None Remove="media\player\up.png" />
     <None Remove="media\projectile1.png" />
+    <None Remove="media\samples\laserpew.ogg" />
     <None Remove="media\ship1.png" />
     <None Remove="media\starfield_black.png" />
     <None Remove="media\starfield_purple.png" />
@@ -152,6 +153,7 @@
     <EmbeddedResource Include="media\player\neutral.png" />
     <EmbeddedResource Include="media\player\up.png" />
     <EmbeddedResource Include="media\projectile1.png" />
+    <EmbeddedResource Include="media\samples\laserpew.ogg" />
     <EmbeddedResource Include="media\ship1.png" />
     <EmbeddedResource Include="media\starfield_black.png" />
     <EmbeddedResource Include="media\starfield_purple.png" />
@@ -169,6 +171,7 @@
     <PackageReference Include="SkiaSharp" Version="1.68.0" />
     <PackageReference Include="SkiaSharp.Views" Version="1.68.0" />
     <PackageReference Include="SkiaSharp.Views.Forms" Version="1.68.0" />
+    <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.4.0" />
     <PackageReference Include="Xamarin.Forms" Version="3.4.0.1008975" />
   </ItemGroup>
 

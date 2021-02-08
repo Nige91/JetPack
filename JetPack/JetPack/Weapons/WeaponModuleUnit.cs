@@ -1,6 +1,7 @@
 ﻿using JetPack.Movement;
 using SkiaSharp;
 using System;
+using Plugin.SimpleAudioPlayer;
 
 namespace JetPack.Weapons
 {
@@ -22,6 +23,7 @@ namespace JetPack.Weapons
 		private float rotAngleMax = 0;
 		private float rotCycleDuration = 0;
 		private long rotStartTime = 0;
+		private ISimpleAudioPlayer fireAudioPlayer;
 
 		private ProjectileManager projectileManager;
 
@@ -46,6 +48,7 @@ namespace JetPack.Weapons
 			cooldownStartTime = Helper.GetMilliseconds();
 			friendly = false;
 			projectileManager = ProjectileManager.GetInstance();
+			fireAudioPlayer = Helper.LoadAudioPlayer("JetPack.media.samples.laserpew.ogg");
 		}
 
 		public void Loop(SKPoint coords, bool active)
@@ -120,6 +123,7 @@ namespace JetPack.Weapons
 			);
 			projectile.friendly = friendly;
 			projectileManager.AddProjectile(projectile);
+			fireAudioPlayer.Play();
 		}
 	}
 }

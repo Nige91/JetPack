@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using Plugin.SimpleAudioPlayer;
 
 namespace JetPack
 {
@@ -36,6 +37,15 @@ namespace JetPack
 			rot.X = (float)(Math.Cos(angleRad) * point.X - Math.Sin(angleRad) * point.Y);
 			rot.Y = (float)(Math.Cos(angleRad) * point.Y + Math.Sin(angleRad) * point.X);
 			return rot;
+		}
+
+		public static ISimpleAudioPlayer LoadAudioPlayer(string resourceId)
+		{
+			Assembly assembly = typeof(App).GetTypeInfo().Assembly;
+			var stream= assembly.GetManifestResourceStream(resourceId);
+			var player = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
+			player.Load(stream);
+			return player;
 		}
 	}
 }
