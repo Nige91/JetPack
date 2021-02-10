@@ -11,18 +11,28 @@ namespace JetPack.Movement
 		public SKSize size { get; private set; }
 		public SKSize explSize { get; private set; }
 		public List<MovementModuleUnit> movementModuleUnits { get; private set; }
+		public float xCoordLimit { get; private set; } = 0;
 
 		public MovementModule()
 		{
 			movementModuleUnits = new List<MovementModuleUnit>();
 		}
 
-		public MovementModule(SKPoint coords, SKSize size, SKSize explSize)
+		public MovementModule(SKPoint coords, SKSize size, SKSize explSize) : this()
 		{
 			this.coords = coords;
 			this.size = size;
 			this.explSize = explSize;
-			movementModuleUnits = new List<MovementModuleUnit>();
+		}
+
+		public MovementModule(
+			SKPoint coords, 
+			SKSize size, 
+			SKSize explSize, 
+			float xCoordLimit
+		) : this(coords, size, explSize)
+		{
+			this.xCoordLimit = xCoordLimit;
 		}
 
 		public MovementModule Copy(SKPoint coords)
@@ -59,6 +69,10 @@ namespace JetPack.Movement
 			{
 				foreach (var unit in movementModuleUnits)
 					coords += Helper.Rotate(unit.Move(), rotation);
+			}
+			if(xCoordLimit != 0 && coords.X <= xCoordLimit)
+			{
+				coords = new SKPoint(xCoordLimit, coords.Y);
 			}
 		}
 

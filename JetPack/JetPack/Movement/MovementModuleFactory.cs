@@ -26,10 +26,11 @@ namespace JetPack.Movement
 			SKPoint coords,
 			SKSize size,
 			SKSize explSize,
-			float speed
+			float speed,
+			float xCoordLimit = 0
 		)
 		{
-			MovementModule module = CreateEmptyModule(coords, size, explSize);
+			MovementModule module = CreateEmptyModule(coords, size, explSize, xCoordLimit);
 			module.AddUnit(new MovementModuleUnit(new SKPoint(speed, 0)));
 			return module;
 		}
@@ -37,10 +38,11 @@ namespace JetPack.Movement
 		public MovementModule CreateEmptyModule(
 			SKPoint coords,
 			SKSize size,
-			SKSize explSize
+			SKSize explSize,
+			float xCoordLimit = 0
 		)
 		{
-			MovementModule module = new MovementModule(coords, size, explSize);
+			MovementModule module = new MovementModule(coords, size, explSize, xCoordLimit);
 			return module;
 		}
 	}

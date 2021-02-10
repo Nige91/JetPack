@@ -62,6 +62,7 @@
 			public const float explSizeY = 20;
 			public const int explAnimStepDuration = 10;
 			public const float speed = -8;
+			public const float xCoordLimit = 20;
 
 			public static class Weapon
 			{
@@ -91,11 +92,12 @@
 			public const float explSizeX = 20;
 			public const float explSizeY = 20;
 			public const int explAnimStepDuration = 10;
-			public const float speed = -15;
+			public const float speed = -50;
+			public const float xCoordLimit = 20;
 
 			public static class Weapon
 			{
-				public const float frequency = 6;
+				public const float frequency = 2;
 				public const float damage = 20;
 				public const float projSpeed = -60;
 				public const float yCoords = 15;
