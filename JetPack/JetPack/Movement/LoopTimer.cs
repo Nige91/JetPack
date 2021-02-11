@@ -32,6 +32,11 @@ namespace JetPack.Movement
 			return loopTime;
 		}
 
+		public float GetFPS()
+		{
+			return 1 / loopTime;
+		}
+
 		public void MeasureTime()
 		{
 			if (lastStepTime == 0)

@@ -20,7 +20,7 @@
 			public const float scoreTextPosX = 5;
 			public const float scoreTextPosY = 5;
 			public const float fpsTextSize = 5;
-			public const float fpsTextPosX = 150;
+			public const float fpsTextPosX = 130;
 			public const float fpsTextPosY = 5;
 
 		}

@@ -133,6 +133,7 @@ namespace JetPack
 			enemyManager.DrawEnemies(canvas);
 			projectileManager.DrawProjectiles(canvas);
 			GraphicalUserInterface.DrawScore(canvas, enemyManager.score);
+			GraphicalUserInterface.DrawFPS(canvas, (int)loopTimer.GetFPS());
 		}
 		
 		private void GameLoop()
