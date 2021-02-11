@@ -11,6 +11,7 @@ using Xamarin.Forms;
 using JetPack.Enemies;
 using JetPack.Weapons;
 using JetPack.Pages;
+using JetPack.Movement;
 
 namespace JetPack
 {
@@ -21,6 +22,7 @@ namespace JetPack
 		Player player;
 		EnemyManager enemyManager;
 		ProjectileManager projectileManager;
+		LoopTimer loopTimer;
 
 		SKBitmap backgroundBitmap;
 
@@ -100,6 +102,7 @@ namespace JetPack
 			enemyManager.Initialize();
 			projectileManager = ProjectileManager.GetInstance();
 			projectileManager.Initialize();
+			loopTimer = LoopTimer.GetInstance();
 			Loop();
 		}
 
@@ -134,6 +137,7 @@ namespace JetPack
 		
 		private void GameLoop()
 		{
+			loopTimer.MeasureTime();
 			player.Loop();
 			enemyManager.Loop();
 			projectileManager.Loop(player, enemyManager.enemyList);

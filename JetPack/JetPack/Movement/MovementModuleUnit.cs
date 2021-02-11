@@ -7,7 +7,7 @@ namespace JetPack.Movement
 {
 	abstract class MovementModuleUnit
 	{
-		protected long lastStepTime = 0;
+		protected LoopTimer loopTimer = LoopTimer.GetInstance();
 
 		public abstract MovementModuleUnit Copy();
 
@@ -15,13 +15,7 @@ namespace JetPack.Movement
 
 		protected float GetLoopTime()
 		{
-			if (lastStepTime == 0)
-			{
-				lastStepTime = Helper.GetMilliseconds() - (1000 / Settings.General.fps);
-			}
-			float loopTimeMs = Helper.GetMilliseconds() - lastStepTime;
-			lastStepTime = Helper.GetMilliseconds();
-			return loopTimeMs / Settings.General.normalTimeUnitInMs;
+			return loopTimer.GetLoopTime();
 		}
 	}
 }

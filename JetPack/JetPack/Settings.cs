@@ -19,6 +19,9 @@
 			public const float scoreTextSize = 5;
 			public const float scoreTextPosX = 5;
 			public const float scoreTextPosY = 5;
+			public const float fpsTextSize = 5;
+			public const float fpsTextPosX = 150;
+			public const float fpsTextPosY = 5;
 
 		}
 
@@ -28,10 +31,10 @@
 			public const float startPosY = 5;
 			public const float sizeX = 10;
 			public const float sizeY = 10;
-			public const float minSpeed = -5;
-			public const float maxSpeed = 5;
-			public const float gravity = 0.45f;
-			public const float jetPackStrength = 1;
+			public const float minSpeed = -5*30;
+			public const float maxSpeed = 5 * 30;
+			public const float gravity = 0.45f * 30 * 30;
+			public const float jetPackStrength = 1 * 30 * 30;
 			public const float maxHealth = 100;
 			public const float explSizeX = 10;
 			public const float explSizeY = 10;
@@ -92,7 +95,7 @@
 			public const float explSizeX = 20;
 			public const float explSizeY = 20;
 			public const int explAnimStepDuration = 10;
-			public const float speed = -50;
+			public const float speed = -10;
 			public const float xCoordLimit = 20;
 
 			public static class Weapon

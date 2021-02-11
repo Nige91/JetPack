@@ -1,6 +1,8 @@
 ﻿using JetPack.Drawing;
 using JetPack.Weapons;
+using JetPack.Movement;
 using SkiaSharp;
+using System;
 
 namespace JetPack
 {
@@ -32,6 +34,7 @@ namespace JetPack
 		private SKBitmap playerBitmapDown;
 		private SKBitmap playerBitmapNeutral;
 		private WeaponModuleFactory weaponModuleFactory;
+		private LoopTimer loopTimer;
 		private WeaponModule weapon;
 
 		public Player()
@@ -45,6 +48,7 @@ namespace JetPack
 			playerBitmapDown = Helper.LoadBitmap("JetPack.media.player.down.png");
 			playerBitmapNeutral = Helper.LoadBitmap("JetPack.media.player.neutral.png");
 			weaponModuleFactory = WeaponModuleFactory.GetInstance();
+			loopTimer = LoopTimer.GetInstance();
 			weapon = weaponModuleFactory.CreatePlayerWeapon(
 				Settings.Player.Weapon.frequency,
 				Settings.Player.Weapon.damage,
@@ -72,8 +76,7 @@ namespace JetPack
 
 		public void Loop()
 		{
-			ApplyGravity();
-			ApplyJetPack();
+			ApplyGravityAndJetPack();
 			Move();
 			weapon.Loop(pos);
 		}
@@ -175,36 +178,21 @@ namespace JetPack
 			return Helper.GetMilliseconds() - explStart > explDuration;
 		}
 
-		private void ApplyGravity()
+		private void ApplyGravityAndJetPack()
 		{
-			if (speed - gravity > minSpeed)
-			{
-				speed -= gravity;
-			}
-			else if (speed > minSpeed)
-			{
-				speed = minSpeed;
-			}
-		}
-
-		private void ApplyJetPack()
-		{
+			float speedModifier = -gravity * loopTimer.GetLoopTime();
 			if (jetPackActive)
-			{
-				if (speed + jetPackStrength < maxSpeed)
-				{
-					speed += jetPackStrength;
-				}
-				else if (speed < maxSpeed)
-				{
-					speed = maxSpeed;
-				}
-			}
+				speedModifier += jetPackStrength * loopTimer.GetLoopTime();
+			speed += speedModifier;
+			if (speed > maxSpeed)
+				speed = maxSpeed;
+			else if (speed < minSpeed)
+				speed = minSpeed;
 		}
 
 		private void Move()
 		{
-			pos.Y -= (float)speed;
+			pos.Y -= speed * loopTimer.GetLoopTime();
 			if (pos.Y < 0)
 			{
 				pos.Y = 0;
