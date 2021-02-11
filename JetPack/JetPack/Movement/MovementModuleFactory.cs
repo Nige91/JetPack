@@ -31,7 +31,7 @@ namespace JetPack.Movement
 		)
 		{
 			MovementModule module = CreateEmptyModule(coords, size, explSize, xCoordLimit);
-			module.AddUnit(new MovementModuleUnit(new SKPoint(speed, 0)));
+			module.AddUnit(new LinearMovementUnit(new SKPoint(speed, 0)));
 			return module;
 		}
 
