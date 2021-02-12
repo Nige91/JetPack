@@ -6,7 +6,7 @@
 		{
 			public const int xAxisLength = 160;
 			public const int yAxisLength = 90;
-			public const int fps = 90;
+			public const int fps = 60;
 			public const int loopTimeArrayLength = 30;
 			public const int normalTimeUnitInMs = 1000;
 		}
@@ -97,12 +97,12 @@
 			public const float explSizeY = 20;
 			public const int explAnimStepDuration = 10;
 			public const float speed = -10;
-			public const float xCoordLimit = 20;
+			public const float xCoordLimit = 140;
 
 			public static class Weapon
 			{
-				public const float frequency = 2;
-				public const float damage = 20;
+				public const float frequency = 5;
+				public const float damage = 0;
 				public const float projSpeed = -60;
 				public const float yCoords = 15;
 				public const float rotAngleMin = -45;

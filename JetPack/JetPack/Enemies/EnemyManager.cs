@@ -61,7 +61,8 @@ namespace JetPack.Enemies
 		{
 			if (enemyList.Count < 1)
 			{
-				//SpawnEnemy2();
+				for(int i = 0; i < 10; i++)
+					SpawnEnemy2();
 			}
 		}
 

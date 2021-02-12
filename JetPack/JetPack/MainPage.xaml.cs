@@ -29,9 +29,9 @@ namespace JetPack
 		public MainPage()
 		{
 			InitializeComponent();
-			canvasView.PaintSurface += OnPaint;
-			canvasView.Touch += OnTouch;
-			Content = canvasView;
+			skglView.PaintSurface += OnPaint;
+			skglView.Touch += OnTouch;
+			Content = skglView;
 			backgroundBitmap = Helper.LoadBitmap("JetPack.media.starfield_purple.png");
 		}
 
@@ -50,16 +50,17 @@ namespace JetPack
 			pageIsActive = false;
 		}
 
-		private void OnPaint(object sender, SKPaintSurfaceEventArgs e)
+		private void OnPaint(object sender, SKPaintGLSurfaceEventArgs e)
 		{
 			float pixelCoordRatioX = 
-				(float)e.Info.Width/(float)Settings.General.xAxisLength;
+				(float)e.BackendRenderTarget.Width/(float)Settings.General.xAxisLength;
 			float pixelCoordRatioY = 
-				(float)e.Info.Height / (float)Settings.General.yAxisLength;
+				(float)e.BackendRenderTarget.Height / (float)Settings.General.yAxisLength;
 			SKCanvas canvas = e.Surface.Canvas;
 			canvas.Scale(pixelCoordRatioX, pixelCoordRatioY);
 			try
 			{
+				GameLoop();
 				DrawingLoop(canvas);
 			}
 			finally
@@ -70,7 +71,7 @@ namespace JetPack
 
 		private void OnTouch(object sender, SKTouchEventArgs e)
 		{
-			if (e.Location.X < ((SKCanvasView)sender).CanvasSize.Width / 2)
+			if (e.Location.X < ((SKGLView)sender).CanvasSize.Width / 2)
 			{
 				if (e.ActionType == SKTouchAction.Pressed)
 				{
@@ -111,8 +112,7 @@ namespace JetPack
 		{
 			while (pageIsActive)
 			{
-				GameLoop();
-				canvasView.InvalidateSurface();
+				skglView.InvalidateSurface();
 				await Task.Delay(TimeSpan.FromSeconds(1.0 / Settings.General.fps));
 			}
 		}
