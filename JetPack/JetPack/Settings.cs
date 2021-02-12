@@ -6,7 +6,8 @@
 		{
 			public const int xAxisLength = 160;
 			public const int yAxisLength = 90;
-			public const int fps = 30;
+			public const int fps = 90;
+			public const int loopTimeArrayLength = 30;
 			public const int normalTimeUnitInMs = 1000;
 		}
 

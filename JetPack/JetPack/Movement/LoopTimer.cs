@@ -11,6 +11,10 @@ namespace JetPack.Movement
 
 		private long lastStepTime = 0;
 		private float loopTime = 1f/ Settings.General.fps;
+		private float[] loopTimeArray = 
+			new float[Settings.General.loopTimeArrayLength];
+		private int loopTimeArrayIndex = 0;
+
 
 		static LoopTimer()
 		{
@@ -34,7 +38,11 @@ namespace JetPack.Movement
 
 		public float GetFPS()
 		{
-			return 1 / loopTime;
+			float loopTimeSum = 0;
+			foreach (var x in loopTimeArray)
+				loopTimeSum += x;
+			float loopTimeMean = loopTimeSum / Settings.General.loopTimeArrayLength;
+			return 1 / loopTimeMean;
 		}
 
 		public void MeasureTime()
@@ -46,6 +54,8 @@ namespace JetPack.Movement
 			float loopTimeMs = Helper.GetMilliseconds() - lastStepTime;
 			lastStepTime = Helper.GetMilliseconds();
 			loopTime =  loopTimeMs / Settings.General.normalTimeUnitInMs;
+			loopTimeArray[loopTimeArrayIndex%30] = loopTime;
+			loopTimeArrayIndex++;
 		}
 	}
 }
