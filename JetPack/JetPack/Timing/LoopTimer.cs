@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 
-namespace JetPack.Movement
+//TODO move out of movement namespace
+namespace JetPack.Timing
 {
 	sealed class LoopTimer
 	{
@@ -10,10 +12,12 @@ namespace JetPack.Movement
 			new LoopTimer();
 
 		private long lastStepTime = 0;
+		private long totalTime = 0;
 		private float loopTime = 1f/ Settings.General.fps;
 		private float[] loopTimeArray = 
 			new float[Settings.General.loopTimeArrayLength];
 		private int loopTimeArrayIndex = 0;
+		private Stopwatch watch = new Stopwatch();
 
 
 		static LoopTimer()
@@ -23,7 +27,7 @@ namespace JetPack.Movement
 
 		private LoopTimer()
 		{
-
+			watch.Start();
 		}
 
 		public static LoopTimer GetInstance()
@@ -34,6 +38,11 @@ namespace JetPack.Movement
 		public float GetLoopTime()
 		{
 			return loopTime;
+		}
+
+		public long GetTotalMs()
+		{
+			return totalTime;
 		}
 
 		public float GetFPS()
@@ -47,12 +56,13 @@ namespace JetPack.Movement
 
 		public void MeasureTime()
 		{
+			totalTime = watch.ElapsedMilliseconds;
 			if (lastStepTime == 0)
 			{
-				lastStepTime = Helper.GetMilliseconds() - (1000 / Settings.General.fps);
+				lastStepTime = GetTotalMs() - (1000 / Settings.General.fps);
 			}
-			float loopTimeMs = Helper.GetMilliseconds() - lastStepTime;
-			lastStepTime = Helper.GetMilliseconds();
+			float loopTimeMs = GetTotalMs() - lastStepTime;
+			lastStepTime = GetTotalMs();
 			loopTime =  loopTimeMs / Settings.General.normalTimeUnitInMs;
 			loopTimeArray[loopTimeArrayIndex%30] = loopTime;
 			loopTimeArrayIndex++;

@@ -12,6 +12,7 @@ using JetPack.Enemies;
 using JetPack.Weapons;
 using JetPack.Pages;
 using JetPack.Movement;
+using JetPack.Timing;
 
 namespace JetPack
 {
@@ -61,13 +62,8 @@ namespace JetPack
 			canvas.Scale(pixelCoordRatioX, pixelCoordRatioY);
 			try
 			{
-				timeLogger.StartLog("GameLoop");
 				GameLoop();
-				timeLogger.FinishLog("GameLoop");
-				timeLogger.StartLog("DrawingLoop");
 				DrawingLoop(canvas);
-				timeLogger.FinishLog("DrawingLoop");
-				timeLogger.CalculateMeans();
 			}
 			finally
 			{
@@ -145,22 +141,15 @@ namespace JetPack
 		
 		private void GameLoop()
 		{
-			timeLogger.StartLog("loopTimer");
 			loopTimer.MeasureTime();
-			timeLogger.FinishLog("loopTimer");
-			timeLogger.StartLog("player");
 			player.Loop();
-			timeLogger.FinishLog("player");
-			timeLogger.StartLog("enemyManager");
 			enemyManager.Loop();
-			timeLogger.FinishLog("enemyManager");
-			timeLogger.StartLog("projectileManager");
 			projectileManager.Loop(player, enemyManager.enemyList);
-			timeLogger.FinishLog("projectileManager");
 			if (player.IsGameOver())
 			{
 				Navigation.PushAsync(new GameOverPage());
 			}
+			timeLogger.CalculateMeansAndMax();
 		}
 	}
 }

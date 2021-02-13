@@ -1,4 +1,5 @@
 ﻿using JetPack.Movement;
+using JetPack.Drawing;
 using SkiaSharp;
 
 namespace JetPack.Weapons
@@ -10,6 +11,9 @@ namespace JetPack.Weapons
 
 		private MovementModuleFactory movementModuleFactory;
 
+		private SKBitmap projBitmap;
+		private Animator animatorExpl1;
+
 		static WeaponModuleFactory()
 		{
 
@@ -18,6 +22,12 @@ namespace JetPack.Weapons
 		private WeaponModuleFactory()
 		{
 			movementModuleFactory = MovementModuleFactory.GetInstance();
+			projBitmap = Helper.LoadBitmap("JetPack.media.projectile1.png");
+			animatorExpl1 = new Animator(
+				"JetPack.media.explosions.explosion1_",
+				1,
+				Settings.WeaponFourShot.explAnimStepDuration
+			);
 		}
 
 		public static WeaponModuleFactory GetInstance()
@@ -145,6 +155,8 @@ namespace JetPack.Weapons
 			float cooldownPhaseShiftPercent = 0
 		)
 		{
+			//TODO fix 1ms execution time
+			Helper.StartTimeLog("CreateWeaponModHoriz");
 			MovementModule module =
 				movementModuleFactory.CreateStandardHorizontalModule(
 					coords,
@@ -156,12 +168,11 @@ namespace JetPack.Weapons
 				frequency,
 				damage,
 				module,
-				"JetPack.media.projectile1.png",
-				"JetPack.media.explosions.explosion1_",
-				1,
-				Settings.WeaponFourShot.explAnimStepDuration
+				projBitmap,
+				animatorExpl1
 			);
 			unit.SetCooldownPhaseShiftPercent(cooldownPhaseShiftPercent);
+			Helper.FinishTimeLog("CreateWeaponModHoriz");
 			return unit;
 		}
 	}

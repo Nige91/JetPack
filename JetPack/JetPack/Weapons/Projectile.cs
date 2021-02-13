@@ -1,5 +1,6 @@
 ﻿using JetPack.Drawing;
 using JetPack.Movement;
+using JetPack.Timing;
 using SkiaSharp;
 
 namespace JetPack.Weapons
@@ -15,26 +16,22 @@ namespace JetPack.Weapons
 		private int explDuration;
 		private bool exploded = false;
 		private long explStart;
+		private LoopTimer loopTimer;
 
 		public Projectile(
 			MovementModule movementModule,
-			string projBitmapResourceId,
-			string explAnimResString,
-			int explAnimNSteps,
-			int explAnimStepDuration,
+			SKBitmap projBitmap,
+			Animator animatorExpl,
 			float damage
 		)
 		{
 			this.movementModule = movementModule;
-			projBitmap = Helper.LoadBitmap(projBitmapResourceId);
-			animatorExpl = new Animator(
-				explAnimResString,
-				explAnimNSteps,
-				explAnimStepDuration
-			);
-			explDuration = explAnimStepDuration * explAnimNSteps;
+			this.projBitmap = projBitmap; 
+			this.animatorExpl = animatorExpl;
+			explDuration = animatorExpl.GetLoopDuration();
 			this.damage = damage;
 			friendly = false;
+			loopTimer = LoopTimer.GetInstance();
 		}
 
 		public void Move()
@@ -60,12 +57,12 @@ namespace JetPack.Weapons
 		public void Explode()
 		{
 			exploded = true;
-			explStart = Helper.GetMilliseconds();
+			explStart = loopTimer.GetTotalMs();
 		}
 
 		public bool ExplosionFinished()
 		{
-			return Helper.GetMilliseconds() - explStart > explDuration;
+			return loopTimer.GetTotalMs() - explStart > explDuration;
 		}
 
 		public bool IsOutOfBounds()

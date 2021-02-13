@@ -1,4 +1,6 @@
 ﻿using SkiaSharp;
+using JetPack.Movement;
+using JetPack.Timing;
 
 namespace JetPack.Drawing
 {
@@ -14,6 +16,7 @@ namespace JetPack.Drawing
 		private SKBitmap[] bitmapsArrayHold;
 		private SKBitmap[] bitmapsArrayPost;
 		private bool on = false;
+		private LoopTimer loopTimer;
 
 		public Animator(string resourceString, int nSteps, int stepDuration)
 		{
@@ -28,6 +31,7 @@ namespace JetPack.Drawing
 					resourceString + GetStepIdentifierString(i) + ".png"
 				);
 			}
+			loopTimer = LoopTimer.GetInstance();
 			//TODO move call out of constructor
 			Start();
 		}
@@ -67,29 +71,34 @@ namespace JetPack.Drawing
 					resourceStringPost + GetStepIdentifierString(i) + ".png"
 				);
 			}
+			loopTimer = LoopTimer.GetInstance();
 		}
 
 		public void Start()
 		{
 			on = true;
-			animationStartTime = Helper.GetMilliseconds();
+			animationStartTime = loopTimer.GetTotalMs();
 		}
 
 		public void Stop()
 		{
 			on = false;
-			animationStopTime = Helper.GetMilliseconds();
+			animationStopTime = loopTimer.GetTotalMs();
 		}
 
 		public void Draw(SKCanvas canvas, SKRect rect)
 		{
-			long time = Helper.GetMilliseconds();
+			long time = loopTimer.GetTotalMs();
 			if (NeedsToDraw(time))
 			{
 				SKBitmap[] ba = GetBitmapArray(time);
 				canvas.DrawBitmap(ba[GetAnimationStep(time)], rect);
 			}
+		}
 
+		public int GetLoopDuration()
+		{
+			return nStepsHold * stepDuration;
 		}
 
 		private int GetAnimationStep(long time)

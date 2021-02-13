@@ -2,6 +2,8 @@
 using SkiaSharp;
 using System;
 using Plugin.SimpleAudioPlayer;
+using JetPack.Drawing;
+using JetPack.Timing;
 
 namespace JetPack.Weapons
 {
@@ -11,11 +13,9 @@ namespace JetPack.Weapons
 		public float damage { get; private set; }
 		public bool friendly { get; set; }
 		public MovementModule movementTemplate { get; set; }
-		public string projectileBitmapResourceString { get; private set; }
+		public SKBitmap projBitmap { get; private set; }
 
-		private string explAnimResString;
-		private int explAnimNSteps;
-		private int explAnimStepDuration;
+		private Animator animatorExpl;
 		private long cooldownStartTime;
 		private bool cooledDown;
 		private bool rotating = false;
@@ -24,6 +24,7 @@ namespace JetPack.Weapons
 		private float rotCycleDuration = 0;
 		private long rotStartTime = 0;
 		private ISimpleAudioPlayer fireAudioPlayer;
+		private LoopTimer loopTimer;
 
 		private ProjectileManager projectileManager;
 
@@ -32,23 +33,21 @@ namespace JetPack.Weapons
 			float frequency,
 			float damage,
 			MovementModule movementTemplate,
-			string projectileBitmapResourceString,
-			string explAnimResString,
-			int explAnimNSteps,
-			int explAnimStepDuration
+			SKBitmap projBitmap,
+			Animator animatorExpl
 		)
 		{
 			shootInterval = 1000 / frequency;
 			this.damage = damage;
 			this.movementTemplate = movementTemplate;
-			this.projectileBitmapResourceString = projectileBitmapResourceString;
-			this.explAnimResString = explAnimResString;
-			this.explAnimNSteps = explAnimNSteps;
-			this.explAnimStepDuration = explAnimStepDuration;
-			cooldownStartTime = Helper.GetMilliseconds();
+			this.projBitmap = projBitmap;
+			this.animatorExpl = animatorExpl;
+			loopTimer = LoopTimer.GetInstance();
+			cooldownStartTime = loopTimer.GetTotalMs();
 			friendly = false;
 			projectileManager = ProjectileManager.GetInstance();
-			fireAudioPlayer = Helper.LoadAudioPlayer("JetPack.media.samples.laserpew.ogg");
+			//fireAudioPlayer = 
+			//	Helper.LoadAudioPlayer("JetPack.media.samples.laserpew.ogg");
 		}
 
 		public void Loop(SKPoint coords, bool active)
@@ -71,12 +70,12 @@ namespace JetPack.Weapons
 			rotAngleMin = angleMin;
 			rotAngleMax = angleMax;
 			rotCycleDuration = cycleDuration * Settings.General.normalTimeUnitInMs;
-			rotStartTime = Helper.GetMilliseconds();
+			rotStartTime = loopTimer.GetTotalMs();
 		}
 
 		private float GetRotationFactor()
 		{
-			int timePassed = (int)(Helper.GetMilliseconds() - rotStartTime);
+			int timePassed = (int)(loopTimer.GetTotalMs() - rotStartTime);
 			float rotPhase = timePassed % rotCycleDuration;
 			return Math.Abs(-1.0f + 2.0f * rotPhase / rotCycleDuration);
 		}
@@ -89,17 +88,17 @@ namespace JetPack.Weapons
 
 		private void ReduceCooldown()
 		{
-			if (Helper.GetMilliseconds() - cooldownStartTime > shootInterval &&
-				Helper.GetMilliseconds() - cooldownStartTime < 2 * shootInterval
+			if (loopTimer.GetTotalMs() - cooldownStartTime > shootInterval &&
+				loopTimer.GetTotalMs() - cooldownStartTime < 2 * shootInterval
 			)
 			{
 				cooledDown = true;
 				cooldownStartTime += (long)shootInterval;
 			}
-			else if (Helper.GetMilliseconds() - cooldownStartTime >= 2 * shootInterval)
+			else if (loopTimer.GetTotalMs() - cooldownStartTime >= 2 * shootInterval)
 			{
 				cooledDown = true;
-				cooldownStartTime = Helper.GetMilliseconds();
+				cooldownStartTime = loopTimer.GetTotalMs();
 			}
 		}
 
@@ -111,19 +110,19 @@ namespace JetPack.Weapons
 		private void Shoot(SKPoint coords)
 		{
 			if (rotating)
+			{
 				movementTemplate.rotation = GetRotationAngle();
+			}
 			cooledDown = false;
 			Projectile projectile = new Projectile(
 				movementTemplate.Copy(coords),
-				projectileBitmapResourceString,
-				explAnimResString,
-				explAnimNSteps,
-				explAnimStepDuration,
+				projBitmap,
+				animatorExpl,
 				damage
 			);
 			projectile.friendly = friendly;
 			projectileManager.AddProjectile(projectile);
-			fireAudioPlayer.Play();
+			//TODO implement efficient Audio
 		}
 	}
 }

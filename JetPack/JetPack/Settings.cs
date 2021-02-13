@@ -101,7 +101,7 @@
 
 			public static class Weapon
 			{
-				public const float frequency = 3;
+				public const float frequency = 20;
 				public const float damage = 0;
 				public const float projSpeed = -60;
 				public const float yCoords = 15;

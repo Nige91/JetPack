@@ -1,5 +1,6 @@
 ﻿using JetPack.Movement;
 using JetPack.Weapons;
+using JetPack.Drawing;
 using SkiaSharp;
 
 namespace JetPack.Enemies
@@ -11,6 +12,11 @@ namespace JetPack.Enemies
 		private MovementModuleFactory movementModuleFactory;
 		private WeaponModuleFactory weaponModuleFactory;
 
+		private Animator enemy1NormalAnim;
+		private Animator enemy1ExplAnim;
+		private Animator enemy2NormalAnim;
+		private Animator enemy2ExplAnim;
+
 		static EnemyFactory()
 		{
 
@@ -20,6 +26,27 @@ namespace JetPack.Enemies
 		{
 			movementModuleFactory = MovementModuleFactory.GetInstance();
 			weaponModuleFactory = WeaponModuleFactory.GetInstance();
+
+			enemy1NormalAnim = new Animator(
+				"JetPack.media.ufos.green1_",
+				4,
+				Settings.Enemy1.normalAnimStepDuration
+			);
+			enemy2NormalAnim = new Animator(
+				"JetPack.media.ufos.red1_",
+				4,
+				Settings.Enemy2.normalAnimStepDuration
+			);
+			enemy1ExplAnim = new Animator(
+				"JetPack.media.explosions.explosion1_",
+				1,
+				Settings.Enemy1.explAnimStepDuration
+			);
+			enemy2ExplAnim = new Animator(
+				"JetPack.media.explosions.explosion1_",
+				1,
+				Settings.Enemy2.explAnimStepDuration
+			);
 		}
 
 		public static EnemyFactory GetInstance()
@@ -44,12 +71,8 @@ namespace JetPack.Enemies
 					Settings.Enemy1.Weapon.damage,
 					Settings.Enemy1.Weapon.projSpeed
 				),
-				"JetPack.media.ufos.green1_",
-				4,
-				Settings.Enemy1.normalAnimStepDuration,
-				"JetPack.media.explosions.explosion1_",
-				1,
-				Settings.Enemy1.explAnimStepDuration
+				enemy1NormalAnim,
+				enemy1ExplAnim
 			);
 			return enemy;
 		}
@@ -73,12 +96,8 @@ namespace JetPack.Enemies
 					Settings.Enemy2.Weapon.rotAngleMax,
 					Settings.Enemy2.Weapon.rotCycleDuration
 				),
-				"JetPack.media.ufos.red1_",
-				4,
-				Settings.Enemy2.normalAnimStepDuration,
-				"JetPack.media.explosions.explosion1_",
-				1,
-				Settings.Enemy2.explAnimStepDuration
+				enemy2NormalAnim,
+				enemy2ExplAnim
 			);
 			return enemy;
 		}

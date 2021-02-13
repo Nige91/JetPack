@@ -2,17 +2,19 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Diagnostics;
 using Plugin.SimpleAudioPlayer;
+using JetPack.Timing;
 
 namespace JetPack
 {
 	static class Helper
 	{
 		static Random rand = new Random();
+		static TimeLogger timeLogger = TimeLogger.GetInstance();
 
-		public static long GetMilliseconds()
+		static Helper()
 		{
-			return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 		}
 
 		public static float GetRandomFloat(float min, float max)
@@ -46,6 +48,16 @@ namespace JetPack
 			var player = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
 			player.Load(stream);
 			return player;
+		}
+
+		public static void StartTimeLog(string identifier)
+		{
+			timeLogger.StartLog(identifier);
+		}
+
+		public static void FinishTimeLog(string identifier)
+		{
+			timeLogger.FinishLog(identifier);
 		}
 	}
 }

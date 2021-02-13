@@ -1,6 +1,7 @@
 ﻿using JetPack.Drawing;
 using JetPack.Movement;
 using JetPack.Weapons;
+using JetPack.Timing;
 using SkiaSharp;
 
 namespace JetPack.Enemies
@@ -8,6 +9,7 @@ namespace JetPack.Enemies
 	class Enemy
 	{
 		public float maxHealth { get; private set; }
+		public float health { get; private set; }
 		public MovementModule movementModule { get; private set; }
 		public SKBitmap explBitmap { get; private set; }
 		public WeaponModule weaponModule { get; private set; }
@@ -18,35 +20,25 @@ namespace JetPack.Enemies
 		private bool exploded = false;
 		private long explStart;
 
-		public float health { get; private set; }
+		private LoopTimer loopTimer;
+
 
 		public Enemy(
 			float maxHealth,
 			MovementModule movementModule,
 			WeaponModule weaponModule,
-			string normalAnimResString,
-			int normalAnimNSteps,
-			int normalAnimStepDuration,
-			string explAnimResString,
-			int explAnimNSteps,
-			int explAnimStepDuration
+			Animator animatorNormal,
+			Animator animatorExpl
 		)
 		{
 			this.maxHealth = maxHealth;
 			health = maxHealth;
 			this.movementModule = movementModule;
 			this.weaponModule = weaponModule;
-			animatorNormal = new Animator(
-				normalAnimResString,
-				normalAnimNSteps,
-				normalAnimStepDuration
-			);
-			animatorExpl = new Animator(
-				explAnimResString,
-				explAnimNSteps,
-				explAnimStepDuration
-			);
-			explDuration = explAnimStepDuration * explAnimNSteps;
+			this.animatorNormal = animatorNormal;
+			this.animatorExpl = animatorExpl;
+			explDuration = animatorExpl.GetLoopDuration();
+			loopTimer = LoopTimer.GetInstance();
 		}
 
 		public void Loop()
@@ -99,12 +91,12 @@ namespace JetPack.Enemies
 		public void Explode()
 		{
 			exploded = true;
-			explStart = Helper.GetMilliseconds();
+			explStart = loopTimer.GetTotalMs();
 		}
 
 		public bool ExplosionFinished()
 		{
-			return Helper.GetMilliseconds() - explStart > explDuration;
+			return loopTimer.GetTotalMs() - explStart > explDuration;
 		}
 	}
 }

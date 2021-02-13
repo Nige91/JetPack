@@ -1,6 +1,7 @@
 ﻿using JetPack.Drawing;
 using JetPack.Weapons;
 using JetPack.Movement;
+using JetPack.Timing;
 using SkiaSharp;
 using System;
 
@@ -170,12 +171,12 @@ namespace JetPack
 		private void Explode()
 		{
 			exploded = true;
-			explStart = Helper.GetMilliseconds();
+			explStart = loopTimer.GetTotalMs();
 		}
 
 		private bool ExplosionFinished()
 		{
-			return Helper.GetMilliseconds() - explStart > explDuration;
+			return loopTimer.GetTotalMs() - explStart > explDuration;
 		}
 
 		private void ApplyGravityAndJetPack()
