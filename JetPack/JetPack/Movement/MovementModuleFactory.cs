@@ -1,4 +1,5 @@
 ﻿using SkiaSharp;
+using System;
 
 namespace JetPack.Movement
 {
@@ -22,19 +23,6 @@ namespace JetPack.Movement
 			return instance;
 		}
 
-		public MovementModule CreateStandardHorizontalModule(
-			SKPoint coords,
-			SKSize size,
-			SKSize explSize,
-			float speed,
-			float xCoordLimit = 0
-		)
-		{
-			MovementModule module = CreateEmptyModule(coords, size, explSize, xCoordLimit);
-			module.AddUnit(new LinearMovementUnit(new SKPoint(speed, 0)));
-			return module;
-		}
-
 		public MovementModule CreateEmptyModule(
 			SKPoint coords,
 			SKSize size,
@@ -43,6 +31,52 @@ namespace JetPack.Movement
 		)
 		{
 			MovementModule module = new MovementModule(coords, size, explSize, xCoordLimit);
+			return module;
+		}
+
+		public MovementModule CreateHorizontalModule(
+			SKPoint coords,
+			SKSize size,
+			SKSize explSize,
+			float speed,
+			float xCoordLimit = 0
+		)
+		{
+			MovementModule module = CreateEmptyModule(coords, size, explSize, xCoordLimit);
+			module.AddUnit(new LinearMovUnit(new SKPoint(speed, 0)));
+			return module;
+		}
+
+		public MovementModule CreateZigZagModule(
+			SKPoint coords,
+			SKSize size,
+			SKSize explSize,
+			float xSpeed,
+			float ySpeed,
+			float yRange,
+			float xCoordLimit = 0
+		)
+		{
+			MovementModule module = CreateEmptyModule(coords, size, explSize, xCoordLimit);
+			module.AddUnit(new LinearMovUnit(new SKPoint(xSpeed, 0)));
+			float cycleDuration = Math.Abs(yRange / ySpeed);
+			module.AddUnit(new BackAndForthMovUnit(new SKPoint(0, ySpeed), cycleDuration));
+			return module;
+		}
+
+		public MovementModule CreateCircularModule(
+			SKPoint coords,
+			SKSize size,
+			SKSize explSize,
+			float xSpeed,
+			float radius,
+			float cycleDuration,
+			float xCoordLimit = 0
+		)
+		{
+			MovementModule module = CreateEmptyModule(coords, size, explSize, xCoordLimit);
+			module.AddUnit(new LinearMovUnit(new SKPoint(xSpeed, 0)));
+			module.AddUnit(new CircularMovUnit(radius, cycleDuration));
 			return module;
 		}
 	}

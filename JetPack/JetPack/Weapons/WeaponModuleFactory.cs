@@ -158,7 +158,7 @@ namespace JetPack.Weapons
 			//TODO fix 1ms execution time
 			Helper.StartTimeLog("CreateWeaponModHoriz");
 			MovementModule module =
-				movementModuleFactory.CreateStandardHorizontalModule(
+				movementModuleFactory.CreateHorizontalModule(
 					coords,
 					projSize,
 					explSize,

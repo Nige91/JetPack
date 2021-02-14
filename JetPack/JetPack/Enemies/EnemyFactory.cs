@@ -59,7 +59,7 @@ namespace JetPack.Enemies
 		{
 			Enemy enemy = new Enemy(
 				Settings.Enemy1.health,
-				movementModuleFactory.CreateStandardHorizontalModule(
+				movementModuleFactory.CreateHorizontalModule(
 					coords,
 					new SKSize(Settings.Enemy1.sizeX, Settings.Enemy1.sizeY),
 					new SKSize(Settings.Enemy1.explSizeX, Settings.Enemy1.explSizeY),
@@ -81,11 +81,13 @@ namespace JetPack.Enemies
 		{
 			Enemy enemy = new Enemy(
 				Settings.Enemy2.health,
-				movementModuleFactory.CreateStandardHorizontalModule(
+				movementModuleFactory.CreateCircularModule(
 					coords,
 					new SKSize(Settings.Enemy2.sizeX, Settings.Enemy2.sizeY),
 					new SKSize(Settings.Enemy2.explSizeX, Settings.Enemy2.explSizeY),
-					Settings.Enemy2.speed,
+					Settings.Enemy2.xSpeed,
+					Settings.Enemy2.radius,
+					Settings.Enemy2.cycleDuration,
 					Settings.Enemy2.xCoordLimit
 				),
 				weaponModuleFactory.CreateEnemyWeaponFanShot(

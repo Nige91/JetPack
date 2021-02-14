@@ -2,22 +2,22 @@
 
 namespace JetPack.Movement
 {
-	class LinearMovementUnit : MovementModuleUnit
+	class LinearMovUnit : MovementModuleUnit
 	{
-		public SKPoint distance { get; set; }
+		private SKPoint distance;
 
-		public LinearMovementUnit()
+		private LinearMovUnit()
 		{
 		}
 
-		public LinearMovementUnit(SKPoint distance)
+		public LinearMovUnit(SKPoint distance)
 		{
 			this.distance = distance;
 		}
 
 		public override MovementModuleUnit Copy()
 		{
-			LinearMovementUnit unit = new LinearMovementUnit();
+			LinearMovUnit unit = new LinearMovUnit();
 			unit.distance = new SKPoint(distance.X, distance.Y);
 			return unit;
 		}

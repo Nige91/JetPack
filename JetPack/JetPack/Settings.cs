@@ -96,8 +96,12 @@
 			public const float explSizeX = 20;
 			public const float explSizeY = 20;
 			public const int explAnimStepDuration = 10;
-			public const float speed = -10;
-			public const float xCoordLimit = 140;
+			public const float xSpeed = -10;
+			public const float ySpeed = -10;
+			public const float yRange = 50;
+			public const float radius = 20;
+			public const float cycleDuration = 2;
+			public const float xCoordLimit = 30;
 
 			public static class Weapon
 			{
